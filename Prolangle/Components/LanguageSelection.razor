@@ -1,0 +1,15 @@
+﻿@using Prolangle.Services
+@using Prolangle.Languages.Framework
+@inject LanguagesProvider LanguagesProvider
+
+<input @bind="Filter" placeholder="Type programming language..." type="text" />
+
+@code {
+
+    private string Filter { get; set; } = string.Empty;
+
+    private IReadOnlyList<ILanguage> FilteredLanguages => LanguagesProvider!.Languages
+        .Where(language => language.Name.Contains(Filter, StringComparison.OrdinalIgnoreCase))
+        .ToList();
+
+}

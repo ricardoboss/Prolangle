@@ -1,0 +1,32 @@
+﻿@page "/Language"
+@using Prolangle.Services
+@using Prolangle.Components
+
+@inject ILogger<Language> Logger;
+@inject LanguagesProvider LanguagesProvider
+@inject GuessGame GuessGame
+
+<LanguageSelection />
+
+@code {
+
+    private Guid SelectedLanguageId { get; set; } = Guid.Empty;
+
+    private void OnLanguageSelected(ChangeEventArgs e)
+    {
+        if (e.Value is not string selectedId)
+            return;
+
+        var selectedGuid = Guid.Parse(selectedId);
+        var selectedLanguage = LanguagesProvider!.Languages.FirstOrDefault(l => l.Id == selectedGuid);
+        if (selectedLanguage is null)
+            return;
+
+        var result = GuessGame!.Guess(selectedLanguage);
+
+        Logger!.LogInformation(result ? "You guessed right!" : "You guessed wrong!");
+
+        SelectedLanguageId = Guid.Empty;
+    }
+
+}
