@@ -4,14 +4,17 @@
 @using Prolangle.Languages.Framework
 
 @inject GuessGame GuessGame
+@inject LanguagesProvider LanguagesProvider
 
 <h1>Guess a Language</h1>
-
-<LanguageSelection OnLanguageSelected="@OnLanguageSelected"/>
 
 @if (won)
 {
     <h2>You won!</h2>
+}
+else
+{
+    <LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
 }
 
 <table>
@@ -31,6 +34,7 @@
 </table>
 
 @code {
+    private List<ILanguage> AvailableLanguages => LanguagesProvider!.Languages.Where(l => !RevealedLanguages.Contains(l)).ToList();
     private List<ILanguage> RevealedLanguages { get; } = [];
     private bool won;
 

@@ -1,6 +1,5 @@
 ﻿@using Prolangle.Services
 @using Prolangle.Languages.Framework
-@inject LanguagesProvider LanguagesProvider
 
 <input @bind="Filter" placeholder="Type programming language..." type="text"/>
 <div style="display: flex; flex-direction: row; flex-wrap: wrap">
@@ -16,9 +15,13 @@
 
     private string Filter { get; set; } = string.Empty;
 
-    private IReadOnlyList<ILanguage> FilteredLanguages => LanguagesProvider!.Languages
+    private IReadOnlyList<ILanguage> FilteredLanguages => AvailableLanguages
         .Where(language => language.Name.Contains(Filter, StringComparison.OrdinalIgnoreCase))
         .ToList();
 
-    [Parameter] public EventCallback<ILanguage> OnLanguageSelected { get; set; }
+    [Parameter]
+    public IReadOnlyList<ILanguage> AvailableLanguages { get; set; }
+
+    [Parameter]
+    public EventCallback<ILanguage> OnLanguageSelected { get; set; }
 }
