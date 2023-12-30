@@ -2,7 +2,15 @@
 @using Prolangle.Languages.Framework
 @inject LanguagesProvider LanguagesProvider
 
-<input @bind="Filter" placeholder="Type programming language..." type="text" />
+<input @bind="Filter" placeholder="Type programming language..." type="text"/>
+<div style="display: flex; flex-direction: row; flex-wrap: wrap">
+    @foreach (var language in FilteredLanguages)
+    {
+        <button @onclick="() => OnLanguageSelected.InvokeAsync(language)">
+            @language.Name
+        </button>
+    }
+</div>
 
 @code {
 
@@ -12,4 +20,5 @@
         .Where(language => language.Name.Contains(Filter, StringComparison.OrdinalIgnoreCase))
         .ToList();
 
+    [Parameter] public EventCallback<ILanguage> OnLanguageSelected { get; set; }
 }

@@ -1,32 +1,47 @@
 ﻿@page "/Language"
 @using Prolangle.Services
 @using Prolangle.Components
+@using Prolangle.Languages.Framework
 
-@inject ILogger<Language> Logger;
-@inject LanguagesProvider LanguagesProvider
 @inject GuessGame GuessGame
 
-<LanguageSelection />
+<h1>Guess a Language</h1>
+
+<LanguageSelection OnLanguageSelected="@OnLanguageSelected"/>
+
+@if (won)
+{
+    <h2>You won!</h2>
+}
+
+<table>
+    <thead>
+    <tr>
+        <th>Language</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var language in RevealedLanguages)
+    {
+        <tr>
+            <td>@language.Name</td>
+        </tr>
+    }
+    </tbody>
+</table>
 
 @code {
+    private List<ILanguage> RevealedLanguages { get; } = [];
+    private bool won;
 
-    private Guid SelectedLanguageId { get; set; } = Guid.Empty;
-
-    private void OnLanguageSelected(ChangeEventArgs e)
+    private void OnLanguageSelected(ILanguage language)
     {
-        if (e.Value is not string selectedId)
-            return;
+        RevealedLanguages.Add(language);
 
-        var selectedGuid = Guid.Parse(selectedId);
-        var selectedLanguage = LanguagesProvider!.Languages.FirstOrDefault(l => l.Id == selectedGuid);
-        if (selectedLanguage is null)
-            return;
+        var result = GuessGame!.Guess(language);
 
-        var result = GuessGame!.Guess(selectedLanguage);
-
-        Logger!.LogInformation(result ? "You guessed right!" : "You guessed wrong!");
-
-        SelectedLanguageId = Guid.Empty;
+        if (result)
+            won = true;
     }
 
 }
