@@ -1,20 +1,24 @@
 ﻿@page "/Language"
+@using Prolangle.Languages.Framework
 @using Prolangle.Services
 @using Prolangle.Components
-@using Prolangle.Extensions
-@using Prolangle.Languages.Framework
 @using System.Text
 
 @inject GuessGame GuessGame
 @inject LanguagesProvider LanguagesProvider
 
 <style>
+    .revealed-table {
+        text-align: center;
+        vertical-align: middle;
+    }
+
     .language-row > .Exact {
         background-color: green;
     }
 
     .language-row > .Partial {
-        background-color: yellow;
+        background-color: gold;
     }
 
     .language-row > .None {
@@ -37,7 +41,7 @@ else
     <LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
 }
 
-<table class="table table-bordered">
+<table class="revealed-table table table-bordered">
     <thead>
     <tr>
         <th>Language</th>
@@ -57,8 +61,8 @@ else
         <tr class="language-row">
             <td>@language.Name</td>
             <td class="@TypingMatch(language) flags">@((MarkupString)HighlightOverlap(TypingOverlap(language), language.Typing, TypeSystem.None))</td>
-            <td class="@CompiledMatch(language)">@language.Compiled.ToYesNo()</td>
-            <td class="@GarbageCollectedMatch(language)">@language.GarbageCollected.ToYesNo()</td>
+            <td class="@CompiledMatch(language)">@(language.Compiled ? "Compiled" : "Interpreted")</td>
+            <td class="@GarbageCollectedMatch(language)">@(language.GarbageCollected ? "Yes" : "No")</td>
             <td class="@SyntaxStyleMatch(language)">@language.SyntaxStyle</td>
             <td class="@ApplicationsMatch(language) flags">@((MarkupString)HighlightOverlap(ApplicationsOverlap(language), language.KnownForBuilding, Applications.None))</td>
             <td class="@ParadigmsMatch(language) flags">@((MarkupString)HighlightOverlap(ParadigmsOverlap(language), language.Paradigms, Paradigms.None))</td>
@@ -94,8 +98,8 @@ else
         return direction switch
         {
             Direction.Equal => "",
-            Direction.Up => "↑",
-            Direction.Down => "↓",
+            Direction.Up => "\u25b2",
+            Direction.Down => "\u25bc",
             _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
         };
     }
@@ -129,7 +133,11 @@ else
             sb.Append($"<span class=\"{className}\">{flag}</span>, ");
         }
 
-        return sb.ToString().TrimEnd(',', ' ');
+        var result = sb.ToString().TrimEnd(',', ' ');
+        if (string.IsNullOrEmpty(result))
+            return "N/A";
+
+        return result;
     }
 
     private Applications ApplicationsOverlap(ILanguage language)
@@ -180,7 +188,7 @@ else
         if (overlap == TypeSystem.None)
             return MatchType.None;
 
-        if (overlap == language.Typing)
+        if (TargetLanguage.Typing == language.Typing)
             return MatchType.Exact;
 
         return MatchType.Partial;
@@ -217,7 +225,7 @@ else
         if (overlap == Applications.None)
             return MatchType.None;
 
-        if (overlap == language.KnownForBuilding)
+        if (TargetLanguage.KnownForBuilding == language.KnownForBuilding)
             return MatchType.Exact;
 
         return MatchType.Partial;
@@ -230,7 +238,7 @@ else
         if (overlap == Paradigms.None)
             return MatchType.None;
 
-        if (overlap == language.Paradigms)
+        if (TargetLanguage.Paradigms == language.Paradigms)
             return MatchType.Exact;
 
         return MatchType.Partial;

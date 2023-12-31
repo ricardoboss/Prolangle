@@ -8,4 +8,5 @@ public enum SyntaxStyle
 	Lisp,
 	Pascal,
 	Indentation,
+	Xml,
 }
