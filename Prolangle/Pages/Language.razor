@@ -6,6 +6,20 @@
 @inject GuessGame GuessGame
 @inject LanguagesProvider LanguagesProvider
 
+<style>
+    .language-row > .Exact {
+        background-color: green;
+    }
+
+    .language-row > .Partial {
+        background-color: yellow;
+    }
+
+    .language-row > .None {
+        background-color: red;
+    }
+</style>
+
 <h1>Guess a Language</h1>
 
 @if (won)
@@ -21,13 +35,29 @@ else
     <thead>
     <tr>
         <th>Language</th>
+        <th>Typing</th>
+        <th>Compiled</th>
+        <th>Garbage Collected</th>
+        <th>Syntax Style</th>
+        <th>Known For Building</th>
+        <th>Paradigms</th>
+        <th>Tiobe Rating</th>
+        <th>Appearance Year</th>
     </tr>
     </thead>
     <tbody>
     @foreach (var language in RevealedLanguages)
     {
-        <tr>
+        <tr class="language-row">
             <td>@language.Name</td>
+            <td class="@TypingMatch(language)">@language.Typing</td>
+            <td class="@CompiledMatch(language)">@language.Compiled</td>
+            <td class="@GarbageCollectedMatch(language)">@language.GarbageCollected</td>
+            <td class="@SyntaxStyleMatch(language)">@language.SyntaxStyle</td>
+            <td class="@ApplicationsMatch(language)">@language.KnownForBuilding</td>
+            <td class="@ParadigmsMatch(language)">@language.Paradigms</td>
+            <td class="@TiobeRatingMatch(language)">@(language.TiobeRating?.ToString() ?? "None") (@TiobeRatingDirection(language))</td>
+            <td class="@AppearanceYearMatch(language)">@language.AppearanceYear (@AppearanceYearDirection(language))</td>
         </tr>
     }
     </tbody>
@@ -36,16 +66,157 @@ else
 @code {
     private List<ILanguage> AvailableLanguages => LanguagesProvider!.Languages.Where(l => !RevealedLanguages.Contains(l)).ToList();
     private List<ILanguage> RevealedLanguages { get; } = [];
+    private ILanguage TargetLanguage => LanguagesProvider!.Languages.Single(l => l.Id == GuessGame!.TargetLanguageId);
     private bool won;
+
+    private enum MatchType
+    {
+        Exact,
+        Partial,
+        None
+    }
+
+    private enum Direction
+    {
+        None,
+        Equal,
+        Up,
+        Down,
+    }
 
     private void OnLanguageSelected(ILanguage language)
     {
-        RevealedLanguages.Add(language);
+        RevealedLanguages.Insert(0, language);
 
-        var result = GuessGame!.Guess(language);
+        var result = GuessGame!.TargetLanguageId == language.Id;
 
         if (result)
             won = true;
     }
 
+    private TypeSystem TypingOverlap(ILanguage language)
+    {
+        return language.Typing & TargetLanguage.Typing;
+    }
+
+    private Applications ApplicationsOverlap(ILanguage language)
+    {
+        return language.KnownForBuilding & TargetLanguage.KnownForBuilding;
+    }
+
+    private Paradigms ParadigmsOverlap(ILanguage language)
+    {
+        return language.Paradigms & TargetLanguage.Paradigms;
+    }
+
+    private Direction TiobeRatingDirection(ILanguage language)
+    {
+        if (language.TiobeRating is null && TargetLanguage.TiobeRating is null)
+            return Direction.Equal;
+
+        if (language.TiobeRating is null)
+            return Direction.None;
+
+        if (TargetLanguage.TiobeRating is null)
+            return Direction.None;
+
+        if (language.TiobeRating < TargetLanguage.TiobeRating)
+            return Direction.Up;
+
+        if (language.TiobeRating > TargetLanguage.TiobeRating)
+            return Direction.Down;
+
+        return Direction.Equal;
+    }
+
+    private Direction AppearanceYearDirection(ILanguage language)
+    {
+        if (language.AppearanceYear < TargetLanguage.AppearanceYear)
+            return Direction.Up;
+
+        if (language.AppearanceYear > TargetLanguage.AppearanceYear)
+            return Direction.Down;
+
+        return Direction.Equal;
+    }
+
+    private MatchType TypingMatch(ILanguage language)
+    {
+        var overlap = TypingOverlap(language);
+
+        if (overlap == TypeSystem.None)
+            return MatchType.None;
+
+        if (overlap == language.Typing)
+            return MatchType.Exact;
+
+        return MatchType.Partial;
+    }
+
+    private MatchType CompiledMatch(ILanguage language)
+    {
+        if (language.Compiled == TargetLanguage.Compiled)
+            return MatchType.Exact;
+
+        return MatchType.None;
+    }
+
+    private MatchType GarbageCollectedMatch(ILanguage language)
+    {
+        if (language.GarbageCollected == TargetLanguage.GarbageCollected)
+            return MatchType.Exact;
+
+        return MatchType.None;
+    }
+
+    private MatchType SyntaxStyleMatch(ILanguage language)
+    {
+        if (language.SyntaxStyle == TargetLanguage.SyntaxStyle)
+            return MatchType.Exact;
+
+        return MatchType.None;
+    }
+
+    private MatchType ApplicationsMatch(ILanguage language)
+    {
+        var overlap = ApplicationsOverlap(language);
+
+        if (overlap == Applications.None)
+            return MatchType.None;
+
+        if (overlap == language.KnownForBuilding)
+            return MatchType.Exact;
+
+        return MatchType.Partial;
+    }
+
+    private MatchType ParadigmsMatch(ILanguage language)
+    {
+        var overlap = ParadigmsOverlap(language);
+
+        if (overlap == Paradigms.None)
+            return MatchType.None;
+
+        if (overlap == language.Paradigms)
+            return MatchType.Exact;
+
+        return MatchType.Partial;
+    }
+
+    private MatchType TiobeRatingMatch(ILanguage language)
+    {
+        // floating point comparison
+        if (language.TiobeRating - TargetLanguage.TiobeRating <= double.Epsilon)
+            return MatchType.Exact;
+
+        return MatchType.None;
+    }
+
+    private MatchType AppearanceYearMatch(ILanguage language)
+    {
+        if (language.AppearanceYear == TargetLanguage.AppearanceYear)
+            return MatchType.Exact;
+
+        return MatchType.None;
+    }
 }

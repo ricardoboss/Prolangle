@@ -1,6 +1,4 @@
-﻿using Prolangle.Languages.Framework;
-
-namespace Prolangle.Services;
+﻿namespace Prolangle.Services;
 
 public class GuessGame
 {
@@ -17,10 +15,5 @@ public class GuessGame
 		logger.LogInformation("Target language is {Language}", targetLanguage.Name);
 	}
 
-	private Guid TargetLanguageId { get; }
-
-	public bool Guess(ILanguage language)
-	{
-		return language.Id == TargetLanguageId;
-	}
+	public Guid TargetLanguageId { get; }
 }
