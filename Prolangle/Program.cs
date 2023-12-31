@@ -11,6 +11,11 @@ builder.Services.AddLogging();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddSingleton<LanguagesProvider>();
-builder.Services.AddSingleton<GuessGame>();
+builder.Services.AddTransient<GuessGame>(sp =>
+{
+	var lp = sp.GetRequiredService<LanguagesProvider>();
+	var logger = sp.GetRequiredService<ILogger<GuessGame>>();
+	return new(lp, logger, () => DateTime.Now.Minute);
+});
 
 await builder.Build().RunAsync();
