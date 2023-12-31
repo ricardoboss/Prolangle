@@ -1,7 +1,7 @@
 ﻿@using Prolangle.Services
 @using Prolangle.Languages.Framework
 
-<input @bind="Filter" placeholder="Type programming language..." type="text"/>
+<input @bind="Filter" @bind:event="oninput" placeholder="Type programming language..." type="text"/>
 <div style="display: flex; flex-direction: row; flex-wrap: wrap">
     @foreach (var language in FilteredLanguages)
     {
