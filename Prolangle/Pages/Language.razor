@@ -1,7 +1,9 @@
 ﻿@page "/Language"
 @using Prolangle.Services
 @using Prolangle.Components
+@using Prolangle.Extensions
 @using Prolangle.Languages.Framework
+@using System.Text
 
 @inject GuessGame GuessGame
 @inject LanguagesProvider LanguagesProvider
@@ -18,6 +20,10 @@
     .language-row > .None {
         background-color: red;
     }
+
+    .language-row > .flags > .Overlap {
+        font-weight: bold;
+    }
 </style>
 
 <h1>Guess a Language</h1>
@@ -31,7 +37,7 @@ else
     <LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
 }
 
-<table>
+<table class="table table-bordered">
     <thead>
     <tr>
         <th>Language</th>
@@ -50,14 +56,14 @@ else
     {
         <tr class="language-row">
             <td>@language.Name</td>
-            <td class="@TypingMatch(language)">@language.Typing</td>
-            <td class="@CompiledMatch(language)">@language.Compiled</td>
-            <td class="@GarbageCollectedMatch(language)">@language.GarbageCollected</td>
+            <td class="@TypingMatch(language) flags">@((MarkupString)HighlightOverlap(TypingOverlap(language), language.Typing, TypeSystem.None))</td>
+            <td class="@CompiledMatch(language)">@language.Compiled.ToYesNo()</td>
+            <td class="@GarbageCollectedMatch(language)">@language.GarbageCollected.ToYesNo()</td>
             <td class="@SyntaxStyleMatch(language)">@language.SyntaxStyle</td>
-            <td class="@ApplicationsMatch(language)">@language.KnownForBuilding</td>
-            <td class="@ParadigmsMatch(language)">@language.Paradigms</td>
-            <td class="@TiobeRatingMatch(language)">@(language.TiobeRating?.ToString() ?? "None") (@TiobeRatingDirection(language))</td>
-            <td class="@AppearanceYearMatch(language)">@language.AppearanceYear (@AppearanceYearDirection(language))</td>
+            <td class="@ApplicationsMatch(language) flags">@((MarkupString)HighlightOverlap(ApplicationsOverlap(language), language.KnownForBuilding, Applications.None))</td>
+            <td class="@ParadigmsMatch(language) flags">@((MarkupString)HighlightOverlap(ParadigmsOverlap(language), language.Paradigms, Paradigms.None))</td>
+            <td class="@TiobeRatingMatch(language)">@(language.TiobeRating?.ToString() ?? "None") @DirectionToString(TiobeRatingDirection(language))</td>
+            <td class="@AppearanceYearMatch(language)">@language.AppearanceYear @DirectionToString(AppearanceYearDirection(language))</td>
         </tr>
     }
     </tbody>
@@ -78,10 +84,20 @@ else
 
     private enum Direction
     {
-        None,
         Equal,
         Up,
         Down,
+    }
+
+    private static string DirectionToString(Direction direction)
+    {
+        return direction switch
+        {
+            Direction.Equal => "",
+            Direction.Up => "↑",
+            Direction.Down => "↓",
+            _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+        };
     }
 
     private void OnLanguageSelected(ILanguage language)
@@ -97,6 +113,23 @@ else
     private TypeSystem TypingOverlap(ILanguage language)
     {
         return language.Typing & TargetLanguage.Typing;
+    }
+
+    private string HighlightOverlap(Enum overlap, Enum value, Enum exclude)
+    {
+        var sb = new StringBuilder();
+
+        foreach (var flag in Enum.GetValues(overlap.GetType()).Cast<Enum>().Where(c => !exclude.HasFlag(c)))
+        {
+            if (!value.HasFlag(flag) && !overlap.HasFlag(flag))
+                continue;
+
+            var className = overlap.HasFlag(flag) ? "Overlap" : "";
+
+            sb.Append($"<span class=\"{className}\">{flag}</span>, ");
+        }
+
+        return sb.ToString().TrimEnd(',', ' ');
     }
 
     private Applications ApplicationsOverlap(ILanguage language)
@@ -115,10 +148,10 @@ else
             return Direction.Equal;
 
         if (language.TiobeRating is null)
-            return Direction.None;
+            return Direction.Up;
 
         if (TargetLanguage.TiobeRating is null)
-            return Direction.None;
+            return Direction.Down;
 
         if (language.TiobeRating < TargetLanguage.TiobeRating)
             return Direction.Up;
@@ -205,8 +238,17 @@ else
 
     private MatchType TiobeRatingMatch(ILanguage language)
     {
+        if (language.TiobeRating is null && TargetLanguage.TiobeRating is null)
+            return MatchType.Exact;
+
+        if (language.TiobeRating is null)
+            return MatchType.None;
+
+        if (TargetLanguage.TiobeRating is null)
+            return MatchType.None;
+
         // floating point comparison
-        if (language.TiobeRating - TargetLanguage.TiobeRating <= double.Epsilon)
+        if (Math.Abs(language.TiobeRating.Value - TargetLanguage.TiobeRating.Value) <= double.Epsilon)
             return MatchType.Exact;
 
         return MatchType.None;
