@@ -2,16 +2,16 @@
 
 namespace Prolangle.Languages;
 
-public class Cpp : ILanguage
+public class Cpp : BaseLanguage
 {
-	public Guid Id { get; } = Guid.NewGuid();
-	public string Name { get; } = "C++";
-	public TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Nominal | TypeSystem.Inferred;
-	public bool Compiled { get; } = true;
-	public bool GarbageCollected { get; } = false;
-	public SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
-	public Applications KnownForBuilding { get; } = Applications.System | Applications.Games | Applications.General;
-	public Paradigms Paradigms { get; } = Paradigms.Procedural | Paradigms.Imperative | Paradigms.Functional | Paradigms.ObjectOriented | Paradigms.Generic;
-	public double? TiobeRating { get; } = 10.01;
-	public int AppearanceYear { get; } = 1985;
+	public override Guid Id { get; } = Guid.NewGuid();
+	public override string Name { get; } = "C++";
+	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Nominal | TypeSystem.Inferred;
+	public override bool Compiled { get; } = true;
+	public override bool GarbageCollected { get; } = false;
+	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
+	public override Applications KnownForBuilding { get; } = Applications.System | Applications.Games | Applications.General;
+	public override Paradigms Paradigms { get; } = Paradigms.Procedural | Paradigms.Imperative | Paradigms.Functional | Paradigms.ObjectOriented | Paradigms.Generic;
+	public override double? TiobeRating { get; } = 10.01;
+	public override int AppearanceYear { get; } = 1985;
 }

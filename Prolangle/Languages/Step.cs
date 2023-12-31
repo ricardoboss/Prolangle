@@ -2,16 +2,16 @@
 
 namespace Prolangle.Languages;
 
-public class Step : ILanguage
+public class Step : BaseLanguage
 {
-	public Guid Id { get; } = Guid.NewGuid();
-	public string Name { get; } = "STEP";
-	public TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Safe | TypeSystem.Nominal | TypeSystem.Manifest;
-	public bool Compiled { get; } = false;
-	public bool GarbageCollected { get; } = true;
-	public SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
-	public Applications KnownForBuilding { get; } = Applications.General;
-	public Paradigms Paradigms { get; } = Paradigms.Functional | Paradigms.Declarative | Paradigms.Structured;
-	public double? TiobeRating { get; } = null;
-	public int AppearanceYear { get; } = 2022;
+	public override Guid Id { get; } = Guid.NewGuid();
+	public override string Name { get; } = "STEP";
+	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Safe | TypeSystem.Nominal | TypeSystem.Manifest;
+	public override bool Compiled { get; } = false;
+	public override bool GarbageCollected { get; } = true;
+	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
+	public override Applications KnownForBuilding { get; } = Applications.General;
+	public override Paradigms Paradigms { get; } = Paradigms.Functional | Paradigms.Declarative | Paradigms.Structured;
+	public override double? TiobeRating { get; } = null;
+	public override int AppearanceYear { get; } = 2022;
 }
