@@ -13,6 +13,7 @@ public class LanguagesProvider
 	{
 		get
 		{
+			yield return new AppleScript();
 			yield return new C();
 			yield return new Cpp();
 			yield return new CSharp();
