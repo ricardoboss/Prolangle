@@ -6,5 +6,6 @@ public enum SyntaxStyle
 	Other,
 	C,
 	Lisp,
-	Pascal
+	Pascal,
+	Indentation,
 }

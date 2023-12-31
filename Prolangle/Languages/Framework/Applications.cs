@@ -17,4 +17,6 @@ public enum Applications
 	Desktop = 1 << 10,
 	Fun = 1 << 11,
 	Education = 1 << 12,
+	Ai = 1 << 13,
+	Science = 1 << 14,
 }

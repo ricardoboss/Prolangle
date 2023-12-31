@@ -13,9 +13,11 @@ public class LanguagesProvider
 	{
 		get
 		{
+			yield return new C();
 			yield return new Cpp();
 			yield return new CSharp();
 			yield return new Java();
+			yield return new Python();
 			yield return new Step();
 		}
 	}

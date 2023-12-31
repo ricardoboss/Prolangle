@@ -14,4 +14,5 @@ public enum TypeSystem
 	Inferred = 1 << 7,
 	Nominal = 1 << 8,
 	Structural = 1 << 9,
+	Duck = 1 << 10,
 }
