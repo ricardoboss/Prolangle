@@ -23,6 +23,7 @@ public class LanguagesProvider
 			yield return new Javascript();
 			yield return new Php();
 			yield return new Python();
+			yield return new Ruby();
 			yield return new Step();
 			yield return new Swift();
 		}
