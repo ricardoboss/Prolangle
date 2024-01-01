@@ -65,4 +65,11 @@ builder.Services.AddTransient<GuessGame>(sp =>
 	return new GuessGame(lp, snippetProvider, logger, seeder, environment);
 });
 
+builder.Services.AddTransient<LanguageSnippetProvider>(sp =>
+{
+	// TODO: seeder; try to unify some code with above
+
+	return new(() => DateTime.Now.Hour);
+});
+
 await builder.Build().RunAsync();

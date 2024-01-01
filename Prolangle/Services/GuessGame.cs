@@ -5,7 +5,7 @@ namespace Prolangle.Services;
 
 public class GuessGame
 {
-	public Func<int> Seeder { get; }
+	private Func<int> Seeder { get; }
 
 	public GuessGame(LanguagesProvider provider, LanguageSnippetProvider snippetProvider,
 		ILogger<GuessGame> logger, GameSeeder seedGenerator,
