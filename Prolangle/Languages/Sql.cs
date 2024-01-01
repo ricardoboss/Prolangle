@@ -1,0 +1,20 @@
+using Prolangle.Languages.Framework;
+
+namespace Prolangle.Languages;
+
+public class Sql : BaseLanguage
+{
+	public override Guid Id { get; } = Guid.NewGuid();
+	public override string Name { get; } = "SQL";
+	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong ;
+	public override bool Compiled { get; } = false;
+	public override bool GarbageCollected { get; } = false;
+	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Other;
+
+	public override Applications KnownForBuilding { get; } = Applications.None;
+
+	public override Paradigms Paradigms { get; } = Paradigms.Declarative;
+
+	public override double? TiobeRating { get; } = 1.61;
+	public override int AppearanceYear { get; } = 1974;
+}
