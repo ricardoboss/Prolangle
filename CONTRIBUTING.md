@@ -54,10 +54,11 @@ sections of this document to see if you should [report a bug](#report-a-bug), [r
 
 1. Fork the repository
 2. Create a new branch with an appropriate name
-    - If you are fixing a bug, name it `fix/<issueNumber>-<shortDescription>`
-    - If you are adding a feature, name it `feature/<issueNumber>-<shortDescription>`
-    - If you are adding a language, name it `language/<languageName>`
-    - If you are doing something else, name it `<shortDescription>`
+    - If you are fixing a bug, name it `fix/<issue-number>-<short-description>`
+    - If you are adding a feature, name it `feature/<issue-number>-<short-description>`
+    - If you are adding a language, name it `language/<language-name>`
+    - If you are doing something else, name it `<short-description>`
+    - The branch name should be in `kebab-case`
 3. Make your changes
 4. Commit and push your changes
 5. Create a pull request against the `main` branch
