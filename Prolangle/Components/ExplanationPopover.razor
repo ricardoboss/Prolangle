@@ -7,6 +7,11 @@
 
 @if (WillHavePopover)
 {
+    <div @ref="titleElement" style="display: none">
+        <p>@Title</p>
+        <p><a href="@Url"><strong>More</strong> Information</a></p>
+    </div>
+
     <span @ref="popoverElement">
         @ChildContent
     </span>
@@ -19,6 +24,7 @@ else
 @code {
     private IJSObjectReference? jsModule;
     private ElementReference popoverElement;
+    private ElementReference titleElement;
 
     bool WillHavePopover => !string.IsNullOrWhiteSpace(Content);
 
@@ -26,6 +32,7 @@ else
 
     [Parameter] public string Content { get; set; }
     [Parameter] public string Title { get; set; }
+    [Parameter] public string Url { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -35,7 +42,7 @@ else
                 "import", "./Components/ExplanationPopover.razor.js");
 
             await jsModule.InvokeVoidAsync("ExplanationPopover.init",
-                popoverElement, GetSerializedOptions());
+                popoverElement, titleElement, GetSerializedOptions());
         }
     }
 
@@ -44,7 +51,6 @@ else
         return JsonSerializer.Serialize(new
         {
             content = Content,
-            title = Title,
             trigger = "click",
         });
     }

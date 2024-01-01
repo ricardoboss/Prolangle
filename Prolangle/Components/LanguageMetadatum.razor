@@ -39,7 +39,7 @@
         tooltip = !string.IsNullOrWhiteSpace(moreInfoUrl) ? $"<p>{desc}</p><div><a href=\"{moreInfoUrl}\">More Information</a></div>" : desc;
     }
 
-    <ExplanationPopover Content="@(tooltip)" Title="@flagName">
+    <ExplanationPopover Content="@(tooltip)" Title="@flagName" Url="@moreInfoUrl">
         <span class="@className" style="@style">@flagName</span>
     </ExplanationPopover>
 
