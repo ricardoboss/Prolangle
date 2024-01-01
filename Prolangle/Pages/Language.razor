@@ -116,7 +116,7 @@ else
                 <td class="@TypingMatch(language) flags"><LanguageMetadatum Overlap="TypingOverlap(language)" Value="language.Typing" Exclude="TypeSystem.None" /></td>
                 <td class="@CompiledMatch(language)">@(language.Compiled ? "Compiled" : "Interpreted")</td>
                 <td class="@GarbageCollectedMatch(language)">@(language.MemoryManagement == MemoryManagement.None ? "N/A" : language.MemoryManagement)</td>
-                <td class="@SyntaxStyleMatch(language)">@language.SyntaxStyle</td>
+                <td class="@SyntaxStyleMatch(language)"><LanguageSyntaxStyle SyntaxStyle="language.SyntaxStyle"/></td>
                 <td class="@ApplicationsMatch(language) flags"><LanguageMetadatum Overlap="ApplicationsOverlap(language)" Value="language.KnownForBuilding" Exclude="Applications.None" /></td>
                 <td class="@ParadigmsMatch(language) flags"><LanguageMetadatum Overlap="ParadigmsOverlap(language)" Value="language.Paradigms" Exclude="Paradigms.None" /></td>
                 <td class="@TiobeRatingMatch(language)">@(language.TiobeRating?.ToString() ?? "None") @DirectionToString(TiobeRatingDirection(language))</td>
