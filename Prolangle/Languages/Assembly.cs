@@ -9,7 +9,7 @@ public class Assembly : BaseLanguage
 
 	public override TypeSystem Typing { get; } = TypeSystem.None;
 	public override bool Compiled { get; } = true;
-	public override bool GarbageCollected { get; } = false;
+	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.Manual;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Assembly;
 
 	public override Applications KnownForBuilding { get; } = Applications.System | Applications.General | Applications.Games;
