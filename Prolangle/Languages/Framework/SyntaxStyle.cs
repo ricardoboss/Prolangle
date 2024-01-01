@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Prolangle.Languages.Framework;
 
@@ -12,7 +13,6 @@ public enum SyntaxStyle
 	[Description("The C syntax style is perhaps most recognizable by blocks " +
 	             "being delineated in curly braces { }, and by statements " +
 	             "typically ending with a semicolon ;.")]
-    [Display(Name = "XML")]
 	C,
 
 	[Description("In the indendation syntax style, the indentation (the " +
@@ -25,5 +25,6 @@ public enum SyntaxStyle
 
 	[Description("In the XML or SGML syntax style, tags use angular brackets " +
 	             "< >, and can be nested, to form a document tree.")]
+	[Display(Name = "XML")]
 	Xml,
 }
