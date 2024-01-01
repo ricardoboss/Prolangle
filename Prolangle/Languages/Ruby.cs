@@ -9,7 +9,7 @@ public class Ruby : BaseLanguage
 	public override TypeSystem Typing { get; } = TypeSystem.Duck | TypeSystem.Dynamic | TypeSystem.Strong;
 	public override bool Compiled { get; } = false;
 	public override bool GarbageCollected { get; } = true;
-	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Other;
+	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Perl;
 	public override Applications KnownForBuilding { get; } = Applications.Server | Applications.Web;
 
 	public override Paradigms Paradigms { get; } = Paradigms.ObjectOriented | Paradigms.Functional |
