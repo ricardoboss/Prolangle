@@ -4,9 +4,11 @@ public enum SyntaxStyle
 {
 	None,
 	Other,
+
 	C,
+	Indentation,
 	Lisp,
 	Pascal,
-	Indentation,
+	Perl,
 	Xml,
 }
