@@ -8,7 +8,7 @@ public class Sql : BaseLanguage
 	public override string Name { get; } = "SQL";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong ;
 	public override bool Compiled { get; } = false;
-	public override bool GarbageCollected { get; } = false;
+	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.None;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Other;
 
 	public override Applications KnownForBuilding { get; } = Applications.None;
