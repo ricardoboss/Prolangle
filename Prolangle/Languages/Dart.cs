@@ -11,8 +11,7 @@ public class Dart : BaseLanguage
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.GarbageCollection;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
 
-	public override Applications KnownForBuilding { get; } =
-		Applications.Mobile | Applications.Web | Applications.Scripts;
+	public override Applications KnownForBuilding { get; } = Applications.Mobile | Applications.Web;
 
 	public override Paradigms Paradigms { get; } = Paradigms.Functional | Paradigms.Imperative |
 	                                               Paradigms.ObjectOriented | Paradigms.Reflective;
