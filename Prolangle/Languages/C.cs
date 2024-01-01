@@ -9,7 +9,7 @@ public class C : BaseLanguage
 
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Weak | TypeSystem.Manifest | TypeSystem.Nominal;
 	public override bool Compiled { get; } = true;
-	public override bool GarbageCollected { get; } = false;
+	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.Manual;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
 
 	public override Applications KnownForBuilding { get; } = Applications.System | Applications.General | Applications.Games;
