@@ -22,6 +22,7 @@ public class LanguagesProvider
 			yield return new Html();
 			yield return new Java();
 			yield return new Javascript();
+			yield return new Pascal();
 			yield return new Perl();
 			yield return new Php();
 			yield return new Python();
