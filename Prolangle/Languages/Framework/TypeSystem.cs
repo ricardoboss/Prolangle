@@ -1,4 +1,6 @@
-﻿namespace Prolangle.Languages.Framework;
+﻿using System.ComponentModel;
+
+namespace Prolangle.Languages.Framework;
 
 [Flags]
 public enum TypeSystem
@@ -9,6 +11,10 @@ public enum TypeSystem
 	Strong = 1 << 2,
 	Weak = 1 << 3,
 	Static = 1 << 4,
+
+	[Description("In a dynamic type system, type information is resolved at " +
+	             "runtime. This is in contrast to a static system, where it is" +
+	             "resolved at compile time.")]
 	Dynamic = 1 << 5,
 	Manifest = 1 << 6,
 	Inferred = 1 << 7,

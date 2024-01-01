@@ -10,6 +10,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddLogging();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddSingleton<LanguageMetadataProvider>();
 builder.Services.AddSingleton<LanguagesProvider>();
 builder.Services.AddTransient<GuessGame>(sp =>
 {

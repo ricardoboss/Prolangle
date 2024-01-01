@@ -1,4 +1,9 @@
+@using BlazorTooltips
 @using System.Text
+@using Prolangle.Languages.Framework
+@using Prolangle.Services
+
+@inject LanguageMetadataProvider MetadataProvider;
 
 @typeparam TEnum where TEnum : System.Enum
 
@@ -16,19 +21,25 @@
 
     var className = Overlap.HasFlag(flag) ? "Overlap" : "";
 
-    <span class="@className">
-        @(first ? "" : ", ")
-        @flag
-    </span>
+    var desc = MetadataProvider.ResolveDescription(flag);
+
+    var style = string.IsNullOrWhiteSpace(desc) ? "" : "border-bottom: 1px dotted black";
+
+    if (!first)
+    {
+        <span>, </span>
+    }
+
+    <Tooltip Title="@desc">
+        <span class="@className" style="@style">@flag</span>
+    </Tooltip>
 
     first = false;
 }
 
-@{
-    if (!any)
-    {
-        <span>N/A</span>
-    }
+@if (!any)
+{
+    <span>N/A</span>
 }
 
 @code {
