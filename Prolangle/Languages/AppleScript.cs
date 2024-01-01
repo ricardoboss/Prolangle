@@ -10,7 +10,9 @@ public class AppleScript : BaseLanguage
 	public override bool Compiled { get; } = true;
 	public override bool GarbageCollected { get; } = true;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Other;
-	public override Applications KnownForBuilding { get; } = Applications.Apple | Applications.Other;
+
+	public override Applications KnownForBuilding { get; } =
+		Applications.Apple | Applications.Other | Applications.Scripts;
 
 	public override Paradigms Paradigms { get; } = Paradigms.Imperative | Paradigms.Structured |
 	                                               Paradigms.EventDriven | Paradigms.ObjectOriented |

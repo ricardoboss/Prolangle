@@ -19,4 +19,5 @@ public enum Applications
 	Education = 1 << 12,
 	Ai = 1 << 13,
 	Science = 1 << 14,
+	Scripts = 1 << 15
 }
