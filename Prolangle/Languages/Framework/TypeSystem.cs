@@ -12,7 +12,7 @@ public enum TypeSystem
 	Strong = 1 << 2,
 	Weak = 1 << 3,
 
-	[Description("In a static type system, type information is resolved at " +
+	[Description("In a static type system, type information is resolved " +
 	             "during the compile step. This is in contrast to a dynamic " +
 	             "system, where it is resolved at runtime.")]
 	Static = 1 << 4,
