@@ -13,7 +13,8 @@ public class AppleScript : BaseLanguage
 	public override Applications KnownForBuilding { get; } = Applications.Apple | Applications.Other;
 
 	public override Paradigms Paradigms { get; } = Paradigms.Imperative | Paradigms.Structured |
-	                                               Paradigms.EventDriven | Paradigms.ObjectOriented;
+	                                               Paradigms.EventDriven | Paradigms.ObjectOriented |
+	                                               Paradigms.NaturalLanguage;
 
 	public override double? TiobeRating { get; } = null;
 	public override int AppearanceYear { get; } = 1993;
