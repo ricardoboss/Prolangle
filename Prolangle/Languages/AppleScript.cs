@@ -12,7 +12,7 @@ public class AppleScript : BaseLanguage
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Other;
 	public override Applications KnownForBuilding { get; } = Applications.Apple | Applications.Other;
 
-	public override Paradigms Paradigms { get; } = Paradigms.Imperative | Paradigms.Procedural | Paradigms.Structured |
+	public override Paradigms Paradigms { get; } = Paradigms.Imperative | Paradigms.Structured |
 	                                               Paradigms.EventDriven | Paradigms.ObjectOriented;
 
 	public override double? TiobeRating { get; } = null;
