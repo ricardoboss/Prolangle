@@ -1,4 +1,3 @@
-@using BlazorTooltips
 @using System.Text
 @using Prolangle.Languages.Framework
 @using Prolangle.Services
@@ -30,9 +29,9 @@
         <span>, </span>
     }
 
-    <Tooltip Title="@desc">
+    <ExplanationPopover Content="@desc">
         <span class="@className" style="@style">@flag</span>
-    </Tooltip>
+    </ExplanationPopover>
 
     first = false;
 }

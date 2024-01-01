@@ -1,0 +1,61 @@
+@using Microsoft.JSInterop
+@using System.Text.Json
+
+@implements IAsyncDisposable
+
+@inject IJSRuntime JS
+
+@if (!string.IsNullOrWhiteSpace(@Content))
+{
+    <span @ref="popoverElement"
+          data-trigger="click" data-toggle="popover" data-content="@Content">
+
+        @ChildContent
+
+    </span>
+}
+else
+{
+    @ChildContent
+}
+
+@code {
+    private IJSObjectReference? jsModule;
+    private ElementReference popoverElement;
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    [Parameter] public string Content { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            jsModule = await JS.InvokeAsync<IJSObjectReference>(
+                "import", "./Components/ExplanationPopover.razor.js");
+
+            await jsModule.InvokeVoidAsync("ExplanationPopover.init",
+                popoverElement, GetSerializedOptions());
+        }
+    }
+
+    private string GetSerializedOptions()
+    {
+        return JsonSerializer.Serialize(new
+        {
+            title = Content,
+            trigger = "click"
+        });
+    }
+
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (jsModule is null)
+            return;
+
+        await jsModule.InvokeVoidAsync("ExplanationPopover.destroy", popoverElement);
+
+        await jsModule.DisposeAsync();
+    }
+
+}

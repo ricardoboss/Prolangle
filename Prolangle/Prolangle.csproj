@@ -8,13 +8,15 @@
 
   <ItemGroup>
     <PackageReference Include="Blazored.Typeahead" Version="4.7.0" />
-    <PackageReference Include="BlazorTooltips" Version="7.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0"/>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\js\" />
+    <Content Update="Components\ExplanationPopover.razor.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
