@@ -5,6 +5,7 @@ public enum SyntaxStyle
 	None,
 	Other,
 
+	Assembly,
 	C,
 	Indentation,
 	Lisp,
