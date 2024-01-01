@@ -17,7 +17,7 @@ public class CSharp : BaseLanguage
 	public override Applications KnownForBuilding { get; } = Applications.Microsoft | Applications.Web |
 	                                                         Applications.Desktop | Applications.Client |
 	                                                         Applications.Server | Applications.General |
-	                                                         Applications.Games | Applications.Scripts;
+	                                                         Applications.Games;
 
 	public override Paradigms Paradigms { get; } = Paradigms.ObjectOriented | Paradigms.Functional |
 	                                               Paradigms.Structured | Paradigms.Imperative | Paradigms.Generic |
