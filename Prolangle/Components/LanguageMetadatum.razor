@@ -1,4 +1,5 @@
 @using System.Text
+@using Prolangle.Extensions
 @using Prolangle.Languages.Framework
 @using Prolangle.Services
 
@@ -29,8 +30,11 @@
         <span>, </span>
     }
 
-    <ExplanationPopover Content="@desc" Title="@flag.ToString()">
-        <span class="@className" style="@style">@flag</span>
+    string flagName = flag.GetDisplayName() ?? flag.ToString();
+    Console.WriteLine(flagName);
+
+    <ExplanationPopover Content="@desc" Title="@flagName">
+        <span class="@className" style="@style">@flagName</span>
     </ExplanationPopover>
 
     first = false;
