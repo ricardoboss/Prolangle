@@ -1,4 +1,6 @@
-﻿namespace Prolangle.Languages.Framework;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Prolangle.Languages.Framework;
 
 public enum SyntaxStyle
 {
@@ -11,5 +13,6 @@ public enum SyntaxStyle
 	Lisp,
 	Pascal,
 	Perl,
+	[Display(Name = "XML")]
 	Xml,
 }
