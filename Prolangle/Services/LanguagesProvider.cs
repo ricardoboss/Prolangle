@@ -14,6 +14,7 @@ public class LanguagesProvider
 		get
 		{
 			yield return new AppleScript();
+			yield return new Assembly();
 			yield return new C();
 			yield return new Cpp();
 			yield return new CSharp();
@@ -26,6 +27,7 @@ public class LanguagesProvider
 			yield return new Php();
 			yield return new Python();
 			yield return new Ruby();
+			yield return new Sql();
 			yield return new Step();
 			yield return new Swift();
 		}
