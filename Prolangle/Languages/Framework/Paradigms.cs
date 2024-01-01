@@ -15,4 +15,5 @@ public enum Paradigms
 	Reflective = 1 << 8,
 	TaskDriven = 1 << 9,
 	Concurrent = 1 << 10,
+	NaturalLanguage = 1 << 11
 }
