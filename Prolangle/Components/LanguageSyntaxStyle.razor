@@ -1,0 +1,8 @@
+@{
+    var syntaxStyle = language.SyntaxStyle;
+    var desc = MetadataProvider.ResolveDescription(syntaxStyle);
+    var style = string.IsNullOrWhiteSpace(desc) ? "" : "border-bottom: 1px dotted black";
+}
+<ExplanationPopover Content="@desc" Title="@syntaxStyle.ToString()">
+    <span style="@style">@syntaxStyle</span>
+</ExplanationPopover>
