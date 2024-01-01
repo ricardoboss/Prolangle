@@ -1,0 +1,53 @@
+@using System.Text
+@using Prolangle.Languages.Framework
+@using Prolangle.Services
+
+@inject LanguageMetadataProvider MetadataProvider;
+
+@typeparam TEnum where TEnum : System.Enum
+
+@{
+    bool first = true;
+    bool any = false;
+}
+
+@foreach (var flag in Enum.GetValues(typeof(TEnum)).Cast<TEnum>().Where(c => !Exclude.HasFlag(c)))
+{
+    any = true;
+
+    if (!Value.HasFlag(flag) && !Overlap.HasFlag(flag))
+        continue;
+
+    var className = Overlap.HasFlag(flag) ? "Overlap" : "";
+
+    var desc = MetadataProvider.ResolveDescription(flag);
+
+    var style = string.IsNullOrWhiteSpace(desc) ? "" : "border-bottom: 1px dotted black";
+
+    if (!first)
+    {
+        <span>, </span>
+    }
+
+    <ExplanationPopover Content="@desc" Title="@flag.ToString()">
+        <span class="@className" style="@style">@flag</span>
+    </ExplanationPopover>
+
+    first = false;
+}
+
+@if (!any)
+{
+    <span>N/A</span>
+}
+
+@code {
+    [Parameter]
+    public TEnum Overlap { get; set; }
+
+    [Parameter]
+    public TEnum Value { get; set; }
+
+    [Parameter]
+    public TEnum Exclude { get; set; }
+}
