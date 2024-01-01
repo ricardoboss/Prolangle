@@ -5,6 +5,5 @@ public enum MemoryManagement
 	None,
 	Other,
 	GarbageCollection,
-	ReferenceCounting,
 	Manual,
 }
