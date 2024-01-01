@@ -22,12 +22,17 @@ public enum TypeSystem
 	             "resolved at compile time.")]
 	Dynamic = 1 << 5,
 
+	[Description("In a manifest type system, type information is explicitly " +
+	             "declared. This is in contrast to an inferred system, where " +
+	             "the compiler guesses the type based on context.")]
 	Manifest = 1 << 6,
 
 	[Description("In type inference, the compiler can determine the type " +
 	             "automatically based on context. For example, if you " +
 	             "initialize a variable with an integer literal, the " +
-	             "compiler might infer that the variable is an integer.")]
+	             "compiler might infer that the variable is an integer. " +
+	             "This is in contrast to a manifest system, where the " +
+	             "type must be explicitly declared.")]
 	Inferred = 1 << 7,
 
 	[Description("In nominal typing, a type is determined based on its " +
