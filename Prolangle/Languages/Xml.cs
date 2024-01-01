@@ -4,6 +4,7 @@ namespace Prolangle.Languages;
 
 public class Xml : BaseLanguage
 {
+	public static Xml Instance { get; } = new();
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "XML";
 	public override TypeSystem Typing { get; } = TypeSystem.None;

@@ -4,6 +4,7 @@ namespace Prolangle.Languages;
 
 public class CSharp : BaseLanguage
 {
+	public static CSharp Instance { get; } = new();
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "C#";
 

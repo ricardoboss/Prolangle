@@ -1,0 +1,86 @@
+@page "/Snippets"
+@using Prolangle.Components
+@using Prolangle.Services
+@using Prolangle.Languages.Framework
+@using Prolangle.Snippets
+@using System.Text.RegularExpressions
+
+@inject GuessGame GuessGame
+@inject LanguageSnippetProvider LanguageSnippetProvider
+
+<h1>Snippets</h1>
+
+@if (won)
+{
+    <h2>You won!</h2>
+}
+else
+{
+    <LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
+}
+
+<code>
+    <pre>
+        @ConcealedSourceCode
+    </pre>
+</code>
+
+<div style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 1em;">
+    @foreach (var language in RevealedLanguages)
+    {
+        @if (language == TargetLanguage)
+        {
+            <span style="background: green; padding: 0.5em">@language.Name</span>
+        }
+        else
+        {
+            <span style="background: red; padding: 0.5em">@language.Name</span>
+        }
+    }
+</div>
+
+@code
+{
+    private static IReadOnlyList<ILanguage> AvailableLanguages => LanguageSnippetProvider.SupportedLanguages;
+    private List<ILanguage> RevealedLanguages { get; } = [];
+    private ILanguage TargetLanguage => GuessGame!.GetTargetLanguage(AvailableLanguages);
+    private ICodeSnippet Snippet => LanguageSnippetProvider!.GetSnippet(TargetLanguage);
+    private bool won;
+
+    private string ConcealedSourceCode
+    {
+        get
+        {
+            var sourceCode = Snippet.SourceCode;
+
+            // replace all non-whitespaces with a bullet
+            sourceCode = Regex.Replace(sourceCode, @"\S", "•");
+
+            // reveal RevealedProgress % from the middle of the snippet using the original source code
+            var revealStart = (int)(sourceCode.Length / 2 - sourceCode.Length * RevealedProgress / 2);
+            var revealEnd = (int)(sourceCode.Length / 2 + sourceCode.Length * RevealedProgress / 2);
+            sourceCode = sourceCode[..revealStart] + Snippet.SourceCode.Substring(revealStart, revealEnd - revealStart) + sourceCode[revealEnd..];
+
+            return sourceCode;
+        }
+    }
+
+    private double RevealedProgress = 0.1;
+
+    private void OnLanguageSelected(ILanguage language)
+    {
+        RevealedLanguages.Add(language);
+
+        var result = TargetLanguage.Id == language.Id;
+
+        if (result)
+        {
+            won = true;
+            RevealedProgress = 1.0;
+        }
+        else
+        {
+            RevealedProgress += 0.1;
+        }
+    }
+}

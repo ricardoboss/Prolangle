@@ -4,6 +4,7 @@ namespace Prolangle.Languages;
 
 public class VisualBasicNet : BaseLanguage
 {
+	public static VisualBasicNet Instance { get; } = new();
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "Visual Basic (.NET)";
 

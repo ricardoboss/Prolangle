@@ -4,6 +4,7 @@ namespace Prolangle.Languages;
 
 public class Javascript : BaseLanguage
 {
+	public static Javascript Instance { get; } = new();
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "JavaScript";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Weak | TypeSystem.Duck;

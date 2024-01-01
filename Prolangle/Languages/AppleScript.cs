@@ -4,6 +4,7 @@ namespace Prolangle.Languages;
 
 public class AppleScript : BaseLanguage
 {
+	public static AppleScript Instance { get; } = new();
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "AppleScript";
 	public override TypeSystem Typing { get; } = TypeSystem.Weak | TypeSystem.Dynamic;
