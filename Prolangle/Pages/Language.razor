@@ -47,7 +47,7 @@ else
         <th>Language</th>
         <th>Typing</th>
         <th>Compiled</th>
-        <th>Garbage Collected</th>
+        <th>Memory Management</th>
         <th>Syntax Style</th>
         <th>Known For Building</th>
         <th>Paradigms</th>
@@ -62,7 +62,7 @@ else
             <td>@language.Name</td>
             <td class="@TypingMatch(language) flags">@((MarkupString)HighlightOverlap(TypingOverlap(language), language.Typing, TypeSystem.None))</td>
             <td class="@CompiledMatch(language)">@(language.Compiled ? "Compiled" : "Interpreted")</td>
-            <td class="@GarbageCollectedMatch(language)">@(language.GarbageCollected ? "Yes" : "No")</td>
+            <td class="@GarbageCollectedMatch(language)">@(language.MemoryManagement == MemoryManagement.None ? "N/A" : language.MemoryManagement)</td>
             <td class="@SyntaxStyleMatch(language)">@language.SyntaxStyle</td>
             <td class="@ApplicationsMatch(language) flags">@((MarkupString)HighlightOverlap(ApplicationsOverlap(language), language.KnownForBuilding, Applications.None))</td>
             <td class="@ParadigmsMatch(language) flags">@((MarkupString)HighlightOverlap(ParadigmsOverlap(language), language.Paradigms, Paradigms.None))</td>
@@ -204,7 +204,7 @@ else
 
     private MatchType GarbageCollectedMatch(ILanguage language)
     {
-        if (language.GarbageCollected == TargetLanguage.GarbageCollected)
+        if (language.MemoryManagement == TargetLanguage.MemoryManagement)
             return MatchType.Exact;
 
         return MatchType.None;
