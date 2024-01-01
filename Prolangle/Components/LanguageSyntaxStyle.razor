@@ -1,8 +1,18 @@
+@using Prolangle.Languages.Framework
+@using Prolangle.Services
+
+@inject LanguageMetadataProvider MetadataProvider
+
 @{
-    var syntaxStyle = language.SyntaxStyle;
-    var desc = MetadataProvider.ResolveDescription(syntaxStyle);
+    var desc = MetadataProvider.ResolveDescription(SyntaxStyle);
     var style = string.IsNullOrWhiteSpace(desc) ? "" : "border-bottom: 1px dotted black";
 }
-<ExplanationPopover Content="@desc" Title="@syntaxStyle.ToString()">
-    <span style="@style">@syntaxStyle</span>
+
+<ExplanationPopover Content="@desc" Title="@SyntaxStyle.ToString()">
+    <span style="@style">@SyntaxStyle</span>
 </ExplanationPopover>
+
+@code {
+    [Parameter]
+    public required SyntaxStyle SyntaxStyle { get; set; }
+}
