@@ -186,7 +186,7 @@ else
         var overlap = TypingOverlap(language);
 
         if (overlap == TypeSystem.None)
-            return MatchType.None;
+            return TargetLanguage.Typing == TypeSystem.None ? MatchType.Exact : MatchType.None;
 
         if (TargetLanguage.Typing == language.Typing)
             return MatchType.Exact;
