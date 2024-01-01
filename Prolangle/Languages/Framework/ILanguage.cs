@@ -10,7 +10,7 @@ public interface ILanguage
 
 	public bool Compiled { get; }
 
-	public bool GarbageCollected { get; }
+	public MemoryManagement MemoryManagement { get; }
 
 	public SyntaxStyle SyntaxStyle { get; }
 

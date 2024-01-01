@@ -6,7 +6,7 @@ public abstract class BaseLanguage : ILanguage
 	public abstract string Name { get; }
 	public abstract TypeSystem Typing { get; }
 	public abstract bool Compiled { get; }
-	public abstract bool GarbageCollected { get; }
+	public abstract MemoryManagement MemoryManagement { get; }
 	public abstract SyntaxStyle SyntaxStyle { get; }
 	public abstract Applications KnownForBuilding { get; }
 	public abstract Paradigms Paradigms { get; }
@@ -15,6 +15,6 @@ public abstract class BaseLanguage : ILanguage
 
 	public override string ToString()
 	{
-		return $"Name = {Name}; Typing = {Typing}; Compiled = {Compiled}; GarbageCollected = {GarbageCollected}; SyntaxStyle = {SyntaxStyle}; KnownForBuilding = {KnownForBuilding}; Paradigms = {Paradigms}; TiobeRating = {TiobeRating}; AppearanceYear = {AppearanceYear}";
+		return $"Name = {Name}; Typing = {Typing}; Compiled = {Compiled}; MemoryManagement = {MemoryManagement}; SyntaxStyle = {SyntaxStyle}; KnownForBuilding = {KnownForBuilding}; Paradigms = {Paradigms}; TiobeRating = {TiobeRating}; AppearanceYear = {AppearanceYear}";
 	}
 }

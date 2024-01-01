@@ -8,7 +8,7 @@ public class Step : BaseLanguage
 	public override string Name { get; } = "STEP";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Safe | TypeSystem.Nominal | TypeSystem.Manifest;
 	public override bool Compiled { get; } = false;
-	public override bool GarbageCollected { get; } = true;
+	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.GarbageCollection;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
 	public override Applications KnownForBuilding { get; } = Applications.General;
 	public override Paradigms Paradigms { get; } = Paradigms.Functional | Paradigms.Declarative | Paradigms.Structured;

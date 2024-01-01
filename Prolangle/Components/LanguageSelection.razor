@@ -1,23 +1,30 @@
-﻿@using Prolangle.Services
+﻿@using Blazored.Typeahead
 @using Prolangle.Languages.Framework
 
-<input @bind="Filter" @bind:event="oninput" placeholder="Type programming language..." type="text"/>
-<div style="display: flex; flex-direction: row; flex-wrap: wrap">
-    @foreach (var language in FilteredLanguages)
-    {
-        <button @onclick="() => OnLanguageSelected.InvokeAsync(language)">
-            @language.Name
-        </button>
-    }
+<div>
+    <BlazoredTypeahead SearchMethod="Search"
+                       TValue="ILanguage"
+                       TItem="ILanguage"
+                       ShowDropDownOnFocus="true"
+                       Value="SelectedLanguage"
+                       ValueChanged="l => OnLanguageSelected.InvokeAsync(l)"
+                       ValueExpression="@(() => SelectedLanguage)">
+        <SelectedTemplate>
+            @context.Name
+        </SelectedTemplate>
+        <ResultTemplate>
+            @context.Name
+        </ResultTemplate>
+    </BlazoredTypeahead>
 </div>
 
 @code {
 
-    private string Filter { get; set; } = string.Empty;
+    private ILanguage? SelectedLanguage { get; set; }
 
-    private IReadOnlyList<ILanguage> FilteredLanguages => AvailableLanguages
-        .Where(language => language.Name.Contains(Filter, StringComparison.OrdinalIgnoreCase))
-        .ToList();
+    private Task<IEnumerable<ILanguage>> Search(string query)
+        => Task.FromResult(AvailableLanguages
+            .Where(language => language.Name.Contains(query, StringComparison.OrdinalIgnoreCase)));
 
     [Parameter]
     public IReadOnlyList<ILanguage> AvailableLanguages { get; set; }
