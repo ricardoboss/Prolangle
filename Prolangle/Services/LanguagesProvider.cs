@@ -19,6 +19,7 @@ public class LanguagesProvider
 			yield return new Cpp();
 			yield return new CSharp();
 			yield return new Css();
+			yield return new Dart();
 			yield return new Go();
 			yield return new Html();
 			yield return new Java();
