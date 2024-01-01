@@ -6,6 +6,7 @@
                        TValue="ILanguage"
                        TItem="ILanguage"
                        ShowDropDownOnFocus="true"
+                       MaximumSuggestions="100"
                        Value="SelectedLanguage"
                        ValueChanged="l => OnLanguageSelected.InvokeAsync(l)"
                        ValueExpression="@(() => SelectedLanguage)">

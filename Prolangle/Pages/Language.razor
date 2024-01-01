@@ -28,6 +28,59 @@
     .language-row > .flags > .Overlap {
         font-weight: bold;
     }
+
+    .language-row > td {
+        --reveal-duration: 0.5s;
+        --reveal-delay: 0.5s;
+
+        animation: fade-in var(--reveal-duration) forwards;
+        opacity: 0;
+    }
+
+    .language-row > td:nth-child(1) {
+        animation-delay: calc(0 * var(--reveal-delay));
+    }
+
+    .language-row > td:nth-child(2) {
+        animation-delay: calc(1 * var(--reveal-delay));
+    }
+
+    .language-row > td:nth-child(3) {
+        animation-delay: calc(2 * var(--reveal-delay));
+    }
+
+    .language-row > td:nth-child(4) {
+        animation-delay: calc(3 * var(--reveal-delay));
+    }
+
+    .language-row > td:nth-child(5) {
+        animation-delay: calc(4 * var(--reveal-delay));
+    }
+
+    .language-row > td:nth-child(6) {
+        animation-delay: calc(5 * var(--reveal-delay));
+    }
+
+    .language-row > td:nth-child(7) {
+        animation-delay: calc(6 * var(--reveal-delay));
+    }
+
+    .language-row > td:nth-child(8) {
+        animation-delay: calc(7 * var(--reveal-delay));
+    }
+
+    .language-row > td:nth-child(9) {
+        animation-delay: calc(8 * var(--reveal-delay));
+    }
+
+    @@keyframes fade-in {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
 </style>
 
 <h1>Guess a Language</h1>
@@ -59,7 +112,7 @@ else
         <tbody>
         @foreach (var language in RevealedLanguages)
         {
-            <tr class="language-row">
+            <tr class="language-row" @key="language.Id">
                 <td>@language.Name</td>
                 <td class="@TypingMatch(language) flags">@((MarkupString)HighlightOverlap(TypingOverlap(language), language.Typing, TypeSystem.None))</td>
                 <td class="@CompiledMatch(language)">@(language.Compiled ? "Compiled" : "Interpreted")</td>
