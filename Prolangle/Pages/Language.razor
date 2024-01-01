@@ -41,37 +41,39 @@ else
     <LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
 }
 
-<table class="revealed-table table table-bordered table-responsive">
-    <thead>
-    <tr>
-        <th>Language</th>
-        <th>Typing</th>
-        <th>Compiled</th>
-        <th>Memory Management</th>
-        <th>Syntax Style</th>
-        <th>Known For Building</th>
-        <th>Paradigms</th>
-        <th><a href="https://www.tiobe.com/tiobe-index/">TIOBE</a> Rating</th>
-        <th>Appearance Year</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var language in RevealedLanguages)
-    {
-        <tr class="language-row">
-            <td>@language.Name</td>
-            <td class="@TypingMatch(language) flags">@((MarkupString)HighlightOverlap(TypingOverlap(language), language.Typing, TypeSystem.None))</td>
-            <td class="@CompiledMatch(language)">@(language.Compiled ? "Compiled" : "Interpreted")</td>
-            <td class="@GarbageCollectedMatch(language)">@(language.MemoryManagement == MemoryManagement.None ? "N/A" : language.MemoryManagement)</td>
-            <td class="@SyntaxStyleMatch(language)">@language.SyntaxStyle</td>
-            <td class="@ApplicationsMatch(language) flags">@((MarkupString)HighlightOverlap(ApplicationsOverlap(language), language.KnownForBuilding, Applications.None))</td>
-            <td class="@ParadigmsMatch(language) flags">@((MarkupString)HighlightOverlap(ParadigmsOverlap(language), language.Paradigms, Paradigms.None))</td>
-            <td class="@TiobeRatingMatch(language)">@(language.TiobeRating?.ToString() ?? "None") @DirectionToString(TiobeRatingDirection(language))</td>
-            <td class="@AppearanceYearMatch(language)">@language.AppearanceYear @DirectionToString(AppearanceYearDirection(language))</td>
+<div style="width: 100%; overflow-x: auto">
+    <table class="revealed-table table table-bordered">
+        <thead>
+        <tr>
+            <th>Language</th>
+            <th>Typing</th>
+            <th>Compiled</th>
+            <th>Memory Management</th>
+            <th>Syntax Style</th>
+            <th>Known For Building</th>
+            <th>Paradigms</th>
+            <th><a href="https://www.tiobe.com/tiobe-index/">TIOBE</a> Rating</th>
+            <th>Appearance Year</th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach (var language in RevealedLanguages)
+        {
+            <tr class="language-row">
+                <td>@language.Name</td>
+                <td class="@TypingMatch(language) flags">@((MarkupString)HighlightOverlap(TypingOverlap(language), language.Typing, TypeSystem.None))</td>
+                <td class="@CompiledMatch(language)">@(language.Compiled ? "Compiled" : "Interpreted")</td>
+                <td class="@GarbageCollectedMatch(language)">@(language.MemoryManagement == MemoryManagement.None ? "N/A" : language.MemoryManagement)</td>
+                <td class="@SyntaxStyleMatch(language)">@language.SyntaxStyle</td>
+                <td class="@ApplicationsMatch(language) flags">@((MarkupString)HighlightOverlap(ApplicationsOverlap(language), language.KnownForBuilding, Applications.None))</td>
+                <td class="@ParadigmsMatch(language) flags">@((MarkupString)HighlightOverlap(ParadigmsOverlap(language), language.Paradigms, Paradigms.None))</td>
+                <td class="@TiobeRatingMatch(language)">@(language.TiobeRating?.ToString() ?? "None") @DirectionToString(TiobeRatingDirection(language))</td>
+                <td class="@AppearanceYearMatch(language)">@language.AppearanceYear @DirectionToString(AppearanceYearDirection(language))</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
 
 @code {
     private List<ILanguage> AvailableLanguages => LanguagesProvider!.Languages.Where(l => !RevealedLanguages.Contains(l)).ToList();
@@ -269,4 +271,5 @@ else
 
         return MatchType.None;
     }
+
 }
