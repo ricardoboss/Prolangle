@@ -1,0 +1,43 @@
+@using System.Text
+
+@typeparam TEnum where TEnum : System.Enum
+
+@{
+    bool first = true;
+    bool any = false;
+}
+
+@foreach (var flag in Enum.GetValues(typeof(TEnum)).Cast<TEnum>().Where(c => !Exclude.HasFlag(c)))
+{
+    any = true;
+
+    if (!Value.HasFlag(flag) && !Overlap.HasFlag(flag))
+        continue;
+
+    var className = Overlap.HasFlag(flag) ? "Overlap" : "";
+
+    <span class="@className">
+        @(first ? "" : ", ")
+        @flag
+    </span>
+
+    first = false;
+}
+
+@{
+    if (!any)
+    {
+        <span>N/A</span>
+    }
+}
+
+@code {
+    [Parameter]
+    public TEnum Overlap { get; set; }
+
+    [Parameter]
+    public TEnum Value { get; set; }
+
+    [Parameter]
+    public TEnum Exclude { get; set; }
+}
