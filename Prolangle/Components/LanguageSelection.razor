@@ -5,6 +5,7 @@
     <BlazoredTypeahead SearchMethod="Search"
                        TValue="ILanguage"
                        TItem="ILanguage"
+                       ShowDropDownOnFocus="true"
                        Value="SelectedLanguage"
                        ValueChanged="l => OnLanguageSelected.InvokeAsync(l)"
                        ValueExpression="@(() => SelectedLanguage)">
