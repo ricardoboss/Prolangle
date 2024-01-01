@@ -1,0 +1,24 @@
+name: Language Request
+description: Suggest an addition of a new language to the project.
+labels: ["language"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a new language for the project! Please fill out the form below.
+  - type: input
+    id: language
+    attributes:
+      label: Language
+      description: What language would you like to see added?
+      placeholder: "fancy-lang"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please link to the language's website, and provide a brief description of the language.
+      placeholder: "Website: https://fancy-lang.org\nDescription: Fancy is a language that is very fancy..."
+    validations:
+      required: true
