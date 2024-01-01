@@ -4,6 +4,7 @@ namespace Prolangle.Languages;
 
 public class PowerShell : BaseLanguage
 {
+	public static PowerShell Instance { get; } = new();
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "PowerShell";
 

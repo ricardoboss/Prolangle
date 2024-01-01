@@ -4,6 +4,7 @@ namespace Prolangle.Languages;
 
 public class Java : BaseLanguage
 {
+	public static Java Instance { get; } = new();
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "Java";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Safe | TypeSystem.Nominal | TypeSystem.Manifest;

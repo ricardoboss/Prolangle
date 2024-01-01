@@ -25,6 +25,7 @@ builder.Services
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddSingleton<LanguageMetadataProvider>();
 builder.Services.AddSingleton<LanguagesProvider>();
+
 builder.Services.AddTransient<GuessGame>(sp =>
 {
 	var lp = sp.GetRequiredService<LanguagesProvider>();
@@ -43,6 +44,13 @@ builder.Services.AddTransient<GuessGame>(sp =>
 
 	return new(lp, logger, () => (int)(seeder % Math.Pow(2, 31)),
 		environment);
+});
+
+builder.Services.AddTransient<LanguageSnippetProvider>(sp =>
+{
+	// TODO: seeder; try to unify some code with above
+
+	return new(() => DateTime.Now.Hour);
 });
 
 await builder.Build().RunAsync();

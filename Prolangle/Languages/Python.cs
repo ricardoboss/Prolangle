@@ -4,6 +4,7 @@ namespace Prolangle.Languages;
 
 public class Python : BaseLanguage
 {
+	public static Python Instance { get; } = new();
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "Python";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Strong | TypeSystem.Duck;

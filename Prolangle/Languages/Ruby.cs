@@ -4,6 +4,7 @@ namespace Prolangle.Languages;
 
 public class Ruby : BaseLanguage
 {
+	public static Ruby Instance { get; } = new();
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "Ruby";
 	public override TypeSystem Typing { get; } = TypeSystem.Duck | TypeSystem.Dynamic | TypeSystem.Strong;

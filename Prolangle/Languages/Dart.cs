@@ -4,6 +4,7 @@ namespace Prolangle.Languages;
 
 public class Dart : BaseLanguage
 {
+	public static Dart Instance { get; } = new();
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "Dart";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Inferred;

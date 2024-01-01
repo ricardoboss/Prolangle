@@ -4,6 +4,7 @@ namespace Prolangle.Languages;
 
 public class Html : BaseLanguage
 {
+	public static Html Instance { get; } = new();
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "HTML";
 	public override TypeSystem Typing { get; } = TypeSystem.None;

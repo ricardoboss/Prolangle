@@ -1,4 +1,5 @@
-﻿using Prolangle.Languages;
+﻿using System.Data;
+using Prolangle.Languages;
 using Prolangle.Languages.Framework;
 
 namespace Prolangle.Services;
@@ -13,33 +14,33 @@ public class LanguagesProvider
 	{
 		get
 		{
-			yield return new AppleScript();
-			yield return new Assembly();
-			yield return new Basic();
-			yield return new C();
-			yield return new Cpp();
-			yield return new CSharp();
-			yield return new Css();
-			yield return new Dart();
-			yield return new Go();
-			yield return new Html();
-			yield return new Java();
-			yield return new Javascript();
-			yield return new Lua();
-			yield return new ObjectiveC();
-			yield return new Pascal();
-			yield return new Perl();
-			yield return new Php();
-			yield return new PowerShell();
-			yield return new Python();
-			yield return new Ruby();
-			yield return new Rust();
-			yield return new Sql();
-			yield return new Step();
-			yield return new Swift();
-			yield return new VisualBasicClassic();
-			yield return new VisualBasicNet();
-			yield return new Xml();
+			yield return AppleScript.Instance;
+			yield return Assembly.Instance;
+			yield return Basic.Instance;
+			yield return C.Instance;
+			yield return Cpp.Instance;
+			yield return CSharp.Instance;
+			yield return Css.Instance;
+			yield return Dart.Instance;
+			yield return Go.Instance;
+			yield return Html.Instance;
+			yield return Java.Instance;
+			yield return Javascript.Instance;
+			yield return Lua.Instance;
+			yield return ObjectiveC.Instance;
+			yield return Pascal.Instance;
+			yield return Perl.Instance;
+			yield return Php.Instance;
+			yield return PowerShell.Instance;
+			yield return Python.Instance;
+			yield return Ruby.Instance;
+			yield return Rust.Instance;
+			yield return Sql.Instance;
+			yield return Step.Instance;
+			yield return Swift.Instance;
+			yield return VisualBasicClassic.Instance;
+			yield return VisualBasicNet.Instance;
+			yield return Xml.Instance;
 		}
 	}
 }

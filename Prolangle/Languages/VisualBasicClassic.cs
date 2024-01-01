@@ -4,6 +4,7 @@ namespace Prolangle.Languages;
 
 public class VisualBasicClassic : BaseLanguage
 {
+	public static VisualBasicClassic Instance { get; } = new();
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "Visual Basic (classic)";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong;

@@ -4,6 +4,7 @@ namespace Prolangle.Languages;
 
 public class Swift : BaseLanguage
 {
+	public static Swift Instance { get; } = new();
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "Swift";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Inferred;
