@@ -7,9 +7,18 @@
 
 @if (WillHavePopover)
 {
-    <div @ref="titleElement" style="display: none">
-        <p>@Title</p>
-        <p><a href="@Url"><strong>More</strong> Information</a></p>
+    <div style="display: none">
+        <div @ref="titleElement">
+            @if (!string.IsNullOrWhiteSpace(Url))
+            {
+                <p>@Title</p>
+                <p class="m-0 small"><a href="@Url" target="_blank">More Information</a></p>
+            }
+            else
+            {
+                <p class="m-0">@Title</p>
+            }
+        </div>
     </div>
 
     <span @ref="popoverElement">
@@ -46,13 +55,13 @@ else
         }
     }
 
+    // ReSharper disable InconsistentNaming
+    record BootstrapPopoverOptions(string content, bool html, string trigger);
+    // ReSharper restore InconsistentNaming
+
     private string GetSerializedOptions()
     {
-        return JsonSerializer.Serialize(new
-        {
-            content = Content,
-            trigger = "click",
-        });
+        return JsonSerializer.Serialize(new BootstrapPopoverOptions(Content, true, "click"));
     }
 
     async ValueTask IAsyncDisposable.DisposeAsync()
