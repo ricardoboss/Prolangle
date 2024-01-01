@@ -22,6 +22,7 @@
     var className = Overlap.HasFlag(flag) ? "Overlap" : "";
 
     var desc = MetadataProvider.ResolveDescription(flag);
+    var moreInfoUrl = MetadataProvider.ResolveMoreInfoUrl(flag);
 
     var style = string.IsNullOrWhiteSpace(desc) ? "" : "border-bottom: 1px dotted black";
 
@@ -32,7 +33,13 @@
 
     string flagName = flag.GetDisplayName() ?? flag.ToString();
 
-    <ExplanationPopover Content="@desc" Title="@flagName">
+    string tooltip = "";
+    if (!string.IsNullOrWhiteSpace(desc))
+    {
+        tooltip = !string.IsNullOrWhiteSpace(moreInfoUrl) ? $"<p>{desc}</p><div><a href=\"{moreInfoUrl}\">More Information</a></div>" : desc;
+    }
+
+    <ExplanationPopover Content="@(tooltip)" Title="@flagName">
         <span class="@className" style="@style">@flagName</span>
     </ExplanationPopover>
 
@@ -45,12 +52,9 @@
 }
 
 @code {
-    [Parameter]
-    public TEnum Overlap { get; set; }
+    [Parameter] public TEnum Overlap { get; set; }
 
-    [Parameter]
-    public TEnum Value { get; set; }
+    [Parameter] public TEnum Value { get; set; }
 
-    [Parameter]
-    public TEnum Exclude { get; set; }
+    [Parameter] public TEnum Exclude { get; set; }
 }

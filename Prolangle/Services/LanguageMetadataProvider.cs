@@ -15,4 +15,14 @@ public class LanguageMetadataProvider
 
 		return attr?.Description ?? null;
 	}
+
+	public string? ResolveMoreInfoUrl<TEnum>(TEnum value)
+		where TEnum : Enum
+	{
+		var memberInfo = typeof(TEnum).GetMember(value.ToString());
+		var enumValueMemberInfo = memberInfo.FirstOrDefault(m => m.DeclaringType == typeof(TEnum));
+		var attr = enumValueMemberInfo?.GetCustomAttribute<MoreInformationUrlAttribute>();
+
+		return attr?.Url ?? null;
+	}
 }
