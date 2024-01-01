@@ -5,13 +5,10 @@
 
 @inject IJSRuntime JS
 
-@if (!string.IsNullOrWhiteSpace(@Content))
+@if (WillHavePopover)
 {
-    <span @ref="popoverElement"
-          data-trigger="click" data-toggle="popover" data-content="@Content">
-
+    <span @ref="popoverElement">
         @ChildContent
-
     </span>
 }
 else
@@ -23,13 +20,16 @@ else
     private IJSObjectReference? jsModule;
     private ElementReference popoverElement;
 
+    bool WillHavePopover => !string.IsNullOrWhiteSpace(Content);
+
     [Parameter] public RenderFragment ChildContent { get; set; }
 
     [Parameter] public string Content { get; set; }
+    [Parameter] public string Title { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
+        if (firstRender && WillHavePopover)
         {
             jsModule = await JS.InvokeAsync<IJSObjectReference>(
                 "import", "./Components/ExplanationPopover.razor.js");
@@ -43,14 +43,15 @@ else
     {
         return JsonSerializer.Serialize(new
         {
-            title = Content,
-            trigger = "click"
+            content = Content,
+            title = Title,
+            trigger = "click",
         });
     }
 
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
-        if (jsModule is null)
+        if (jsModule is null || !WillHavePopover)
             return;
 
         await jsModule.InvokeVoidAsync("ExplanationPopover.destroy", popoverElement);
