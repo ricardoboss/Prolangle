@@ -1,0 +1,26 @@
+@inject LanguageMetadataProvider MetadataProvider;
+
+@using Prolangle.Services
+@using Prolangle.Extensions
+
+@typeparam TEnum where TEnum : System.Enum
+
+@{
+    var flagName = Value.GetDisplayName() ?? Value.ToString();
+
+    var desc = MetadataProvider.ResolveDescription(Value);
+
+    <h5>
+        @flagName
+    </h5>
+
+    if (!string.IsNullOrWhiteSpace(desc))
+    {
+        <p class="mb-0">@desc</p>
+    }
+}
+
+@code {
+    [Parameter]
+    public required TEnum Value { get; set; }
+}
