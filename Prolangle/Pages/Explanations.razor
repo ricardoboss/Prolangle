@@ -1,0 +1,24 @@
+@page "/explanations"
+
+@using Prolangle.Languages.Framework
+@using Prolangle.Components
+
+<h3 id="syntax-styles">Syntax styles</h3>
+
+@foreach (var syntaxStyle in Enum.GetValues<SyntaxStyle>()
+              .OrderBy(t => t.ToString()))
+{
+    <div class="my-3">
+        <ExplanationBodyText Value="@syntaxStyle" />
+    </div>
+}
+
+<h3 id="type-systems">Type systems</h3>
+
+@foreach (var typeSystem in Enum.GetValues<TypeSystem>()
+              .OrderBy(t => t.ToString()))
+{
+    <div class="my-3">
+        <ExplanationBodyText Value="@typeSystem" />
+    </div>
+}

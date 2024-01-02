@@ -8,7 +8,7 @@
     var desc = MetadataProvider.ResolveDescription(SyntaxStyle);
     var style = string.IsNullOrWhiteSpace(desc) ? "" : "border-bottom: 1px dotted black";
 
-    string flagName = SyntaxStyle.GetDisplayName() ?? SyntaxStyle.ToString();
+    var flagName = SyntaxStyle.GetDisplayName() ?? SyntaxStyle.ToString();
 
     flagName += SyntaxStyle switch
     {
