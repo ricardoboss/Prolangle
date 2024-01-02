@@ -6,9 +6,9 @@
 @typeparam TEnum where TEnum : System.Enum
 
 @{
-    string flagName = Value.GetDisplayName() ?? Value.ToString();
+    var flagName = Value.GetDisplayName() ?? Value.ToString();
 
-    string desc = MetadataProvider.ResolveDescription(Value);
+    var desc = MetadataProvider.ResolveDescription(Value);
 
     <h5>
         @flagName
