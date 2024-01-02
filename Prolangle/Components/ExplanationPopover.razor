@@ -51,7 +51,8 @@ else
                 "import", "./Components/ExplanationPopover.razor.js");
 
             await jsModule.InvokeVoidAsync("ExplanationPopover.init",
-                popoverElement, titleElement, GetSerializedOptions());
+                popoverElement, titleElement,
+                GetSerializedOptions());
         }
     }
 
