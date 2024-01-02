@@ -7,6 +7,20 @@
 
 @if (WillHavePopover)
 {
+    <div style="display: none">
+        <div @ref="titleElement">
+            @if (!string.IsNullOrWhiteSpace(Url))
+            {
+                <p>@Title</p>
+                <p class="m-0 small"><a href="@Url" target="_blank">More Information</a></p>
+            }
+            else
+            {
+                <p class="m-0">@Title</p>
+            }
+        </div>
+    </div>
+
     <span @ref="popoverElement">
         @ChildContent
     </span>
@@ -19,6 +33,7 @@ else
 @code {
     private IJSObjectReference? jsModule;
     private ElementReference popoverElement;
+    private ElementReference titleElement;
 
     bool WillHavePopover => !string.IsNullOrWhiteSpace(Content);
 
@@ -26,6 +41,7 @@ else
 
     [Parameter] public string Content { get; set; }
     [Parameter] public string Title { get; set; }
+    [Parameter] public string Url { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -35,18 +51,18 @@ else
                 "import", "./Components/ExplanationPopover.razor.js");
 
             await jsModule.InvokeVoidAsync("ExplanationPopover.init",
-                popoverElement, GetSerializedOptions());
+                popoverElement, titleElement,
+                GetSerializedOptions());
         }
     }
 
+    // ReSharper disable InconsistentNaming
+    record BootstrapPopoverOptions(string content, bool html, string trigger);
+    // ReSharper restore InconsistentNaming
+
     private string GetSerializedOptions()
     {
-        return JsonSerializer.Serialize(new
-        {
-            content = Content,
-            title = Title,
-            trigger = "click",
-        });
+        return JsonSerializer.Serialize(new BootstrapPopoverOptions(Content, true, "click"));
     }
 
     async ValueTask IAsyncDisposable.DisposeAsync()

@@ -20,6 +20,7 @@ public enum TypeSystem
 	[Description("In a dynamic type system, type information is resolved at " +
 	             "runtime. This is in contrast to a static system, where it is " +
 	             "resolved at compile time.")]
+	[MoreInformationUrl("https://en.wikipedia.org/wiki/Type_system#Dynamic_type_checking_and_runtime_type_information")]
 	Dynamic = 1 << 5,
 
 	[Description("In a manifest type system, type information is explicitly " +

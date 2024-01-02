@@ -1,8 +1,10 @@
 export class ExplanationPopover {
-    static init(elem, optionsJson) {
+    static init(popoverElem, titleElem, optionsJson) {
         var options = JSON.parse(optionsJson);
 
-        bootstrap.Popover.getOrCreateInstance(elem,
+        options.title = titleElem;
+
+        bootstrap.Popover.getOrCreateInstance(popoverElem,
             options);
     }
 
