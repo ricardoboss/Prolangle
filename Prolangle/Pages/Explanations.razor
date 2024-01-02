@@ -8,7 +8,9 @@
 @foreach (var syntaxStyle in Enum.GetValues<SyntaxStyle>()
               .OrderBy(t => t.ToString()))
 {
-    <ExplanationBodyText Value="@syntaxStyle" />
+    <div class="my-3">
+        <ExplanationBodyText Value="@syntaxStyle" />
+    </div>
 }
 
 <h3 id="type-systems">Type systems</h3>
@@ -16,5 +18,7 @@
 @foreach (var typeSystem in Enum.GetValues<TypeSystem>()
               .OrderBy(t => t.ToString()))
 {
-    <ExplanationBodyText Value="@typeSystem" />
+    <div class="my-3">
+        <ExplanationBodyText Value="@typeSystem" />
+    </div>
 }
