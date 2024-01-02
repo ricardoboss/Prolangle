@@ -1,9 +1,11 @@
 @using Microsoft.JSInterop
 @using System.Text.Json
+@using Prolangle.Services
+@using Prolangle.Services.Popover
 
-@implements IAsyncDisposable
+@implements IAsyncDisposable;
 
-@inject IJSRuntime JS
+@inject PopoverCoordinator PopoverCoordinator;
 
 @if (WillHavePopover)
 {
@@ -31,7 +33,6 @@ else
 }
 
 @code {
-    private IJSObjectReference? jsModule;
     private ElementReference popoverElement;
     private ElementReference titleElement;
 
@@ -46,14 +47,7 @@ else
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender && WillHavePopover)
-        {
-            jsModule = await JS.InvokeAsync<IJSObjectReference>(
-                "import", "./Components/ExplanationPopover.razor.js");
-
-            await jsModule.InvokeVoidAsync("ExplanationPopover.init",
-                popoverElement, titleElement,
-                GetSerializedOptions());
-        }
+            await PopoverCoordinator.ShowOrReplaceAsync(popoverElement, GetSerializedOptions());
     }
 
     // ReSharper disable InconsistentNaming
@@ -62,17 +56,21 @@ else
 
     private string GetSerializedOptions()
     {
-        return JsonSerializer.Serialize(new BootstrapPopoverOptions(Content, true, "click"));
+        // TODO after merging #40: move record to `Prolangle.Services.Popover`
+
+        return JsonSerializer.Serialize(new
+        {
+            content = Content,
+            title = Title,
+            trigger = "click",
+        });
+return JsonSerializer.Serialize(new BootstrapPopoverOptions(Content, true, "click"));
+
     }
 
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
-        if (jsModule is null || !WillHavePopover)
-            return;
-
-        await jsModule.InvokeVoidAsync("ExplanationPopover.destroy", popoverElement);
-
-        await jsModule.DisposeAsync();
+        await PopoverCoordinator.RemoveAsync(popoverElement);
     }
 
 }
