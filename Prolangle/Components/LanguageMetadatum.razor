@@ -33,13 +33,7 @@
 
     string flagName = flag.GetDisplayName() ?? flag.ToString();
 
-    string tooltip = "";
-    if (!string.IsNullOrWhiteSpace(desc))
-    {
-        tooltip = !string.IsNullOrWhiteSpace(moreInfoUrl) ? $"<p>{desc}</p><div><a href=\"{moreInfoUrl}\">More Information</a></div>" : desc;
-    }
-
-    <ExplanationPopover Content="@(tooltip)" Title="@flagName" Url="@moreInfoUrl">
+    <ExplanationPopover Content="@desc" Title="@flagName" Url="@moreInfoUrl">
         <span class="@className" style="@style">@flagName</span>
     </ExplanationPopover>
 
