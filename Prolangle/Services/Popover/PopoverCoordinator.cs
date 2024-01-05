@@ -9,13 +9,13 @@ public class PopoverCoordinator(IJSRuntime jsRuntime) : IAsyncDisposable
 
 	private const string JsClassName = nameof(PopoverCoordinator);
 
-	public async Task ShowOrReplaceAsync(ElementReference popoverElement, string serializedOptions)
+	public async Task ToggleAsync(ElementReference popoverElement, string serializedOptions)
 	{
 		// init once
 		_jsModule ??= await jsRuntime.InvokeAsync<IJSObjectReference>(
 			"import", "./js/PopoverCoordinator.js");
 
-		await _jsModule.InvokeVoidAsync($"{JsClassName}.showOrReplace",
+		await _jsModule.InvokeVoidAsync($"{JsClassName}.toggle",
 			popoverElement, serializedOptions);
 	}
 

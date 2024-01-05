@@ -1,20 +1,30 @@
 export class PopoverCoordinator {
     static existingInstanceElement;
 
-    static showOrReplace(elem, optionsJson) {
+    static toggle(elem, optionsJson) {
         const options = JSON.parse(optionsJson);
 
         console.log(`showing with title ${options.title}`)
 
+        let sameElem = false;
+
         if (this.existingInstanceElement != null && typeof this.existingInstanceElement !== 'undefined') {
+            if (this.existingInstanceElement === elem)
+                sameElem = true;
+
             this.destroy(this.existingInstanceElement);
         }
 
-        const instance = bootstrap.Popover.getOrCreateInstance(elem, options);
+        if (!sameElem) {
+            const instance = bootstrap.Popover.getOrCreateInstance(elem, options);
 
-        instance.show();
+            instance.show();
 
-        this.existingInstanceElement = elem;
+            this.existingInstanceElement = elem;
+        }
+        else {
+            this.existingInstanceElement = null;
+        }
     }
 
     static destroy(elem) {
