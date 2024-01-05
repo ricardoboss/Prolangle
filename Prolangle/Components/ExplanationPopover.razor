@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <span @ref="popoverElement">
+    <span @ref="popoverElement" @onclick="ShowOrReplaceAsync">
         @ChildContent
     </span>
 }
@@ -44,10 +44,9 @@ else
     [Parameter] public string Title { get; set; }
     [Parameter] public string Url { get; set; }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private async Task ShowOrReplaceAsync()
     {
-        if (firstRender && WillHavePopover)
-            await PopoverCoordinator.ShowOrReplaceAsync(popoverElement, GetSerializedOptions());
+        await PopoverCoordinator.ShowOrReplaceAsync(popoverElement, GetSerializedOptions());
     }
 
     // ReSharper disable InconsistentNaming

@@ -10,7 +10,9 @@ export class PopoverCoordinator {
             this.destroy(this.existingInstanceElement);
         }
 
-        bootstrap.Popover.getOrCreateInstance(elem, options);
+        const instance = bootstrap.Popover.getOrCreateInstance(elem, options);
+
+        instance.show();
 
         this.existingInstanceElement = elem;
     }
