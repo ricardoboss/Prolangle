@@ -46,26 +46,11 @@ else
 
     private async Task ToggleAsync()
     {
-        await PopoverCoordinator.ToggleAsync(popoverElement, GetSerializedOptions());
+        await PopoverCoordinator.ToggleAsync(popoverElement, titleElement, GetSerializedOptions());
     }
-
-    // ReSharper disable InconsistentNaming
-    record BootstrapPopoverOptions(string content, bool html, string trigger);
-    // ReSharper restore InconsistentNaming
 
     private string GetSerializedOptions()
-    {
-        // TODO after merging #40: move record to `Prolangle.Services.Popover`
-
-        return JsonSerializer.Serialize(new
-        {
-            content = Content,
-            title = Title,
-            trigger = "click",
-        });
-return JsonSerializer.Serialize(new BootstrapPopoverOptions(Content, true, "click"));
-
-    }
+	    => JsonSerializer.Serialize(new BootstrapPopoverOptions(Content, Title, true, "click"));
 
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
