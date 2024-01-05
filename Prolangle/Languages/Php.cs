@@ -8,7 +8,7 @@ public class Php : BaseLanguage
 	public override string Name { get; } = "PHP";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Weak;
 	public override bool Compiled { get; } = false;
-	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.GarbageCollection;
+	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.ReferenceCounting;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
 
 	public override Applications KnownForBuilding { get; } =
