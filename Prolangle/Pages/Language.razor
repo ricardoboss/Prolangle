@@ -130,7 +130,7 @@ else
 @code {
     private List<ILanguage> AvailableLanguages => LanguagesProvider!.Languages.Where(l => !RevealedLanguages.Contains(l)).ToList();
     private List<ILanguage> RevealedLanguages { get; } = [];
-    private ILanguage TargetLanguage => LanguagesProvider!.Languages.Single(l => l.Id == GuessGame!.TargetLanguageId);
+    private ILanguage TargetLanguage => LanguagesProvider!.Languages.Single(l => l.Id == GuessGame!.PlayedGame.TargetLanguageId);
     private bool won;
 
     private enum MatchType
@@ -158,13 +158,11 @@ else
         };
     }
 
-    private void OnLanguageSelected(ILanguage language)
+    private async Task OnLanguageSelected(ILanguage language)
     {
         RevealedLanguages.Insert(0, language);
 
-        var result = GuessGame!.TargetLanguageId == language.Id;
-
-        if (result)
+        if (await GuessGame!.GuessAsync(language.Id))
             won = true;
     }
 

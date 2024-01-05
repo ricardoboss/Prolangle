@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Prolangle;
@@ -12,11 +13,16 @@ builder.Services.AddLogging();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddSingleton<LanguageMetadataProvider>();
 builder.Services.AddSingleton<LanguagesProvider>();
+
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddScoped<GameHistoryService>();
+
 builder.Services.AddTransient<GuessGame>(sp =>
 {
 	var lp = sp.GetRequiredService<LanguagesProvider>();
 	var logger = sp.GetRequiredService<ILogger<GuessGame>>();
-	return new(lp, logger, () => DateTime.Now.Minute);
+	return new(lp, logger, () => DateTime.Now.Minute,
+		sp.GetRequiredService<GameHistoryService>());
 });
 
 await builder.Build().RunAsync();
