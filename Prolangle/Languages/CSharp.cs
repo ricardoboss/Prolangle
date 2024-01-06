@@ -11,7 +11,7 @@ public class CSharp : BaseLanguage
 	                                             TypeSystem.Safe | TypeSystem.Nominal | TypeSystem.Inferred;
 
 	public override bool Compiled { get; } = true;
-	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.GarbageCollection;
+	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.TracingGarbageCollection;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
 
 	public override Applications KnownForBuilding { get; } = Applications.Microsoft | Applications.Web |

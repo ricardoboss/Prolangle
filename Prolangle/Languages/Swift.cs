@@ -8,7 +8,7 @@ public class Swift : BaseLanguage
 	public override string Name { get; } = "Swift";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Inferred;
 	public override bool Compiled { get; } = true;
-	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.GarbageCollection;
+	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.ReferenceCounting;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
 
 	public override Applications KnownForBuilding { get; } = Applications.Apple | Applications.Mobile |

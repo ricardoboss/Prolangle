@@ -11,7 +11,7 @@ public class Go : BaseLanguage
 	                                             TypeSystem.Structural | TypeSystem.Nominal;
 
 	public override bool Compiled { get; } = true;
-	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.GarbageCollection;
+	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.TracingGarbageCollection;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
 
 	public override Applications KnownForBuilding { get; } =
