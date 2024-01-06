@@ -17,12 +17,11 @@ builder.Services.AddSingleton<LanguagesProvider>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<GameHistoryService>();
 
-builder.Services.AddTransient<GuessGame>(sp =>
+builder.Services.AddTransient<GameInitializer>(sp =>
 {
 	var lp = sp.GetRequiredService<LanguagesProvider>();
-	var logger = sp.GetRequiredService<ILogger<GuessGame>>();
-	return new(lp, logger, () => DateTime.Now.Minute,
-		sp.GetRequiredService<GameHistoryService>());
+	var logger = sp.GetRequiredService<ILogger<GameInitializer>>();
+	return new(lp, logger, () => DateTime.Now.Minute);
 });
 
 await builder.Build().RunAsync();

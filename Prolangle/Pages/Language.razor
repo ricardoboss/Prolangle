@@ -2,8 +2,10 @@
 @using Prolangle.Languages.Framework
 @using Prolangle.Services
 @using Prolangle.Components
+@using Prolangle.Models.Game
 
-@inject GuessGame GuessGame
+@inject GameHistoryService GameHistoryService
+@inject GameInitializer GameInitializer
 @inject LanguagesProvider LanguagesProvider
 
 <style>
@@ -130,7 +132,10 @@ else
 @code {
     private List<ILanguage> AvailableLanguages => LanguagesProvider!.Languages.Where(l => !RevealedLanguages.Contains(l)).ToList();
     private List<ILanguage> RevealedLanguages { get; } = [];
-    private ILanguage TargetLanguage => LanguagesProvider!.Languages.Single(l => l.Id == GuessGame!.PropertyGuessingGameInstance.TargetLanguageId);
+
+    private ILanguage TargetLanguage => LanguagesProvider!.Languages.Single(l => l.Id == Game.TargetLanguageId);
+    private PropertyGuessingGameInstance Game => GameInitializer!.PropertyGuessingGameInstance;
+
     private bool won;
 
     private enum MatchType
@@ -162,7 +167,7 @@ else
     {
         RevealedLanguages.Insert(0, language);
 
-        if (await GuessGame!.GuessAsync(language.Id))
+        if (await Game.GuessAsync(language.Id, GameHistoryService))
             won = true;
     }
 
