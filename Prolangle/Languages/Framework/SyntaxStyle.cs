@@ -23,6 +23,11 @@ public enum SyntaxStyle
 	Pascal,
 	Perl,
 
+	[Description("In Smalltalk syntax, you start with the receiver of a " +
+	             "message (an object), then continue with the message to " +
+	             "send to it.")]
+	Smalltalk,
+
 	[Description("In the XML or SGML syntax style, tags use angular brackets " +
 	             "< >, and can be nested, to form a document tree.")]
 	[Display(Name = "XML")]
