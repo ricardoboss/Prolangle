@@ -17,6 +17,12 @@ public enum MemoryManagement
 	GarbageCollection,
 
 	[Display(Name = "Reference counting")]
+	[Description("Reference counting is a form of garbage collection where " +
+	             "code — either written manually, or inserted by a compiler — " +
+	             "increments and decrements how many times an object is " +
+	             "referenced. As the count hits zero, it is assumed that the " +
+	             "object's memory can be released.")]
+	[MoreInformationUrl("https://en.wikipedia.org/wiki/Reference_counting")]
 	ReferenceCounting,
 
 	[Description("In manual memory management, the author of the code is " +
