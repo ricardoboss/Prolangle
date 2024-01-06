@@ -9,10 +9,20 @@ public enum MemoryManagement
 	Other,
 
 	[Display(Name = "Tracing garbage collection")]
-	TracingGarbageCollection,
+	[Description("In tracing garbage collection (often just called 'garbage " +
+	             "collection', a mechanism continously determines at runtime " +
+	             "whether objects are still \"reachable\", and, for those " +
+	             "which aren't, cleans them up.")]
+	[MoreInformationUrl("https://en.wikipedia.org/wiki/Tracing_garbage_collection")]
+	GarbageCollection,
 
 	[Display(Name = "Reference counting")]
 	ReferenceCounting,
 
+	[Description("In manual memory management, the author of the code is " +
+	             "responsible for determining when to start using memory " +
+	             "for objects ('allocate' it) as well as how much, and to " +
+	             "clean it up later on ('free' it).")]
+	[MoreInformationUrl("https://en.wikipedia.org/wiki/Manual_memory_management")]
 	Manual,
 }
