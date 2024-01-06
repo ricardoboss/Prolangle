@@ -8,7 +8,7 @@ public class AppleScript : BaseLanguage
 	public override string Name { get; } = "AppleScript";
 	public override TypeSystem Typing { get; } = TypeSystem.Weak | TypeSystem.Dynamic;
 	public override bool Compiled { get; } = true;
-	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.GarbageCollection;
+	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.TracingGarbageCollection;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Other;
 
 	public override Applications KnownForBuilding { get; } =

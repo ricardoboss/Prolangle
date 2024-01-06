@@ -8,7 +8,7 @@ public class Javascript : BaseLanguage
 	public override string Name { get; } = "JavaScript";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Weak | TypeSystem.Duck;
 	public override bool Compiled { get; } = false;
-	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.GarbageCollection;
+	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.TracingGarbageCollection;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
 
 	public override Applications KnownForBuilding { get; } =

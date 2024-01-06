@@ -28,7 +28,7 @@
             .Where(language => language.Name.Contains(query, StringComparison.OrdinalIgnoreCase)));
 
     [Parameter]
-    public IReadOnlyList<ILanguage> AvailableLanguages { get; set; }
+    public required IReadOnlyList<ILanguage> AvailableLanguages { get; set; }
 
     [Parameter]
     public EventCallback<ILanguage> OnLanguageSelected { get; set; }

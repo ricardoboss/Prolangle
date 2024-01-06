@@ -7,7 +7,12 @@ public enum MemoryManagement
 {
 	None,
 	Other,
-	[Display(Name = "Garbage collection")]
-	GarbageCollection,
+
+	[Display(Name = "Tracing garbage collection")]
+	TracingGarbageCollection,
+
+	[Display(Name = "Reference counting")]
+	ReferenceCounting,
+
 	Manual,
 }

@@ -27,6 +27,7 @@ public class LanguagesProvider
 			yield return new Pascal();
 			yield return new Perl();
 			yield return new Php();
+			yield return new PowerShell();
 			yield return new Python();
 			yield return new Ruby();
 			yield return new Sql();
