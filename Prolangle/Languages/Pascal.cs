@@ -11,7 +11,7 @@ public class Pascal : BaseLanguage
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.TracingGarbageCollection;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Pascal;
 	public override Applications KnownForBuilding { get; } = Applications.Education | Applications.Desktop;
-	public override Paradigms Paradigms { get; } = Paradigms.Imperative | Paradigms.Structured;
+public override Paradigms Paradigms { get; } = Paradigms.Imperative | Paradigms.Structured | Paradigms.Procedural;
 	public override double? TiobeRating { get; } = 0.92;
 	public override int AppearanceYear { get; } = 1970;
 }
