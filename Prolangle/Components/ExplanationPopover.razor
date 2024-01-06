@@ -37,11 +37,15 @@ else
 
     bool WillHavePopover => !string.IsNullOrWhiteSpace(Content);
 
-    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public required RenderFragment ChildContent { get; set; }
 
-    [Parameter] public string Content { get; set; }
-    [Parameter] public string Title { get; set; }
-    [Parameter] public string Url { get; set; }
+    [Parameter]
+    public required string Content { get; set; }
+    [Parameter]
+    public required string Title { get; set; }
+    [Parameter]
+    public required string Url { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

@@ -47,11 +47,11 @@
 
 @code {
     [Parameter]
-    public TEnum Overlap { get; set; }
+    public required TEnum Overlap { get; set; }
 
     [Parameter]
-    public TEnum Value { get; set; }
+    public required TEnum Value { get; set; }
 
     [Parameter]
-    public TEnum Exclude { get; set; }
+    public required TEnum Exclude { get; set; }
 }
