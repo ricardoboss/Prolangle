@@ -22,6 +22,13 @@ export class PopoverCoordinator {
 
             instance.show();
 
+            // `tip` will contain the created element. Make it focusable so that
+            // clicks outside are considered a loss of focus.
+            instance.tip.tabIndex = 0;
+            instance.tip.addEventListener("focusout", (event) => {
+                this.destroy(popoverElem);
+            });
+
             this.existingInstanceElement = popoverElem;
         }
         else {
