@@ -130,7 +130,7 @@ else
 @code {
     private List<ILanguage> AvailableLanguages => LanguagesProvider!.Languages.Where(l => !RevealedLanguages.Contains(l)).ToList();
     private List<ILanguage> RevealedLanguages { get; } = [];
-    private ILanguage TargetLanguage => LanguagesProvider!.Languages.Single(l => l.Id == GuessGame!.PlayedGame.TargetLanguageId);
+    private ILanguage TargetLanguage => LanguagesProvider!.Languages.Single(l => l.Id == GuessGame!.PropertyGuessingGameInstance.TargetLanguageId);
     private bool won;
 
     private enum MatchType

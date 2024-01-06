@@ -1,5 +1,6 @@
 using Blazored.LocalStorage;
 using Prolangle.Models;
+using Prolangle.Models.Game;
 
 namespace Prolangle.Services;
 
@@ -9,21 +10,21 @@ public class GameHistoryService(ILocalStorageService localStorageService)
 
 	private ILocalStorageService _localStorage = localStorageService;
 
-	public async Task WriteAsync(PlayedGame currentGame)
+	public async Task WriteAsync(PropertyGuessingGameInstance currentGameInstance)
 	{
-		var games = await _localStorage.GetItemAsync<Stack<PlayedGame>>(Key);
+		var games = await _localStorage.GetItemAsync<Stack<PropertyGuessingGameInstance>>(Key);
 
 		if (games != null)
 		{
-			if (games.Peek().TargetLanguageId == currentGame.TargetLanguageId)
+			if (games.Peek().TargetLanguageId == currentGameInstance.TargetLanguageId)
 				_ = games.Pop();
 
-			games.Push(currentGame);
+			games.Push(currentGameInstance);
 		}
 		else
 		{
-			games = new Stack<PlayedGame>();
-			games.Push(currentGame);
+			games = new Stack<PropertyGuessingGameInstance>();
+			games.Push(currentGameInstance);
 		}
 
 		await _localStorage.SetItemAsync(Key, games);

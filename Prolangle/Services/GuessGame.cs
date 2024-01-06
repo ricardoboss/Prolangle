@@ -1,4 +1,5 @@
 ﻿using Prolangle.Models;
+using Prolangle.Models.Game;
 
 namespace Prolangle.Services;
 
@@ -17,27 +18,27 @@ public class GuessGame
 
 		var targetLanguage = languages[random.Next(languages.Count)];
 
-		PlayedGame = new PlayedGame(targetLanguage.Id);
+		PropertyGuessingGameInstance = new PropertyGuessingGameInstance(targetLanguage.Id);
 
 		logger.LogInformation("Target language is {Language}", targetLanguage.Name);
 	}
 
 	public async Task<bool> GuessAsync(Guid guessedId)
 	{
-		PlayedGame.Guesses.Add(guessedId);
+		PropertyGuessingGameInstance.Guesses.Add(guessedId);
 
-		if (PlayedGame.TargetLanguageId != guessedId)
+		if (PropertyGuessingGameInstance.TargetLanguageId != guessedId)
 		{
-			await _gameHistoryService.WriteAsync(PlayedGame);
+			await _gameHistoryService.WriteAsync(PropertyGuessingGameInstance);
 			return false;
 		}
 		else
 		{
-			PlayedGame.Won = true;
-			await _gameHistoryService.WriteAsync(PlayedGame);
+			PropertyGuessingGameInstance.Won = true;
+			await _gameHistoryService.WriteAsync(PropertyGuessingGameInstance);
 			return true;
 		}
 	}
 
-	public PlayedGame PlayedGame { get; }
+	public PropertyGuessingGameInstance PropertyGuessingGameInstance { get; }
 }
