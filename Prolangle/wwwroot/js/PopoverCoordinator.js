@@ -4,7 +4,7 @@ export class PopoverCoordinator {
     static toggle(popoverElem, titleElem, optionsJson) {
         const options = JSON.parse(optionsJson);
 
-        options.title = titleElem;
+        options.title = titleElem.cloneNode(true);
 
         console.log(`showing with title ${options.title}`)
 
