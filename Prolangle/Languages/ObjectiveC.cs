@@ -10,7 +10,7 @@ public class ObjectiveC : BaseLanguage
 	public override bool Compiled { get; } = true;
 
 	public override MemoryManagement MemoryManagement { get; } =
-		MemoryManagement.GarbageCollection; // TODO change after #44 merge
+		MemoryManagement.ReferenceCounting;
 
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Smalltalk;
 
