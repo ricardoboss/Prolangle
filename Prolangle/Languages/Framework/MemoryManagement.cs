@@ -14,7 +14,7 @@ public enum MemoryManagement
 	             "whether objects are still \"reachable\", and, for those " +
 	             "which aren't, cleans them up.")]
 	[MoreInformationUrl("https://en.wikipedia.org/wiki/Tracing_garbage_collection")]
-	GarbageCollection,
+	TracingGarbageCollection,
 
 	[Display(Name = "Reference counting")]
 	[Description("Reference counting is a form of garbage collection where " +
