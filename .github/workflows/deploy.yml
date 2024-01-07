@@ -30,7 +30,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet publish --no-restore -o publish
+      run: dotnet publish Prolangle/Prolangle.csproj --no-restore -o publish
     - name: Create Artifact
       uses: actions/upload-artifact@v4.0.0
       with:
