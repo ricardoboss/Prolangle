@@ -1,3 +1,6 @@
+@import "loading-progress.css";
+@import "blazor-error-ui.css";
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
