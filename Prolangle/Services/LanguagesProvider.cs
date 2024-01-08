@@ -31,6 +31,7 @@ public class LanguagesProvider
 			yield return new PowerShell();
 			yield return new Python();
 			yield return new Ruby();
+			yield return new Rust();
 			yield return new Sql();
 			yield return new Step();
 			yield return new Swift();
