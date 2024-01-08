@@ -9,7 +9,7 @@ public class Basic : BaseLanguage
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Weak;
 	public override bool Compiled { get; } = false;
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.None;
-	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Algol;
+	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Other;
 	public override Applications KnownForBuilding { get; } = Applications.Education | Applications.General;
 	public override Paradigms Paradigms { get; } = Paradigms.Imperative;
 	public override double? TiobeRating { get; } = null;

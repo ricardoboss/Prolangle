@@ -8,7 +8,6 @@ public enum SyntaxStyle
 	None,
 	Other,
 
-	Algol,
 	Assembly,
 
 	[Description("The C syntax style is perhaps most recognizable by blocks " +
