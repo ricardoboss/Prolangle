@@ -15,6 +15,7 @@ public class LanguagesProvider
 		{
 			yield return new AppleScript();
 			yield return new Assembly();
+			yield return new Basic();
 			yield return new C();
 			yield return new Cpp();
 			yield return new CSharp();
