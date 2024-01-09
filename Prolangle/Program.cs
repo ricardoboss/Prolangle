@@ -28,7 +28,8 @@ builder.Services.AddTransient<GuessGame>(sp =>
 		_ => throw new NotImplementedException()
 	};
 
-	return new(lp, logger, () => (int)(seeder % Math.Pow(2, 31)));
+	return new(lp, logger, () => (int)(seeder % Math.Pow(2, 31)),
+		environment);
 });
 
 await builder.Build().RunAsync();
