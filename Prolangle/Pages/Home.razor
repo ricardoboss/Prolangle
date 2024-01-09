@@ -2,6 +2,8 @@
 @using Prolangle.Languages.Framework
 @using Prolangle.Services
 @using Prolangle.Components
+@using Prolangle.Models
+@using Match = Prolangle.Models.Match
 
 @inject GuessGame GuessGame
 @inject LanguagesProvider LanguagesProvider
@@ -32,6 +34,34 @@
 		{
 			<TableRow>
 				<TableRowHeader>@language.Name</TableRowHeader>
+				<TableRowCell>
+					<MatchDisplay Match="TypingMatch(language)">
+						<LanguageMetadatum Overlap="TypingOverlap(language)" Value="language.Typing" Exclude="TypeSystem.None"/>
+					</MatchDisplay>
+				</TableRowCell>
+				@* <TableRowCell class="@CompiledMatch(language)"> *@
+				@* 	@(language.Compiled ? "Compiled" : "Interpreted") *@
+				@* </TableRowCell> *@
+				@* <TableRowCell class="@GarbageCollectedMatch(language)"> *@
+				@* 	<LanguageMemoryManagement MemoryManagement="language.MemoryManagement"/> *@
+				@* </TableRowCell> *@
+				@* <TableRowCell class="@SyntaxStyleMatch(language)"> *@
+				@* 	<LanguageSyntaxStyle SyntaxStyle="language.SyntaxStyle"/> *@
+				@* </TableRowCell> *@
+				@* <TableRowCell class="@ApplicationsMatch(language) flags"> *@
+				@* 	<LanguageMetadatum Overlap="ApplicationsOverlap(language)" Value="language.KnownForBuilding" Exclude="Applications.None"/> *@
+				@* </TableRowCell> *@
+				@* <TableRowCell class="@ParadigmsMatch(language) flags"> *@
+				@* 	<LanguageMetadatum Overlap="ParadigmsOverlap(language)" Value="language.Paradigms" Exclude="Paradigms.None"/> *@
+				@* </TableRowCell> *@
+				@* <TableRowCell class="@TiobeRatingMatch(language)"> *@
+				@* 	@(language.TiobeRating?.ToString() ?? "None") *@
+				@* 	@DirectionToString(TiobeRatingDirection(language)) *@
+				@* </TableRowCell> *@
+				@* <TableRowCell class="@AppearanceYearMatch(language)"> *@
+				@* 	@language.AppearanceYear *@
+				@* 	@DirectionToString(AppearanceYearDirection(language)) *@
+				@* </TableRowCell> *@
 			</TableRow>
 		}
 	</TableBody>
@@ -92,27 +122,13 @@
 	private ILanguage TargetLanguage => LanguagesProvider!.Languages.Single(l => l.Id == GuessGame!.TargetLanguageId);
 	private bool won;
 
-	private enum MatchType
-	{
-		Exact,
-		Partial,
-		None,
-	}
-
-	private enum Direction
-	{
-		Equal,
-		Up,
-		Down,
-	}
-
-	private static string DirectionToString(Direction direction)
+	private static string DirectionToString(DirectionIndicator direction)
 	{
 		return direction switch
 		{
-			Direction.Equal => "",
-			Direction.Up => "\u25b2",
-			Direction.Down => "\u25bc",
+			DirectionIndicator.Equal => "",
+			DirectionIndicator.Up => "\u25b2",
+			DirectionIndicator.Down => "\u25bc",
 			_ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
 		};
 	}
@@ -142,124 +158,124 @@
 		return language.Paradigms & TargetLanguage.Paradigms;
 	}
 
-	private Direction TiobeRatingDirection(ILanguage language)
+	private DirectionIndicator TiobeRatingDirection(ILanguage language)
 	{
 		if (language.TiobeRating is null && TargetLanguage.TiobeRating is null)
-			return Direction.Equal;
+			return DirectionIndicator.Equal;
 
 		if (language.TiobeRating is null)
-			return Direction.Up;
+			return DirectionIndicator.Up;
 
 		if (TargetLanguage.TiobeRating is null)
-			return Direction.Down;
+			return DirectionIndicator.Down;
 
 		if (language.TiobeRating < TargetLanguage.TiobeRating)
-			return Direction.Up;
+			return DirectionIndicator.Up;
 
 		if (language.TiobeRating > TargetLanguage.TiobeRating)
-			return Direction.Down;
+			return DirectionIndicator.Down;
 
-		return Direction.Equal;
+		return DirectionIndicator.Equal;
 	}
 
-	private Direction AppearanceYearDirection(ILanguage language)
+	private DirectionIndicator AppearanceYearDirection(ILanguage language)
 	{
 		if (language.AppearanceYear < TargetLanguage.AppearanceYear)
-			return Direction.Up;
+			return DirectionIndicator.Up;
 
 		if (language.AppearanceYear > TargetLanguage.AppearanceYear)
-			return Direction.Down;
+			return DirectionIndicator.Down;
 
-		return Direction.Equal;
+		return DirectionIndicator.Equal;
 	}
 
-	private MatchType TypingMatch(ILanguage language)
+	private Match TypingMatch(ILanguage language)
 	{
 		var overlap = TypingOverlap(language);
 
 		if (overlap == TypeSystem.None)
-			return TargetLanguage.Typing == TypeSystem.None ? MatchType.Exact : MatchType.None;
+			return TargetLanguage.Typing == TypeSystem.None ? Match.Exact : Match.None;
 
 		if (TargetLanguage.Typing == language.Typing)
-			return MatchType.Exact;
+			return Match.Exact;
 
-		return MatchType.Partial;
+		return Match.Partial;
 	}
 
-	private MatchType CompiledMatch(ILanguage language)
+	private Match CompiledMatch(ILanguage language)
 	{
 		if (language.Compiled == TargetLanguage.Compiled)
-			return MatchType.Exact;
+			return Match.Exact;
 
-		return MatchType.None;
+		return Match.None;
 	}
 
-	private MatchType GarbageCollectedMatch(ILanguage language)
+	private Match GarbageCollectedMatch(ILanguage language)
 	{
 		if (language.MemoryManagement == TargetLanguage.MemoryManagement)
-			return MatchType.Exact;
+			return Match.Exact;
 
-		return MatchType.None;
+		return Match.None;
 	}
 
-	private MatchType SyntaxStyleMatch(ILanguage language)
+	private Match SyntaxStyleMatch(ILanguage language)
 	{
 		if (language.SyntaxStyle == TargetLanguage.SyntaxStyle)
-			return MatchType.Exact;
+			return Match.Exact;
 
-		return MatchType.None;
+		return Match.None;
 	}
 
-	private MatchType ApplicationsMatch(ILanguage language)
+	private Match ApplicationsMatch(ILanguage language)
 	{
 		var overlap = ApplicationsOverlap(language);
 
 		if (overlap == Applications.None)
-			return MatchType.None;
+			return Match.None;
 
 		if (TargetLanguage.KnownForBuilding == language.KnownForBuilding)
-			return MatchType.Exact;
+			return Match.Exact;
 
-		return MatchType.Partial;
+		return Match.Partial;
 	}
 
-	private MatchType ParadigmsMatch(ILanguage language)
+	private Match ParadigmsMatch(ILanguage language)
 	{
 		var overlap = ParadigmsOverlap(language);
 
 		if (overlap == Paradigms.None)
-			return MatchType.None;
+			return Match.None;
 
 		if (TargetLanguage.Paradigms == language.Paradigms)
-			return MatchType.Exact;
+			return Match.Exact;
 
-		return MatchType.Partial;
+		return Match.Partial;
 	}
 
-	private MatchType TiobeRatingMatch(ILanguage language)
+	private Match TiobeRatingMatch(ILanguage language)
 	{
 		if (language.TiobeRating is null && TargetLanguage.TiobeRating is null)
-			return MatchType.Exact;
+			return Match.Exact;
 
 		if (language.TiobeRating is null)
-			return MatchType.None;
+			return Match.None;
 
 		if (TargetLanguage.TiobeRating is null)
-			return MatchType.None;
+			return Match.None;
 
 		// floating point comparison
 		if (Math.Abs(language.TiobeRating.Value - TargetLanguage.TiobeRating.Value) <= double.Epsilon)
-			return MatchType.Exact;
+			return Match.Exact;
 
-		return MatchType.None;
+		return Match.None;
 	}
 
-	private MatchType AppearanceYearMatch(ILanguage language)
+	private Match AppearanceYearMatch(ILanguage language)
 	{
 		if (language.AppearanceYear == TargetLanguage.AppearanceYear)
-			return MatchType.Exact;
+			return Match.Exact;
 
-		return MatchType.None;
+		return Match.None;
 	}
 
 }

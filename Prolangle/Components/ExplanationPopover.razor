@@ -49,15 +49,15 @@ else
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender && WillHavePopover)
-        {
-            jsModule = await JS.InvokeAsync<IJSObjectReference>(
-                "import", "./Components/ExplanationPopover.razor.js");
-
-            await jsModule.InvokeVoidAsync("ExplanationPopover.init",
-                popoverElement, titleElement,
-                GetSerializedOptions());
-        }
+        // if (firstRender && WillHavePopover)
+        // {
+        //     jsModule = await JS.InvokeAsync<IJSObjectReference>(
+        //         "import", "./Components/ExplanationPopover.razor.js");
+        //
+        //     await jsModule.InvokeVoidAsync("ExplanationPopover.init",
+        //         popoverElement, titleElement,
+        //         GetSerializedOptions());
+        // }
     }
 
     // ReSharper disable InconsistentNaming

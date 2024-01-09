@@ -1,0 +1,15 @@
+.match > .Exact {
+    background-color: green;
+}
+
+.match > .Partial {
+    background-color: gold;
+}
+
+.match > .None {
+    background-color: red;
+}
+
+.match .Overlap {
+    font-weight: bold;
+}

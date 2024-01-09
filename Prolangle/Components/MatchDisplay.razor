@@ -1,0 +1,15 @@
+@using Match = Prolangle.Models.Match
+
+<div class="match @Match">
+	@ChildContent
+</div>
+
+@code {
+
+	[Parameter]
+	public required Match Match { get; init; }
+
+	[Parameter]
+	public required RenderFragment ChildContent { get; init; }
+
+}

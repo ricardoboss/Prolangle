@@ -26,4 +26,10 @@
     <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css.map" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Components\MatchDisplay.css">
+      <DependentUpon>MatchDisplay.razor</DependentUpon>
+    </None>
+  </ItemGroup>
+
 </Project>

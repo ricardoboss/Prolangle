@@ -19,7 +19,7 @@
     if (!Value.HasFlag(flag) && !Overlap.HasFlag(flag))
         continue;
 
-    var className = Overlap.HasFlag(flag) ? "Overlap" : "";
+    var className = Overlap.HasFlag(flag) ? "Match" : "";
 
     var desc = MetadataProvider.ResolveDescription(flag);
     var moreInfoUrl = MetadataProvider.ResolveMoreInfoUrl(flag);
