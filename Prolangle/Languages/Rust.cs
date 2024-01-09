@@ -10,7 +10,8 @@ public class Rust : BaseLanguage
 	public override bool Compiled { get; } = true;
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.Manual;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
-	public override Applications KnownForBuilding { get; } = Applications.Server | Applications.General | Applications.System;
+	public override Applications KnownForBuilding { get; } = Applications.Server | Applications.General |
+	                                                         Applications.System | Applications.Desktop;
 
 	public override Paradigms Paradigms { get; } = Paradigms.Concurrent | Paradigms.Functional | Paradigms.Generic |
 	                                               Paradigms.Imperative | Paradigms.Structured;
