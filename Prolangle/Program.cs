@@ -16,7 +16,19 @@ builder.Services.AddTransient<GuessGame>(sp =>
 {
 	var lp = sp.GetRequiredService<LanguagesProvider>();
 	var logger = sp.GetRequiredService<ILogger<GuessGame>>();
-	return new(lp, logger, () => DateTime.Now.Minute);
+
+	var environment = sp.GetRequiredService<IWebAssemblyHostEnvironment>();
+
+	Console.WriteLine($"Running in {environment.Environment} environment");
+
+	var seeder = environment.Environment switch
+	{
+		"Development" => DateTime.Now.Ticks,
+		"Production" => DateTime.Today.Ticks,
+		_ => throw new NotImplementedException()
+	};
+
+	return new(lp, logger, () => (int)(seeder % Math.Pow(2, 31)));
 });
 
 await builder.Build().RunAsync();
