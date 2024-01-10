@@ -8,110 +8,79 @@
 @inject GuessGame GuessGame
 @inject LanguagesProvider LanguagesProvider
 
-<h1>Guess a Language</h1>
-
-@if (won)
-{
-	<h2>You won!</h2>
-}
+<Heading Size="HeadingSize.Is1">Guess a Language</Heading>
 
 <Table>
 	<TableHeader>
 		<TableRow>
-			<TableHeaderCell>Language</TableHeaderCell>
-			<TableHeaderCell>Type System</TableHeaderCell>
-			<TableHeaderCell>Execution Model</TableHeaderCell>
-			<TableHeaderCell>Memory Management</TableHeaderCell>
-			<TableHeaderCell>Syntax Style</TableHeaderCell>
-			<TableHeaderCell>Known For Building</TableHeaderCell>
-			<TableHeaderCell>Paradigms</TableHeaderCell>
-			<TableHeaderCell>TIOBE Rating</TableHeaderCell>
-			<TableHeaderCell>Appearance Year</TableHeaderCell>
+			<TableHeaderCell TextAlignment="TextAlignment.Center">Language</TableHeaderCell>
+			<TableHeaderCell TextAlignment="TextAlignment.Center">Type System</TableHeaderCell>
+			<TableHeaderCell TextAlignment="TextAlignment.Center">Execution Model</TableHeaderCell>
+			<TableHeaderCell TextAlignment="TextAlignment.Center">Memory Management</TableHeaderCell>
+			<TableHeaderCell TextAlignment="TextAlignment.Center">Syntax Style</TableHeaderCell>
+			<TableHeaderCell TextAlignment="TextAlignment.Center">Known For Building</TableHeaderCell>
+			<TableHeaderCell TextAlignment="TextAlignment.Center">Paradigms</TableHeaderCell>
+			<TableHeaderCell TextAlignment="TextAlignment.Center">TIOBE Rating</TableHeaderCell>
+			<TableHeaderCell TextAlignment="TextAlignment.Center">Appearance Year</TableHeaderCell>
 		</TableRow>
 	</TableHeader>
 	<TableBody>
 		@foreach (ILanguage language in RevealedLanguages)
 		{
 			<TableRow>
-				<TableRowHeader>@language.Name</TableRowHeader>
+				<TableRowHeader Style="white-space: nowrap; vertical-align: middle">@language.Name</TableRowHeader>
 				<TableRowCell>
 					<MatchDisplay Match="TypingMatch(language)">
 						<LanguageMetadatum Overlap="TypingOverlap(language)" Value="language.Typing" Exclude="TypeSystem.None"/>
 					</MatchDisplay>
 				</TableRowCell>
-				@* <TableRowCell class="@CompiledMatch(language)"> *@
-				@* 	@(language.Compiled ? "Compiled" : "Interpreted") *@
-				@* </TableRowCell> *@
-				@* <TableRowCell class="@GarbageCollectedMatch(language)"> *@
-				@* 	<LanguageMemoryManagement MemoryManagement="language.MemoryManagement"/> *@
-				@* </TableRowCell> *@
-				@* <TableRowCell class="@SyntaxStyleMatch(language)"> *@
-				@* 	<LanguageSyntaxStyle SyntaxStyle="language.SyntaxStyle"/> *@
-				@* </TableRowCell> *@
-				@* <TableRowCell class="@ApplicationsMatch(language) flags"> *@
-				@* 	<LanguageMetadatum Overlap="ApplicationsOverlap(language)" Value="language.KnownForBuilding" Exclude="Applications.None"/> *@
-				@* </TableRowCell> *@
-				@* <TableRowCell class="@ParadigmsMatch(language) flags"> *@
-				@* 	<LanguageMetadatum Overlap="ParadigmsOverlap(language)" Value="language.Paradigms" Exclude="Paradigms.None"/> *@
-				@* </TableRowCell> *@
-				@* <TableRowCell class="@TiobeRatingMatch(language)"> *@
-				@* 	@(language.TiobeRating?.ToString() ?? "None") *@
-				@* 	@DirectionToString(TiobeRatingDirection(language)) *@
-				@* </TableRowCell> *@
-				@* <TableRowCell class="@AppearanceYearMatch(language)"> *@
-				@* 	@language.AppearanceYear *@
-				@* 	@DirectionToString(AppearanceYearDirection(language)) *@
-				@* </TableRowCell> *@
+				<TableRowCell>
+					<MatchDisplay Match="CompiledMatch(language)">
+						@(language.Compiled ? "Compiled" : "Interpreted")
+					</MatchDisplay>
+				</TableRowCell>
+				<TableRowCell>
+					<MatchDisplay Match="GarbageCollectedMatch(language)">
+						<LanguageMemoryManagement MemoryManagement="language.MemoryManagement"/>
+					</MatchDisplay>
+				</TableRowCell>
+				<TableRowCell>
+					<MatchDisplay Match="SyntaxStyleMatch(language)">
+						<LanguageSyntaxStyle SyntaxStyle="language.SyntaxStyle"/>
+					</MatchDisplay>
+				</TableRowCell>
+				<TableRowCell>
+					<MatchDisplay Match="ApplicationsMatch(language)">
+						<LanguageMetadatum Overlap="ApplicationsOverlap(language)" Value="language.KnownForBuilding" Exclude="Applications.None"/>
+					</MatchDisplay>
+				</TableRowCell>
+				<TableRowCell>
+					<MatchDisplay Match="ParadigmsMatch(language)">
+						<LanguageMetadatum Overlap="ParadigmsOverlap(language)" Value="language.Paradigms" Exclude="Paradigms.None"/>
+					</MatchDisplay>
+				</TableRowCell>
+				<TableRowCell>
+					<MatchDisplay Match="TiobeRatingMatch(language)">
+						@(language.TiobeRating?.ToString() ?? "None")
+						@DirectionToString(TiobeRatingDirection(language))
+					</MatchDisplay>
+				</TableRowCell>
+				<TableRowCell>
+					<MatchDisplay Match="AppearanceYearMatch(language)">
+						@language.AppearanceYear
+						@DirectionToString(AppearanceYearDirection(language))
+					</MatchDisplay>
+				</TableRowCell>
 			</TableRow>
 		}
 	</TableBody>
 </Table>
 
-<div style="width: 100%; overflow-x: auto">
-	<table class="revealed-table table table-bordered">
-		<thead>
-		<tr>
-			<th>Language</th>
-			<th>Typing</th>
-			<th>Compiled</th>
-			<th>Memory Management</th>
-			<th>Syntax Style</th>
-			<th>Known For Building</th>
-			<th>Paradigms</th>
-			<th><a href="https://www.tiobe.com/tiobe-index/">TIOBE</a> Rating</th>
-			<th>Appearance Year</th>
-		</tr>
-		</thead>
-		<tbody>
-		@foreach (ILanguage language in RevealedLanguages)
-		{
-			<tr class="language-row" @key="language.Id">
-				<td>@language.Name</td>
-				<td class="@TypingMatch(language) flags">
-					<LanguageMetadatum Overlap="TypingOverlap(language)" Value="language.Typing" Exclude="TypeSystem.None"/>
-				</td>
-				<td class="@CompiledMatch(language)">@(language.Compiled ? "Compiled" : "Interpreted")</td>
-				<td class="@GarbageCollectedMatch(language)">
-					<LanguageMemoryManagement MemoryManagement="language.MemoryManagement"/>
-				</td>
-				<td class="@SyntaxStyleMatch(language)">
-					<LanguageSyntaxStyle SyntaxStyle="language.SyntaxStyle"/>
-				</td>
-				<td class="@ApplicationsMatch(language) flags">
-					<LanguageMetadatum Overlap="ApplicationsOverlap(language)" Value="language.KnownForBuilding" Exclude="Applications.None"/>
-				</td>
-				<td class="@ParadigmsMatch(language) flags">
-					<LanguageMetadatum Overlap="ParadigmsOverlap(language)" Value="language.Paradigms" Exclude="Paradigms.None"/>
-				</td>
-				<td class="@TiobeRatingMatch(language)">@(language.TiobeRating?.ToString() ?? "None") @DirectionToString(TiobeRatingDirection(language))</td>
-				<td class="@AppearanceYearMatch(language)">@language.AppearanceYear @DirectionToString(AppearanceYearDirection(language))</td>
-			</tr>
-		}
-		</tbody>
-	</table>
-</div>
-
-@if (!won)
+@if (won)
+{
+	<Heading Size="HeadingSize.Is2">You won!</Heading>
+}
+else
 {
 	<LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
 }
@@ -135,7 +104,7 @@
 
 	private void OnLanguageSelected(ILanguage language)
 	{
-		RevealedLanguages.Insert(0, language);
+		RevealedLanguages.Add(language);
 
 		var result = GuessGame!.TargetLanguageId == language.Id;
 
@@ -191,10 +160,10 @@
 
 	private Match TypingMatch(ILanguage language)
 	{
-		var overlap = TypingOverlap(language);
+		TypeSystem overlap = TypingOverlap(language);
 
 		if (overlap == TypeSystem.None)
-			return TargetLanguage.Typing == TypeSystem.None ? Match.Exact : Match.None;
+			return language.Typing == TypeSystem.None && TargetLanguage.Typing == TypeSystem.None ? Match.Exact : Match.None;
 
 		if (TargetLanguage.Typing == language.Typing)
 			return Match.Exact;
@@ -279,3 +248,66 @@
 	}
 
 }
+
+<style>
+thead > tr > th {
+	white-space: nowrap;
+}
+
+tbody > tr > td {
+    --reveal-duration: 0.5s;
+    --reveal-delay: 0.35s;
+
+    animation: fade-in var(--reveal-duration) forwards;
+    opacity: 0;
+}
+
+tbody > tr > td {
+	vertical-align: middle !important;
+}
+
+tbody > tr > td:nth-child(1) {
+    animation-delay: calc(0 * var(--reveal-delay));
+}
+
+tbody > tr > td:nth-child(2) {
+    animation-delay: calc(1 * var(--reveal-delay));
+}
+
+tbody > tr > td:nth-child(3) {
+    animation-delay: calc(2 * var(--reveal-delay));
+}
+
+tbody > tr > td:nth-child(4) {
+    animation-delay: calc(3 * var(--reveal-delay));
+}
+
+tbody > tr > td:nth-child(5) {
+    animation-delay: calc(4 * var(--reveal-delay));
+}
+
+tbody > tr > td:nth-child(6) {
+    animation-delay: calc(5 * var(--reveal-delay));
+}
+
+tbody > tr > td:nth-child(7) {
+    animation-delay: calc(6 * var(--reveal-delay));
+}
+
+tbody > tr > td:nth-child(8) {
+    animation-delay: calc(7 * var(--reveal-delay));
+}
+
+tbody > tr > td:nth-child(9) {
+    animation-delay: calc(8 * var(--reveal-delay));
+}
+
+@@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+</style>

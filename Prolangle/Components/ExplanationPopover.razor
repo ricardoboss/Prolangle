@@ -1,5 +1,6 @@
 @using Microsoft.JSInterop
 @using System.Text.Json
+@using BlazorComponentUtilities
 
 @implements IAsyncDisposable
 
@@ -7,76 +8,83 @@
 
 @if (WillHavePopover)
 {
-    <div style="display: none">
-        <div @ref="titleElement">
-            @if (!string.IsNullOrWhiteSpace(Url))
-            {
-                <p>@Title</p>
-                <p class="m-0 small"><a href="@Url" target="_blank">More Information</a></p>
-            }
-            else
-            {
-                <p class="m-0">@Title</p>
-            }
-        </div>
-    </div>
+	<div style="display: none">
+		<div @ref="titleElement">
+			@if (!string.IsNullOrWhiteSpace(Url))
+			{
+				<p>@Title</p>
+				<p class="m-0 small">
+					<a href="@Url" target="_blank">More Information</a>
+				</p>
+			}
+			else
+			{
+				<p class="m-0">@Title</p>
+			}
+		</div>
+	</div>
+}
 
-    <span @ref="popoverElement">
-        @ChildContent
-    </span>
-}
-else
-{
-    @ChildContent
-}
+<span @ref="popoverElement" class="@CssClass">
+	@ChildContent
+</span>
 
 @code {
-    private IJSObjectReference? jsModule;
-    private ElementReference popoverElement;
-    private ElementReference titleElement;
+	[Parameter(CaptureUnmatchedValues = true)]
+	public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, object>();
 
-    bool WillHavePopover => !string.IsNullOrWhiteSpace(Content);
+	CssBuilder CssClass => CssBuilder.Empty().AddClassFromAttributes(AdditionalAttributes);
 
-    [Parameter]
-    public required RenderFragment ChildContent { get; set; }
+	private IJSObjectReference? jsModule;
+	private ElementReference popoverElement;
+	private ElementReference titleElement;
 
-    [Parameter]
-    public required string Content { get; set; }
-    [Parameter]
-    public required string Title { get; set; }
-    [Parameter]
-    public required string Url { get; set; }
+	bool WillHavePopover => !string.IsNullOrWhiteSpace(Content);
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        // if (firstRender && WillHavePopover)
-        // {
-        //     jsModule = await JS.InvokeAsync<IJSObjectReference>(
-        //         "import", "./Components/ExplanationPopover.razor.js");
-        //
-        //     await jsModule.InvokeVoidAsync("ExplanationPopover.init",
-        //         popoverElement, titleElement,
-        //         GetSerializedOptions());
-        // }
-    }
+	[Parameter]
+	public required RenderFragment ChildContent { get; set; }
 
-    // ReSharper disable InconsistentNaming
-    record BootstrapPopoverOptions(string content, bool html, string trigger);
-    // ReSharper restore InconsistentNaming
+	[Parameter]
+	public required string Content { get; set; }
 
-    private string GetSerializedOptions()
-    {
-        return JsonSerializer.Serialize(new BootstrapPopoverOptions(Content, true, "click"));
-    }
+	[Parameter]
+	public required string Title { get; set; }
 
-    async ValueTask IAsyncDisposable.DisposeAsync()
-    {
-        if (jsModule is null || !WillHavePopover)
-            return;
+	[Parameter]
+	public required string Url { get; set; }
 
-        await jsModule.InvokeVoidAsync("ExplanationPopover.destroy", popoverElement);
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		// if (firstRender && WillHavePopover)
+		// {
+		//     jsModule = await JS.InvokeAsync<IJSObjectReference>(
+		//         "import", "./Components/ExplanationPopover.razor.js");
+		//
+		//     await jsModule.InvokeVoidAsync("ExplanationPopover.init",
+		//         popoverElement, titleElement,
+		//         GetSerializedOptions());
+		// }
+	}
 
-        await jsModule.DisposeAsync();
-    }
+	// ReSharper disable InconsistentNaming
+	record BootstrapPopoverOptions(string content, bool html, string trigger);
+	// ReSharper restore InconsistentNaming
+
+	private string GetSerializedOptions()
+	{
+		return JsonSerializer.Serialize(new BootstrapPopoverOptions(Content, true, "click"));
+	}
+
+	async ValueTask IAsyncDisposable.DisposeAsync()
+	{
+		if (jsModule is null || !WillHavePopover)
+			return;
+
+		await jsModule.InvokeVoidAsync("ExplanationPopover.destroy", popoverElement);
+
+		await jsModule.DisposeAsync();
+	}
 
 }
+
+
