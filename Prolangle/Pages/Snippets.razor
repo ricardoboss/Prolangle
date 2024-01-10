@@ -59,6 +59,15 @@ else
             // reveal RevealedProgress % from the middle of the snippet using the original source code
             var revealStart = (int)(sourceCode.Length / 2 - sourceCode.Length * RevealedProgress / 2);
             var revealEnd = (int)(sourceCode.Length / 2 + sourceCode.Length * RevealedProgress / 2);
+
+            // randomly move the center of revealed code around a little, to make snippets harder to remember
+            var random = new Random();
+            const int padding = 3;
+            var jitter = random.Next((revealStart - padding) * -1, revealStart - padding);
+
+            revealStart += jitter;
+            revealEnd += jitter;
+
             sourceCode = sourceCode[..revealStart] + Snippet.SourceCode.Substring(revealStart, revealEnd - revealStart) + sourceCode[revealEnd..];
 
             return sourceCode;
