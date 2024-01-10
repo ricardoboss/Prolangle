@@ -14,7 +14,7 @@ public class GuessGame
 		var targetLanguage = languages[random.Next(languages.Count)];
 		TargetLanguageId = targetLanguage.Id;
 
-		if (environment.Environment == "Development")
+		if (environment.IsDevelopment())
 		{
 			logger.LogInformation("Target language is {Language}", targetLanguage.Name);
 		}
