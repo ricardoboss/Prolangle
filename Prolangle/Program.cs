@@ -19,7 +19,7 @@ builder.Services.AddTransient<GuessGame>(sp =>
 
 	var environment = sp.GetRequiredService<IWebAssemblyHostEnvironment>();
 
-	Console.WriteLine($"Running in {environment.Environment} environment");
+	logger.LogInformation("Running in {Environment} environment", environment.Environment);
 
 	var seeder = environment.Environment switch
 	{
