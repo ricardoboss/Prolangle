@@ -7,6 +7,8 @@ namespace Prolangle.Services;
 public class GuessGame(LanguagesProvider provider, ILogger<GuessGame> logger, Func<int> seeder,
 	IWebAssemblyHostEnvironment environment)
 {
+	public Func<int> Seeder => seeder;
+
 	public ILanguage GetTargetLanguage(IReadOnlyList<ILanguage> languages)
 	{
 		var random = new Random(seeder());

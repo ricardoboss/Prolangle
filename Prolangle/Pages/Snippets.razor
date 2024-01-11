@@ -1,9 +1,9 @@
 @page "/Snippets"
+
 @using Prolangle.Components
 @using Prolangle.Services
 @using Prolangle.Languages.Framework
 @using Prolangle.Snippets
-@using System.Text.RegularExpressions
 
 @inject GuessGame GuessGame
 @inject LanguageSnippetProvider LanguageSnippetProvider
@@ -47,34 +47,16 @@ else
     private ICodeSnippet Snippet => LanguageSnippetProvider!.GetSnippet(TargetLanguage);
     private bool won;
 
-    private string ConcealedSourceCode
+    private SnippetRevealer SnippetRevealer;
+
+    private string ConcealedSourceCode;
+
+    protected override void OnInitialized()
     {
-        get
-        {
-            var sourceCode = Snippet.SourceCode;
+	    SnippetRevealer = new SnippetRevealer(GuessGame, Snippet.SourceCode);
 
-            // replace all non-whitespaces with a bullet
-            sourceCode = Regex.Replace(sourceCode, @"\S", "•");
-
-            // reveal RevealedProgress % from the middle of the snippet using the original source code
-            var revealStart = (int)(sourceCode.Length / 2 - sourceCode.Length * RevealedProgress / 2);
-            var revealEnd = (int)(sourceCode.Length / 2 + sourceCode.Length * RevealedProgress / 2);
-
-            // randomly move the center of revealed code around a little, to make snippets harder to remember
-            var random = new Random();
-            const int padding = 3;
-            var jitter = random.Next((revealStart - padding) * -1, revealStart - padding);
-
-            revealStart += jitter;
-            revealEnd += jitter;
-
-            sourceCode = sourceCode[..revealStart] + Snippet.SourceCode.Substring(revealStart, revealEnd - revealStart) + sourceCode[revealEnd..];
-
-            return sourceCode;
-        }
+	    ConcealedSourceCode = SnippetRevealer.RevealMore();
     }
-
-    private double RevealedProgress = 0.1;
 
     private void OnLanguageSelected(ILanguage language)
     {
@@ -84,12 +66,16 @@ else
 
         if (result)
         {
-            won = true;
-            RevealedProgress = 1.0;
+	        won = true;
+	        SnippetRevealer.Win();
+
+	        ConcealedSourceCode = Snippet.SourceCode;
         }
         else
         {
-            RevealedProgress += 0.1;
+	        ConcealedSourceCode = SnippetRevealer.RevealMore();
         }
+
+        StateHasChanged();
     }
 }
