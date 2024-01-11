@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prolangle.Tests", "Prolangle.Tests\Prolangle.Tests.csproj", "{7D716373-8C2B-4874-BE6B-0FE55E7BD230}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{0EC37D46-D241-4BA4-97E9-98019EC9D8ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EC37D46-D241-4BA4-97E9-98019EC9D8ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EC37D46-D241-4BA4-97E9-98019EC9D8ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D716373-8C2B-4874-BE6B-0FE55E7BD230}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D716373-8C2B-4874-BE6B-0FE55E7BD230}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D716373-8C2B-4874-BE6B-0FE55E7BD230}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D716373-8C2B-4874-BE6B-0FE55E7BD230}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
