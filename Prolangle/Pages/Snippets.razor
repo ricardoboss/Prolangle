@@ -12,70 +12,70 @@
 
 @if (won)
 {
-    <h2>You won!</h2>
+	<h2>You won!</h2>
 }
 else
 {
-    <LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
+	<LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
 }
 
 <code>
-    <pre>
+	<pre>
         @ConcealedSourceCode
     </pre>
 </code>
 
 <div style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 1em;">
-    @foreach (var language in RevealedLanguages)
-    {
-        @if (language == TargetLanguage)
-        {
-            <span style="background: green; padding: 0.5em">@language.Name</span>
-        }
-        else
-        {
-            <span style="background: red; padding: 0.5em">@language.Name</span>
-        }
-    }
+	@foreach (var language in RevealedLanguages)
+	{
+		@if (language == TargetLanguage)
+		{
+			<span style="background: green; padding: 0.5em">@language.Name</span>
+		}
+		else
+		{
+			<span style="background: red; padding: 0.5em">@language.Name</span>
+		}
+	}
 </div>
 
 @code
 {
-    private static IReadOnlyList<ILanguage> AvailableLanguages => LanguageSnippetProvider.SupportedLanguages;
-    private List<ILanguage> RevealedLanguages { get; } = [];
-    private ILanguage TargetLanguage => GuessGame!.GetTargetLanguage(AvailableLanguages);
-    private ICodeSnippet Snippet => LanguageSnippetProvider!.GetSnippet(TargetLanguage);
-    private bool won;
+	private IReadOnlyList<ILanguage> AvailableLanguages => LanguageSnippetProvider.SupportedLanguages.Where(l => !RevealedLanguages.Contains(l)).ToList();
+	private List<ILanguage> RevealedLanguages { get; } = [];
+	private ILanguage TargetLanguage => GuessGame!.GetTargetLanguage(AvailableLanguages);
+	private ICodeSnippet Snippet => LanguageSnippetProvider!.GetSnippet(TargetLanguage);
+	private bool won;
 
-    private SnippetRevealer SnippetRevealer;
+	private SnippetRevealer SnippetRevealer;
 
-    private string ConcealedSourceCode;
+	private string ConcealedSourceCode;
 
-    protected override void OnInitialized()
-    {
-	    SnippetRevealer = new SnippetRevealer(GuessGame, Snippet.SourceCode, useJitter: true);
+	protected override void OnInitialized()
+	{
+		SnippetRevealer = new SnippetRevealer(GuessGame, Snippet.SourceCode, useJitter: true);
 
-	    ConcealedSourceCode = SnippetRevealer.RevealMore();
-    }
+		ConcealedSourceCode = SnippetRevealer.RevealMore();
+	}
 
-    private void OnLanguageSelected(ILanguage language)
-    {
-        RevealedLanguages.Add(language);
+	private void OnLanguageSelected(ILanguage language)
+	{
+		RevealedLanguages.Add(language);
 
-        var result = TargetLanguage.Id == language.Id;
+		var result = TargetLanguage.Id == language.Id;
 
-        if (result)
-        {
-	        won = true;
-	        SnippetRevealer.Win();
+		if (result)
+		{
+			won = true;
+			SnippetRevealer.Win();
 
-	        ConcealedSourceCode = Snippet.SourceCode;
-        }
-        else
-        {
-	        ConcealedSourceCode = SnippetRevealer.RevealMore();
-        }
+			ConcealedSourceCode = Snippet.SourceCode;
+		}
+		else
+		{
+			ConcealedSourceCode = SnippetRevealer.RevealMore();
+		}
 
-        StateHasChanged();
-    }
+		StateHasChanged();
+	}
 }
