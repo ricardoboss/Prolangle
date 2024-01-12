@@ -11,8 +11,9 @@ public class Xml : BaseLanguage
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.None;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Xml;
 
-	public override Applications KnownForBuilding { get; } = Applications.Client | Applications.Server |
-	                                                         Applications.Scripts | Applications.Web;
+	public override Applications KnownForBuilding { get; } = Applications.Client | Applications.Documents |
+								 Applications.Server | Applications.Scripts |
+								 Applications.Web;
 
 	public override Paradigms Paradigms { get; } = Paradigms.Declarative;
 	public override double? TiobeRating { get; } = null;
