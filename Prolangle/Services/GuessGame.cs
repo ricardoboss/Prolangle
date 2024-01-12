@@ -1,8 +1,11 @@
-﻿namespace Prolangle.Services;
+﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+
+namespace Prolangle.Services;
 
 public class GuessGame
 {
-	public GuessGame(LanguagesProvider provider, ILogger<GuessGame> logger, Func<int> seeder)
+	public GuessGame(LanguagesProvider provider, ILogger<GuessGame> logger, Func<int> seeder,
+		IWebAssemblyHostEnvironment environment)
 	{
 		var languages = provider.Languages;
 
@@ -11,7 +14,10 @@ public class GuessGame
 		var targetLanguage = languages[random.Next(languages.Count)];
 		TargetLanguageId = targetLanguage.Id;
 
-		logger.LogInformation("Target language is {Language}", targetLanguage.Name);
+		if (environment.IsDevelopment())
+		{
+			logger.LogInformation("Target language is {Language}", targetLanguage.Name);
+		}
 	}
 
 	public Guid TargetLanguageId { get; }
