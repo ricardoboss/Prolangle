@@ -3,22 +3,28 @@
 @using Prolangle.Languages.Framework
 @using Prolangle.Components
 
-<h3 id="syntax-styles">Syntax styles</h3>
+<Heading Size="HeadingSize.Is3">Explanations</Heading>
 
-@foreach (var syntaxStyle in Enum.GetValues<SyntaxStyle>()
-              .OrderBy(t => t.ToString()))
-{
-    <div class="my-3">
-        <ExplanationBodyText Value="@syntaxStyle" />
-    </div>
-}
+<Paragraph>
+	This page contains explanations of the various syntax styles and type systems different programming languages use.
+</Paragraph>
 
-<h3 id="type-systems">Type systems</h3>
+<Hr />
 
-@foreach (var typeSystem in Enum.GetValues<TypeSystem>()
-              .OrderBy(t => t.ToString()))
-{
-    <div class="my-3">
-        <ExplanationBodyText Value="@typeSystem" />
-    </div>
-}
+<Div>
+	<Heading Size="HeadingSize.Is4" id="syntax-styles">Syntax styles</Heading>
+
+	@foreach (SyntaxStyle syntaxStyle in Enum.GetValues<SyntaxStyle>()
+		          .OrderBy(t => t.ToString()))
+	{
+		<ExplanationBodyText Value="@syntaxStyle"/>
+	}
+
+	<Heading Size="HeadingSize.Is4" id="type-systems">Type systems</Heading>
+
+	@foreach (TypeSystem typeSystem in Enum.GetValues<TypeSystem>()
+		          .OrderBy(t => t.ToString()))
+	{
+		<ExplanationBodyText Value="@typeSystem"/>
+	}
+</Div>
