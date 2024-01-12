@@ -7,15 +7,15 @@ public class SnippetRevealerTests
 	public static IEnumerable<object[]> SnippetData
 	{
 		get { yield return ["Console.WriteLine(message);",
-							"•••••••••••teL•••••••••••••",
-							"••••••••••iteLi••••••••••••",
-							"••••••••WriteLine••••••••••",
-							"•••••••.WriteLine(•••••••••",
-							"••••••e.WriteLine(m••••••••",
-							"••••ole.WriteLine(mes••••••",
-							"•••sole.WriteLine(mess•••••",
-							"••nsole.WriteLine(messa••••",
-							"Console.WriteLine(message••"]; }
+							"••••••••••••eL•••••••••••••",
+							"••••••••••iteLin•••••••••••",
+							"•••••••••riteLine••••••••••",
+							"••••••••WriteLine(•••••••••",
+							"••••••e.WriteLine(me•••••••",
+							"•••••le.WriteLine(mes••••••",
+							"••••ole.WriteLine(mess•••••",
+							"••nsole.WriteLine(messag•••",
+							"•onsole.WriteLine(message••"]; }
 	}
 
 	[Theory]
@@ -31,7 +31,7 @@ public class SnippetRevealerTests
 					  string expected80PercentOutput,
 					  string expected90PercentOutput)
 	{
-		var game = new GuessGame(null, () => DateTime.Now.Minute);
+		var game = new GuessGame(null!, () => DateTime.Now.Minute);
 		var revealer = new SnippetRevealer(game, input);
 
 		Assert.Equal(expected10PercentOutput, revealer.RevealMore());
