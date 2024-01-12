@@ -11,8 +11,9 @@ public class Javascript : BaseLanguage
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.TracingGarbageCollection;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
 
-	public override Applications KnownForBuilding { get; } =
-		Applications.Client | Applications.Server | Applications.Web | Applications.Scripts;
+	public override Applications KnownForBuilding { get; } = Applications.Client | Applications.Configuration |
+	                                                         Applications.Server | Applications.Web |
+	                                                         Applications.Scripts;
 
 	public override Paradigms Paradigms { get; } = Paradigms.EventDriven | Paradigms.Functional | Paradigms.Imperative |
 	                                               Paradigms.Procedural | Paradigms.ObjectOriented;

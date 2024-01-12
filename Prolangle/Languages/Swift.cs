@@ -12,8 +12,8 @@ public class Swift : BaseLanguage
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
 
 	public override Applications KnownForBuilding { get; } = Applications.Apple | Applications.Mobile |
-	                                                         Applications.Client | Applications.Desktop |
-	                                                         Applications.System;
+	                                                         Applications.Client | Applications.Configuration |
+	                                                         Applications.Desktop | Applications.System;
 
 	public override Paradigms Paradigms { get; } = Paradigms.ObjectOriented | Paradigms.Functional |
 	                                               Paradigms.Imperative | Paradigms.Declarative | Paradigms.Concurrent |

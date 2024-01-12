@@ -1,4 +1,6 @@
-﻿namespace Prolangle.Languages.Framework;
+﻿using System.ComponentModel;
+
+namespace Prolangle.Languages.Framework;
 
 [Flags]
 public enum Applications
@@ -19,5 +21,11 @@ public enum Applications
 	Education = 1 << 12,
 	Ai = 1 << 13,
 	Science = 1 << 14,
-	Scripts = 1 << 15
+	Scripts = 1 << 15,
+
+	[Description("This language is commonly used as a textual settings format.")]
+	Configuration = 1 << 16,
+
+	[Description("This language is commonly used to write/describe documents.")]
+	Documents = 1 << 17,
 }

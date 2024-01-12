@@ -10,7 +10,9 @@ public class Ruby : BaseLanguage
 	public override bool Compiled { get; } = false;
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.TracingGarbageCollection;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Perl;
-	public override Applications KnownForBuilding { get; } = Applications.Server | Applications.Web;
+
+	public override Applications KnownForBuilding { get; } = Applications.Configuration |
+	                                                         Applications.Server | Applications.Web;
 
 	public override Paradigms Paradigms { get; } = Paradigms.ObjectOriented | Paradigms.Functional |
 	                                               Paradigms.Imperative | Paradigms.Structured | Paradigms.Reflective;
