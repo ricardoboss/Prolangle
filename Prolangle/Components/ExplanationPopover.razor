@@ -39,7 +39,6 @@
 
 	private async Task OnPopoverToggled()
 	{
-		Console.WriteLine("OnPopoverToggled");
 		anchorBox = await JSRuntime.InvokeAsync<BoundingBox>("getBoundingBox", AnchorId);
 		popoverBox = await JSRuntime.InvokeAsync<BoundingBox>("getBoundingBox", PopoverId);
 	}
