@@ -1,7 +1,11 @@
+using Prolangle.Languages.Framework;
+
 namespace Prolangle.Snippets.Php;
 
 public class SimplePhpSnippet : ICodeSnippet
 {
+	public ILanguage Language => Languages.Php.Instance;
+
 	public string SourceCode =>
 		"""
 		<?php
