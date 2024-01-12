@@ -36,6 +36,7 @@ public class LanguagesProvider
 			yield return new Sql();
 			yield return new Step();
 			yield return new Swift();
+			yield return new Xml();
 		}
 	}
 }
