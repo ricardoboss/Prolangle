@@ -4,7 +4,7 @@ namespace Prolangle.Services;
 
 public partial class SnippetRevealer(GuessGame guessGame, string sourceCode)
 {
-	public double RevealedProgress { get; private set; } = 0.0;
+	private double RevealedProgress { get; set; } = 0.0;
 
 	public string RevealMore()
 	{
@@ -14,8 +14,8 @@ public partial class SnippetRevealer(GuessGame guessGame, string sourceCode)
 		var concealedCode = NonWhitespaceRegex().Replace(sourceCode, "•");
 
 		// reveal RevealedProgress % from the middle of the snippet using the original source code
-		var revealStart = (int)(concealedCode.Length / 2 - concealedCode.Length * RevealedProgress / 2);
-		var revealEnd = (int)(concealedCode.Length / 2 + concealedCode.Length * RevealedProgress / 2);
+		var revealStart = (int)(concealedCode.Length / 2f - concealedCode.Length * RevealedProgress / 2);
+		var revealEnd = (int)(concealedCode.Length / 2f + concealedCode.Length * RevealedProgress / 2);
 
 		// // randomly move the center of revealed code around a little, to make snippets harder to remember
 		// var random = new Random(guessGame.Seeder());
