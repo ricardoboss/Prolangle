@@ -1,50 +1,40 @@
-using Prolangle.Languages;
 using Prolangle.Languages.Framework;
 using Prolangle.Snippets;
-using Prolangle.Snippets.AppleScript;
-using Prolangle.Snippets.CSharp;
-using Prolangle.Snippets.Php;
 
 namespace Prolangle.Services;
 
-public class LanguageSnippetProvider(Func<int> seedGenerator)
+public class LanguageSnippetProvider
 {
-	public static IReadOnlyList<ILanguage> SupportedLanguages =>
-	[
-		AppleScript.Instance,
-		CSharp.Instance,
-		Php.Instance,
-	];
+	private readonly Func<int> _seedGenerator;
+
+	public LanguageSnippetProvider(Func<int> seedGenerator)
+	{
+		_seedGenerator = seedGenerator;
+
+		Snippets = this.GetType().Assembly.GetTypes()
+			.Where(t => typeof(ICodeSnippet).IsAssignableFrom(t) && t.IsClass)
+			.Select(t => (ICodeSnippet)Activator.CreateInstance(t)!)
+			.ToLookup(cs => cs.Language);
+
+		SupportedLanguages = Snippets.Select(g => g.Key).ToList();
+	}
+
+	private ILookup<ILanguage, ICodeSnippet> Snippets { get; }
+	public IReadOnlyList<ILanguage> SupportedLanguages { get; }
 
 	public ICodeSnippet GetSnippet(ILanguage language)
 	{
-		var random = new Random(seedGenerator());
+		// FIXME: change this design so the LanguageSnippetProvider itselfdecides on the language
 
-		if (language.Id == AppleScript.Instance.Id)
-			return GetAppleScriptSnippet();
+		var random = new Random(_seedGenerator());
 
-		if (language.Id == CSharp.Instance.Id)
-			return GetCSharpSnippet(random);
+		ICodeSnippet[] currentLanguageSnippets = Snippets[language].ToArray();
 
-		if (language.Id == Php.Instance.Id)
-			return GetPhpSnippet();
+		if (currentLanguageSnippets.Length == 0)
+			throw new NotSupportedException("Language not supported");
 
-		throw new NotSupportedException("Language not supported");
+		random.Shuffle(currentLanguageSnippets);
+
+		return currentLanguageSnippets.First();
 	}
-
-	private static SimpleAppleScriptSnippet GetAppleScriptSnippet() => new();
-
-	private static ICodeSnippet GetCSharpSnippet(Random random)
-	{
-		ICodeSnippet[] snippets = [
-			new SimpleCSharpSnippet(),
-			new TaskCSharpSnippet(),
-		];
-
-		var index = random.Next(snippets.Length);
-
-		return snippets[index];
-	}
-
-	private static SimplePhpSnippet GetPhpSnippet() => new();
 }

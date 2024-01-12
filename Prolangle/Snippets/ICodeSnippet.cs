@@ -1,6 +1,10 @@
+using Prolangle.Languages.Framework;
+
 namespace Prolangle.Snippets;
 
 public interface ICodeSnippet
 {
-	public string SourceCode { get; }
+	ILanguage Language { get; }
+
+	string SourceCode { get; }
 }

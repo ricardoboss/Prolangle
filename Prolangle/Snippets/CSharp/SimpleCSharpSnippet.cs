@@ -1,7 +1,11 @@
+using Prolangle.Languages.Framework;
+
 namespace Prolangle.Snippets.CSharp;
 
 public class SimpleCSharpSnippet : ICodeSnippet
 {
+	public ILanguage Language => Languages.CSharp.Instance;
+
 	public string SourceCode =>
 		"""
 		using System;
