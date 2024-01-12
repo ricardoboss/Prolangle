@@ -1,45 +1,11 @@
 @using Microsoft.JSInterop
 @using System.Text.Json
 @using BlazorComponentUtilities
+@using Blazorise.Extensions
 
-@implements IAsyncDisposable
-
-@inject IJSRuntime JS
-
-@if (WillHavePopover)
-{
-	<div style="display: none">
-		<div @ref="titleElement">
-			@if (!string.IsNullOrWhiteSpace(Url))
-			{
-				<p>@Title</p>
-				<p class="m-0 small">
-					<a href="@Url" target="_blank">More Information</a>
-				</p>
-			}
-			else
-			{
-				<p class="m-0">@Title</p>
-			}
-		</div>
-	</div>
-}
-
-<span @ref="popoverElement" class="@CssClass">
-	@ChildContent
-</span>
+@inject IJSRuntime JSRuntime
 
 @code {
-	[Parameter(CaptureUnmatchedValues = true)]
-	public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, object>();
-
-	CssBuilder CssClass => CssBuilder.Empty().AddClassFromAttributes(AdditionalAttributes);
-
-	private IJSObjectReference? jsModule;
-	private ElementReference popoverElement;
-	private ElementReference titleElement;
-
-	bool WillHavePopover => !string.IsNullOrWhiteSpace(Content);
 
 	[Parameter]
 	public required RenderFragment ChildContent { get; set; }
@@ -53,38 +19,75 @@
 	[Parameter]
 	public required string Url { get; set; }
 
-	protected override async Task OnAfterRenderAsync(bool firstRender)
+	[Parameter(CaptureUnmatchedValues = true)]
+	public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, object>();
+
+	private readonly string id = Guid.NewGuid().ToString();
+
+	private string PopoverId => "popover-" + id;
+
+	private string AnchorId => "anchor-" + id;
+
+	CssBuilder CssClass => CssBuilder.Empty().AddClassFromAttributes(AdditionalAttributes);
+
+	bool WillHavePopover => !string.IsNullOrWhiteSpace(Content);
+
+	private record BoundingBox(double X, double Y, double Width, double Height);
+
+	private BoundingBox? anchorBox;
+	private BoundingBox? popoverBox;
+
+	private async Task OnPopoverToggled()
 	{
-		// if (firstRender && WillHavePopover)
-		// {
-		//     jsModule = await JS.InvokeAsync<IJSObjectReference>(
-		//         "import", "./Components/ExplanationPopover.razor.js");
-		//
-		//     await jsModule.InvokeVoidAsync("ExplanationPopover.init",
-		//         popoverElement, titleElement,
-		//         GetSerializedOptions());
-		// }
+		Console.WriteLine("OnPopoverToggled");
+		anchorBox = await JSRuntime.InvokeAsync<BoundingBox>("getBoundingBox", AnchorId);
+		popoverBox = await JSRuntime.InvokeAsync<BoundingBox>("getBoundingBox", PopoverId);
 	}
 
-	// ReSharper disable InconsistentNaming
-	record BootstrapPopoverOptions(string content, bool html, string trigger);
-	// ReSharper restore InconsistentNaming
-
-	private string GetSerializedOptions()
+	private string PopoverStyle
 	{
-		return JsonSerializer.Serialize(new BootstrapPopoverOptions(Content, true, "click"));
-	}
+		get
+		{
+			const string style = "border: none; padding: 0; margin: 0; position: absolute; font-weight: normal; ";
 
-	async ValueTask IAsyncDisposable.DisposeAsync()
-	{
-		if (jsModule is null || !WillHavePopover)
-			return;
+			var anchorLeft = anchorBox?.X ?? 0;
+			var anchorTop = anchorBox?.Y ?? 0;
+			var anchorWidth = anchorBox?.Width ?? 0;
+			var anchorHeight = anchorBox?.Height ?? 0;
 
-		await jsModule.InvokeVoidAsync("ExplanationPopover.destroy", popoverElement);
+			var popoverWidth = popoverBox?.Width ?? 0;
 
-		await jsModule.DisposeAsync();
+			var x = anchorLeft + anchorWidth / 2 - popoverWidth / 2;
+			var y = anchorTop + anchorHeight + 10;
+
+			return style + $"left: {x.ToCultureInvariantString()}px; top: {y.ToCultureInvariantString()}px;";
+		}
 	}
 
 }
 
+<button id="@AnchorId" popovertarget="@PopoverId" popovertargetaction="toggle" class="@CssClass" style="border: none">
+	@ChildContent
 
+	@if (WillHavePopover)
+	{
+		<div popover id="@PopoverId" style="@PopoverStyle" @ontoggle="OnPopoverToggled">
+			<Div Display="Display.Flex" Flex="Flex.Column" Border="Border.Is1.Info.OnAll.Rounded">
+				<Div Display="Display.Flex" Flex="Flex.Column" Padding="Padding.Is1" Background="Background.Secondary" Border="Border.Is1.Info.OnBottom">
+					<Heading Size="HeadingSize.Is5" Margin="Margin.Is1.FromBottom">
+						@Title
+					</Heading>
+
+					@if (!string.IsNullOrWhiteSpace(Url))
+					{
+						<Anchor href="@Url" Target="Target.Blank">More Information</Anchor>
+					}
+				</Div>
+
+				<Paragraph Padding="Padding.Is2" style="max-width: 20rem; white-space: normal">
+					@Content
+				</Paragraph>
+			</Div>
+		</div>
+	}
+</button>
