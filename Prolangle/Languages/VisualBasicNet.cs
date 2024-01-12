@@ -11,7 +11,7 @@ public class VisualBasicNet : BaseLanguage
 	                                             TypeSystem.Weak | TypeSystem.Nominal;
 
 	public override bool Compiled { get; } = true;
-	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.ReferenceCounting;
+	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.TracingGarbageCollection;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Other;
 
 	public override Applications KnownForBuilding { get; } = Applications.Client | Applications.Desktop |
