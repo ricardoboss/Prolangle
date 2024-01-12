@@ -53,7 +53,7 @@ else
 
     protected override void OnInitialized()
     {
-	    SnippetRevealer = new SnippetRevealer(GuessGame, Snippet.SourceCode);
+	    SnippetRevealer = new SnippetRevealer(GuessGame, Snippet.SourceCode, useJitter: true);
 
 	    ConcealedSourceCode = SnippetRevealer.RevealMore();
     }
