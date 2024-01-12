@@ -10,7 +10,7 @@
 
 <h1>Snippets</h1>
 
-@if (won)
+@if (_won)
 {
 	<h2>You won!</h2>
 }
@@ -21,7 +21,7 @@ else
 
 <code>
 	<pre>
-        @ConcealedSourceCode
+        @_concealedSourceCode
     </pre>
 </code>
 
@@ -43,37 +43,40 @@ else
 {
 	private IReadOnlyList<ILanguage> AvailableLanguages => LanguageSnippetProvider.SupportedLanguages.Where(l => !RevealedLanguages.Contains(l)).ToList();
 	private List<ILanguage> RevealedLanguages { get; } = [];
-	private ILanguage TargetLanguage => GuessGame!.GetTargetLanguage(AvailableLanguages);
-	private ICodeSnippet Snippet => LanguageSnippetProvider!.GetSnippet(TargetLanguage);
-	private bool won;
+	private ILanguage? TargetLanguage { get; set; }
+	private ICodeSnippet? Snippet { get; set; }
+	private bool _won;
 
-	private SnippetRevealer SnippetRevealer;
+	private SnippetRevealer? _snippetRevealer;
 
-	private string ConcealedSourceCode;
+	private string? _concealedSourceCode;
 
 	protected override void OnInitialized()
 	{
-		SnippetRevealer = new SnippetRevealer(GuessGame, Snippet.SourceCode, useJitter: true);
+		TargetLanguage = GuessGame!.GetTargetLanguage(AvailableLanguages);
+		Snippet = LanguageSnippetProvider!.GetSnippet(TargetLanguage);
 
-		ConcealedSourceCode = SnippetRevealer.RevealMore();
+		_snippetRevealer = new SnippetRevealer(GuessGame, Snippet.SourceCode, useJitter: true);
+
+		_concealedSourceCode = _snippetRevealer.RevealMore();
 	}
 
 	private void OnLanguageSelected(ILanguage language)
 	{
 		RevealedLanguages.Add(language);
 
-		var result = TargetLanguage.Id == language.Id;
+		var result = TargetLanguage!.Id == language.Id;
 
 		if (result)
 		{
-			won = true;
-			SnippetRevealer.Win();
+			_won = true;
+			_snippetRevealer!.Win();
 
-			ConcealedSourceCode = Snippet.SourceCode;
+			_concealedSourceCode = Snippet!.SourceCode;
 		}
 		else
 		{
-			ConcealedSourceCode = SnippetRevealer.RevealMore();
+			_concealedSourceCode = _snippetRevealer!.RevealMore();
 		}
 
 		StateHasChanged();
