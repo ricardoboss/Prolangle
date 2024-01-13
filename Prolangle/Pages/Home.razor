@@ -2,78 +2,13 @@
 @using Prolangle.Languages.Framework
 @using Prolangle.Services
 @using Prolangle.Components
-@using Prolangle.Models
 
 @inject GuessGame GuessGame
 @inject LanguagesProvider LanguagesProvider
 
 <Heading Size="HeadingSize.Is1">Guess a Language</Heading>
 
-<Table>
-	<TableHeader>
-		<TableRow>
-			<TableHeaderCell TextAlignment="TextAlignment.Center">Language</TableHeaderCell>
-			<TableHeaderCell TextAlignment="TextAlignment.Center">Type System</TableHeaderCell>
-			<TableHeaderCell TextAlignment="TextAlignment.Center">Execution Model</TableHeaderCell>
-			<TableHeaderCell TextAlignment="TextAlignment.Center">Memory Management</TableHeaderCell>
-			<TableHeaderCell TextAlignment="TextAlignment.Center">Syntax Style</TableHeaderCell>
-			<TableHeaderCell TextAlignment="TextAlignment.Center">Known For Building</TableHeaderCell>
-			<TableHeaderCell TextAlignment="TextAlignment.Center">Paradigms</TableHeaderCell>
-			<TableHeaderCell TextAlignment="TextAlignment.Center">TIOBE Rating</TableHeaderCell>
-			<TableHeaderCell TextAlignment="TextAlignment.Center">Appearance Year</TableHeaderCell>
-		</TableRow>
-	</TableHeader>
-	<TableBody>
-		@foreach (ILanguage language in RevealedLanguages)
-		{
-			<TableRow>
-				<TableRowHeader Style="white-space: nowrap; vertical-align: middle">@language.Name</TableRowHeader>
-				<TableRowCell>
-					<MatchDisplay MatchType="TypingMatch(language)">
-						<LanguageMetadatum Overlap="TypingOverlap(language)" Value="language.Typing" Exclude="TypeSystem.None"/>
-					</MatchDisplay>
-				</TableRowCell>
-				<TableRowCell>
-					<MatchDisplay MatchType="CompiledMatch(language)">
-						@(language.Compiled ? "Compiled" : "Interpreted")
-					</MatchDisplay>
-				</TableRowCell>
-				<TableRowCell>
-					<MatchDisplay MatchType="GarbageCollectedMatch(language)">
-						<LanguageMemoryManagement MemoryManagement="language.MemoryManagement"/>
-					</MatchDisplay>
-				</TableRowCell>
-				<TableRowCell>
-					<MatchDisplay MatchType="SyntaxStyleMatch(language)">
-						<LanguageSyntaxStyle SyntaxStyle="language.SyntaxStyle"/>
-					</MatchDisplay>
-				</TableRowCell>
-				<TableRowCell>
-					<MatchDisplay MatchType="ApplicationsMatch(language)">
-						<LanguageMetadatum Overlap="ApplicationsOverlap(language)" Value="language.KnownForBuilding" Exclude="Applications.None"/>
-					</MatchDisplay>
-				</TableRowCell>
-				<TableRowCell>
-					<MatchDisplay MatchType="ParadigmsMatch(language)">
-						<LanguageMetadatum Overlap="ParadigmsOverlap(language)" Value="language.Paradigms" Exclude="Paradigms.None"/>
-					</MatchDisplay>
-				</TableRowCell>
-				<TableRowCell>
-					<MatchDisplay MatchType="TiobeRatingMatch(language)">
-						@(language.TiobeRating?.ToString() ?? "None")
-						@DirectionToString(TiobeRatingDirection(language))
-					</MatchDisplay>
-				</TableRowCell>
-				<TableRowCell>
-					<MatchDisplay MatchType="AppearanceYearMatch(language)">
-						@language.AppearanceYear
-						@DirectionToString(AppearanceYearDirection(language))
-					</MatchDisplay>
-				</TableRowCell>
-			</TableRow>
-		}
-	</TableBody>
-</Table>
+<MetadatumComparisonTable TargetLanguage="TargetLanguage" RevealedLanguages="RevealedLanguages" />
 
 @if (won)
 {
@@ -85,21 +20,11 @@ else
 }
 
 @code {
+
 	private List<ILanguage> AvailableLanguages => LanguagesProvider!.Languages.Where(l => !RevealedLanguages.Contains(l)).ToList();
 	private List<ILanguage> RevealedLanguages { get; } = [];
 	private ILanguage TargetLanguage => LanguagesProvider!.Languages.Single(l => l.Id == GuessGame!.TargetLanguageId);
 	private bool won;
-
-	private static string DirectionToString(ComparisonDirection comparisonDirection)
-	{
-		return comparisonDirection switch
-		{
-			ComparisonDirection.Equal => "",
-			ComparisonDirection.Up => "\u25b2",
-			ComparisonDirection.Down => "\u25bc",
-			_ => throw new ArgumentOutOfRangeException(nameof(comparisonDirection), comparisonDirection, null)
-		};
-	}
 
 	private void OnLanguageSelected(ILanguage language)
 	{
@@ -111,202 +36,4 @@ else
 			won = true;
 	}
 
-	private TypeSystem TypingOverlap(ILanguage language)
-	{
-		return language.Typing & TargetLanguage.Typing;
-	}
-
-	private Applications ApplicationsOverlap(ILanguage language)
-	{
-		return language.KnownForBuilding & TargetLanguage.KnownForBuilding;
-	}
-
-	private Paradigms ParadigmsOverlap(ILanguage language)
-	{
-		return language.Paradigms & TargetLanguage.Paradigms;
-	}
-
-	private ComparisonDirection TiobeRatingDirection(ILanguage language)
-	{
-		if (language.TiobeRating is null && TargetLanguage.TiobeRating is null)
-			return ComparisonDirection.Equal;
-
-		if (language.TiobeRating is null)
-			return ComparisonDirection.Up;
-
-		if (TargetLanguage.TiobeRating is null)
-			return ComparisonDirection.Down;
-
-		if (language.TiobeRating < TargetLanguage.TiobeRating)
-			return ComparisonDirection.Up;
-
-		if (language.TiobeRating > TargetLanguage.TiobeRating)
-			return ComparisonDirection.Down;
-
-		return ComparisonDirection.Equal;
-	}
-
-	private ComparisonDirection AppearanceYearDirection(ILanguage language)
-	{
-		if (language.AppearanceYear < TargetLanguage.AppearanceYear)
-			return ComparisonDirection.Up;
-
-		if (language.AppearanceYear > TargetLanguage.AppearanceYear)
-			return ComparisonDirection.Down;
-
-		return ComparisonDirection.Equal;
-	}
-
-	private MatchType TypingMatch(ILanguage language)
-	{
-		TypeSystem overlap = TypingOverlap(language);
-
-		if (overlap == TypeSystem.None)
-			return language.Typing == TypeSystem.None && TargetLanguage.Typing == TypeSystem.None ? MatchType.Exact : MatchType.None;
-
-		if (TargetLanguage.Typing == language.Typing)
-			return MatchType.Exact;
-
-		return MatchType.Partial;
-	}
-
-	private MatchType CompiledMatch(ILanguage language)
-	{
-		if (language.Compiled == TargetLanguage.Compiled)
-			return MatchType.Exact;
-
-		return MatchType.None;
-	}
-
-	private MatchType GarbageCollectedMatch(ILanguage language)
-	{
-		if (language.MemoryManagement == TargetLanguage.MemoryManagement)
-			return MatchType.Exact;
-
-		return MatchType.None;
-	}
-
-	private MatchType SyntaxStyleMatch(ILanguage language)
-	{
-		if (language.SyntaxStyle == TargetLanguage.SyntaxStyle)
-			return MatchType.Exact;
-
-		return MatchType.None;
-	}
-
-	private MatchType ApplicationsMatch(ILanguage language)
-	{
-		var overlap = ApplicationsOverlap(language);
-
-		if (overlap == Applications.None)
-			return MatchType.None;
-
-		if (TargetLanguage.KnownForBuilding == language.KnownForBuilding)
-			return MatchType.Exact;
-
-		return MatchType.Partial;
-	}
-
-	private MatchType ParadigmsMatch(ILanguage language)
-	{
-		var overlap = ParadigmsOverlap(language);
-
-		if (overlap == Paradigms.None)
-			return MatchType.None;
-
-		if (TargetLanguage.Paradigms == language.Paradigms)
-			return MatchType.Exact;
-
-		return MatchType.Partial;
-	}
-
-	private MatchType TiobeRatingMatch(ILanguage language)
-	{
-		if (language.TiobeRating is null && TargetLanguage.TiobeRating is null)
-			return MatchType.Exact;
-
-		if (language.TiobeRating is null)
-			return MatchType.None;
-
-		if (TargetLanguage.TiobeRating is null)
-			return MatchType.None;
-
-		// floating point comparison
-		if (Math.Abs(language.TiobeRating.Value - TargetLanguage.TiobeRating.Value) <= double.Epsilon)
-			return MatchType.Exact;
-
-		return MatchType.None;
-	}
-
-	private MatchType AppearanceYearMatch(ILanguage language)
-	{
-		if (language.AppearanceYear == TargetLanguage.AppearanceYear)
-			return MatchType.Exact;
-
-		return MatchType.None;
-	}
-
 }
-
-<style>
-thead > tr > th {
-	white-space: nowrap;
-}
-
-tbody > tr > td {
-    --reveal-duration: 0.5s;
-    --reveal-delay: 0.35s;
-
-    animation: fade-in var(--reveal-duration) forwards;
-    opacity: 0;
-}
-
-tbody > tr > td {
-	vertical-align: middle !important;
-}
-
-tbody > tr > td:nth-child(1) {
-    animation-delay: calc(0 * var(--reveal-delay));
-}
-
-tbody > tr > td:nth-child(2) {
-    animation-delay: calc(1 * var(--reveal-delay));
-}
-
-tbody > tr > td:nth-child(3) {
-    animation-delay: calc(2 * var(--reveal-delay));
-}
-
-tbody > tr > td:nth-child(4) {
-    animation-delay: calc(3 * var(--reveal-delay));
-}
-
-tbody > tr > td:nth-child(5) {
-    animation-delay: calc(4 * var(--reveal-delay));
-}
-
-tbody > tr > td:nth-child(6) {
-    animation-delay: calc(5 * var(--reveal-delay));
-}
-
-tbody > tr > td:nth-child(7) {
-    animation-delay: calc(6 * var(--reveal-delay));
-}
-
-tbody > tr > td:nth-child(8) {
-    animation-delay: calc(7 * var(--reveal-delay));
-}
-
-tbody > tr > td:nth-child(9) {
-    animation-delay: calc(8 * var(--reveal-delay));
-}
-
-@@keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-</style>
