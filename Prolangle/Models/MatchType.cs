@@ -1,6 +1,6 @@
 namespace Prolangle.Models;
 
-public enum Match
+public enum MatchType
 {
 	Exact,
 	Partial,

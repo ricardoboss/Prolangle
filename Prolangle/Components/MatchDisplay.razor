@@ -1,13 +1,13 @@
-@using Match = Prolangle.Models.Match
+@using Prolangle.Models
 
-<div class="match @Match">
+<div class="match @MatchType">
 	@ChildContent
 </div>
 
 @code {
 
 	[Parameter]
-	public required Match Match { get; init; }
+	public required MatchType MatchType { get; init; }
 
 	[Parameter]
 	public required RenderFragment ChildContent { get; init; }
