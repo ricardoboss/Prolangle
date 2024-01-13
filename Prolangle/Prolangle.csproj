@@ -11,6 +11,7 @@
     <PackageReference Include="Blazored.Typeahead" Version="4.7.0" />
     <PackageReference Include="Blazorise.Bulma" Version="1.4.0" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.4.0" />
+    <PackageReference Include="Blazorise.Snackbar" Version="1.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0"/>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all"/>
   </ItemGroup>

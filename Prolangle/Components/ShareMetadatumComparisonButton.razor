@@ -1,0 +1,86 @@
+@using Prolangle.Languages.Framework
+@using System.Text
+@using Prolangle.Models
+@using Prolangle.Services
+@inject IJSRuntime JsRuntime
+
+@code {
+
+	[Parameter]
+	public required RenderFragment ChildContent { get; set; }
+
+	[Parameter]
+	public required ILanguage TargetLanguage { get; set; }
+
+	[Parameter]
+	public required IReadOnlyList<ILanguage> RevealedLanguages { get; set; }
+
+	Snackbar snackbar = null!;
+	MetadatumComparisonService comparisonService = null!;
+
+	protected override void OnParametersSet()
+	{
+		comparisonService = new(TargetLanguage);
+	}
+
+	private async Task OnClicked()
+	{
+		await JsRuntime!.InvokeVoidAsync("writeTextToClipboard", GetComparisonResults());
+
+		await snackbar.Show()!;
+	}
+
+	private string GetComparisonResults()
+	{
+		var builder = new StringBuilder();
+
+		foreach (ILanguage language in RevealedLanguages)
+		{
+			MatchType typings = comparisonService.TypingMatch(language);
+			MatchType compiled = comparisonService.CompiledMatch(language);
+			MatchType garbageCollected = comparisonService.GarbageCollectedMatch(language);
+			MatchType syntax = comparisonService.SyntaxStyleMatch(language);
+			MatchType applications = comparisonService.ApplicationsMatch(language);
+			MatchType paradigms = comparisonService.ParadigmsMatch(language);
+			ComparisonDirection tiobeRatingDirection = comparisonService.TiobeRatingDirection(language);
+			ComparisonDirection appearanceYearDirection = comparisonService.AppearanceYearDirection(language);
+
+			foreach (MatchType match in new List<MatchType> { typings, compiled, garbageCollected, syntax, applications, paradigms })
+			{
+				builder.Append(match switch
+				{
+					MatchType.Exact => "🟩",
+					MatchType.Partial => "🟨",
+					MatchType.None => "🟥",
+					_ => throw new NotImplementedException(),
+				});
+			}
+
+			foreach (ComparisonDirection direction in new List<ComparisonDirection> { tiobeRatingDirection, appearanceYearDirection })
+			{
+				builder.Append(direction switch
+				{
+					ComparisonDirection.Up => "🔼",
+					ComparisonDirection.Down => "🔽",
+					ComparisonDirection.Equal => "🟩",
+					_ => throw new NotImplementedException(),
+				});
+			}
+
+			builder.AppendLine();
+		}
+
+		return builder.ToString();
+	}
+
+}
+
+<Button @onclick="OnClicked">
+	@ChildContent
+</Button>
+
+<Snackbar @ref="snackbar">
+	<SnackbarBody>
+		Result copied to clipboard!
+	</SnackbarBody>
+</Snackbar>

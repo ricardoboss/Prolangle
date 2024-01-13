@@ -9,3 +9,7 @@ function getBoundingBox(id) {
         Height: rect.height
     };
 }
+
+async function writeTextToClipboard(text) {
+    await navigator.clipboard.writeText(text);
+}
