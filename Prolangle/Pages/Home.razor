@@ -91,14 +91,14 @@ else
 	private ILanguage TargetLanguage => LanguagesProvider!.Languages.Single(l => l.Id == GuessGame!.TargetLanguageId);
 	private bool won;
 
-	private static string DirectionToString(DirectionIndicator direction)
+	private static string DirectionToString(ComparisonDirection comparisonDirection)
 	{
-		return direction switch
+		return comparisonDirection switch
 		{
-			DirectionIndicator.Equal => "",
-			DirectionIndicator.Up => "\u25b2",
-			DirectionIndicator.Down => "\u25bc",
-			_ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+			ComparisonDirection.Equal => "",
+			ComparisonDirection.Up => "\u25b2",
+			ComparisonDirection.Down => "\u25bc",
+			_ => throw new ArgumentOutOfRangeException(nameof(comparisonDirection), comparisonDirection, null)
 		};
 	}
 
@@ -127,35 +127,35 @@ else
 		return language.Paradigms & TargetLanguage.Paradigms;
 	}
 
-	private DirectionIndicator TiobeRatingDirection(ILanguage language)
+	private ComparisonDirection TiobeRatingDirection(ILanguage language)
 	{
 		if (language.TiobeRating is null && TargetLanguage.TiobeRating is null)
-			return DirectionIndicator.Equal;
+			return ComparisonDirection.Equal;
 
 		if (language.TiobeRating is null)
-			return DirectionIndicator.Up;
+			return ComparisonDirection.Up;
 
 		if (TargetLanguage.TiobeRating is null)
-			return DirectionIndicator.Down;
+			return ComparisonDirection.Down;
 
 		if (language.TiobeRating < TargetLanguage.TiobeRating)
-			return DirectionIndicator.Up;
+			return ComparisonDirection.Up;
 
 		if (language.TiobeRating > TargetLanguage.TiobeRating)
-			return DirectionIndicator.Down;
+			return ComparisonDirection.Down;
 
-		return DirectionIndicator.Equal;
+		return ComparisonDirection.Equal;
 	}
 
-	private DirectionIndicator AppearanceYearDirection(ILanguage language)
+	private ComparisonDirection AppearanceYearDirection(ILanguage language)
 	{
 		if (language.AppearanceYear < TargetLanguage.AppearanceYear)
-			return DirectionIndicator.Up;
+			return ComparisonDirection.Up;
 
 		if (language.AppearanceYear > TargetLanguage.AppearanceYear)
-			return DirectionIndicator.Down;
+			return ComparisonDirection.Down;
 
-		return DirectionIndicator.Equal;
+		return ComparisonDirection.Equal;
 	}
 
 	private Match TypingMatch(ILanguage language)

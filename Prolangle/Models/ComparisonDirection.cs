@@ -1,6 +1,6 @@
 namespace Prolangle.Models;
 
-public enum DirectionIndicator
+public enum ComparisonDirection
 {
 	Equal,
 	Up,
