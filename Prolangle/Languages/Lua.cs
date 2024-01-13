@@ -10,7 +10,7 @@ public class Lua : BaseLanguage
 	public override bool Compiled => false;
 	public override MemoryManagement MemoryManagement => MemoryManagement.TracingGarbageCollection;
 	public override SyntaxStyle SyntaxStyle => SyntaxStyle.Other;
-	public override Applications KnownForBuilding => Applications.Games | Applications.Scripts;
+	public override Applications KnownForBuilding => Applications.General | Applications.Games | Applications.Scripts;
 
 	public override Paradigms Paradigms =>
 		Paradigms.Imperative | Paradigms.Procedural |
