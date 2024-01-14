@@ -10,6 +10,22 @@ function getBoundingBox(id) {
     };
 }
 
-async function writeTextToClipboard(text) {
-    await navigator.clipboard.writeText(text);
+async function shareResult(text) {
+    if (!navigator.share && !navigator.clipboard) {
+        return "Your browser does not support sharing or copying to clipboard.";
+    }
+
+    const shareData = {
+        text: text,
+    };
+
+    if (!navigator.canShare(shareData)) {
+        await navigator.clipboard.writeText(text);
+
+        return "Result copied to clipboard.";
+    }
+
+    await navigator.share(shareData);
+
+    return "Share dialog opened.";
 }

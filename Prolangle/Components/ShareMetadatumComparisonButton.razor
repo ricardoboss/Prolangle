@@ -16,6 +16,7 @@
 	public required IReadOnlyList<ILanguage> RevealedLanguages { get; set; }
 
 	Snackbar snackbar = null!;
+	string snackbarMessage = "";
 	MetadatumComparisonService comparisonService = null!;
 
 	protected override void OnParametersSet()
@@ -25,7 +26,7 @@
 
 	private async Task OnClicked()
 	{
-		await JsRuntime!.InvokeVoidAsync("writeTextToClipboard", GetComparisonResults());
+		snackbarMessage = await JsRuntime!.InvokeAsync<string>("shareResult", GetComparisonResults());
 
 		await snackbar.Show()!;
 	}
@@ -34,7 +35,7 @@
 	{
 		var builder = new StringBuilder();
 
-		foreach (ILanguage language in RevealedLanguages)
+		foreach (ILanguage language in RevealedLanguages.Take(4))
 		{
 			MatchType typings = comparisonService.TypingMatch(language);
 			MatchType compiled = comparisonService.CompiledMatch(language);
@@ -81,6 +82,6 @@
 
 <Snackbar @ref="snackbar">
 	<SnackbarBody>
-		Result copied to clipboard!
+		@snackbarMessage
 	</SnackbarBody>
 </Snackbar>
