@@ -6,136 +6,136 @@ namespace Prolangle.Services;
 
 public class MetadatumComparisonService(ILanguage targetLanguage)
 {
-	public TypeSystem TypingOverlap(ILanguage language)
+	public TypeSystem TypingOverlap(ILanguage otherLanguage)
 	{
-		return language.Typing & targetLanguage.Typing;
+		return otherLanguage.Typing & targetLanguage.Typing;
 	}
 
-	public Applications ApplicationsOverlap(ILanguage language)
+	public Applications ApplicationsOverlap(ILanguage otherLanguage)
 	{
-		return language.KnownForBuilding & targetLanguage.KnownForBuilding;
+		return otherLanguage.KnownForBuilding & targetLanguage.KnownForBuilding;
 	}
 
-	public Paradigms ParadigmsOverlap(ILanguage language)
+	public Paradigms ParadigmsOverlap(ILanguage otherLanguage)
 	{
-		return language.Paradigms & targetLanguage.Paradigms;
+		return otherLanguage.Paradigms & targetLanguage.Paradigms;
 	}
 
-	public ComparisonDirection TiobeRatingDirection(ILanguage language)
+	public ComparisonDirection TiobeRatingDirection(ILanguage otherLanguage)
 	{
-		if (language.TiobeRating is null && targetLanguage.TiobeRating is null)
+		if (otherLanguage.TiobeRating is null && targetLanguage.TiobeRating is null)
 			return ComparisonDirection.Equal;
 
-		if (language.TiobeRating is null)
+		if (otherLanguage.TiobeRating is null)
 			return ComparisonDirection.Up;
 
 		if (targetLanguage.TiobeRating is null)
 			return ComparisonDirection.Down;
 
-		if (language.TiobeRating < targetLanguage.TiobeRating)
+		if (otherLanguage.TiobeRating < targetLanguage.TiobeRating)
 			return ComparisonDirection.Up;
 
-		if (language.TiobeRating > targetLanguage.TiobeRating)
+		if (otherLanguage.TiobeRating > targetLanguage.TiobeRating)
 			return ComparisonDirection.Down;
 
 		return ComparisonDirection.Equal;
 	}
 
-	public ComparisonDirection AppearanceYearDirection(ILanguage language)
+	public ComparisonDirection AppearanceYearDirection(ILanguage otherLanguage)
 	{
-		if (language.AppearanceYear < targetLanguage.AppearanceYear)
+		if (otherLanguage.AppearanceYear < targetLanguage.AppearanceYear)
 			return ComparisonDirection.Up;
 
-		if (language.AppearanceYear > targetLanguage.AppearanceYear)
+		if (otherLanguage.AppearanceYear > targetLanguage.AppearanceYear)
 			return ComparisonDirection.Down;
 
 		return ComparisonDirection.Equal;
 	}
 
-	public MatchType TypingMatch(ILanguage language)
+	public MatchType TypingMatch(ILanguage otherLanguage)
 	{
-		TypeSystem overlap = TypingOverlap(language);
+		TypeSystem overlap = TypingOverlap(otherLanguage);
 
 		if (overlap == TypeSystem.None)
-			return language.Typing == TypeSystem.None && targetLanguage.Typing == TypeSystem.None ? MatchType.Exact : MatchType.None;
+			return otherLanguage.Typing == TypeSystem.None && targetLanguage.Typing == TypeSystem.None ? MatchType.Exact : MatchType.None;
 
-		if (targetLanguage.Typing == language.Typing)
+		if (targetLanguage.Typing == otherLanguage.Typing)
 			return MatchType.Exact;
 
 		return MatchType.Partial;
 	}
 
-	public MatchType CompiledMatch(ILanguage language)
+	public MatchType CompiledMatch(ILanguage otherLanguage)
 	{
-		if (language.Compiled == targetLanguage.Compiled)
+		if (otherLanguage.Compiled == targetLanguage.Compiled)
 			return MatchType.Exact;
 
 		return MatchType.None;
 	}
 
-	public MatchType GarbageCollectedMatch(ILanguage language)
+	public MatchType GarbageCollectedMatch(ILanguage otherLanguage)
 	{
-		if (language.MemoryManagement == targetLanguage.MemoryManagement)
+		if (otherLanguage.MemoryManagement == targetLanguage.MemoryManagement)
 			return MatchType.Exact;
 
 		return MatchType.None;
 	}
 
-	public MatchType SyntaxStyleMatch(ILanguage language)
+	public MatchType SyntaxStyleMatch(ILanguage otherLanguage)
 	{
-		if (language.SyntaxStyle == targetLanguage.SyntaxStyle)
+		if (otherLanguage.SyntaxStyle == targetLanguage.SyntaxStyle)
 			return MatchType.Exact;
 
 		return MatchType.None;
 	}
 
-	public MatchType ApplicationsMatch(ILanguage language)
+	public MatchType ApplicationsMatch(ILanguage otherLanguage)
 	{
-		var overlap = ApplicationsOverlap(language);
+		var overlap = ApplicationsOverlap(otherLanguage);
 
 		if (overlap == Applications.None)
 			return MatchType.None;
 
-		if (targetLanguage.KnownForBuilding == language.KnownForBuilding)
+		if (targetLanguage.KnownForBuilding == otherLanguage.KnownForBuilding)
 			return MatchType.Exact;
 
 		return MatchType.Partial;
 	}
 
-	public MatchType ParadigmsMatch(ILanguage language)
+	public MatchType ParadigmsMatch(ILanguage otherLanguage)
 	{
-		var overlap = ParadigmsOverlap(language);
+		var overlap = ParadigmsOverlap(otherLanguage);
 
 		if (overlap == Paradigms.None)
 			return MatchType.None;
 
-		if (targetLanguage.Paradigms == language.Paradigms)
+		if (targetLanguage.Paradigms == otherLanguage.Paradigms)
 			return MatchType.Exact;
 
 		return MatchType.Partial;
 	}
 
-	public MatchType TiobeRatingMatch(ILanguage language)
+	public MatchType TiobeRatingMatch(ILanguage otherLanguage)
 	{
-		if (language.TiobeRating is null && targetLanguage.TiobeRating is null)
+		if (otherLanguage.TiobeRating is null && targetLanguage.TiobeRating is null)
 			return MatchType.Exact;
 
-		if (language.TiobeRating is null)
+		if (otherLanguage.TiobeRating is null)
 			return MatchType.None;
 
 		if (targetLanguage.TiobeRating is null)
 			return MatchType.None;
 
 		// floating point comparison
-		if (Math.Abs(language.TiobeRating.Value - targetLanguage.TiobeRating.Value) <= double.Epsilon)
+		if (Math.Abs(otherLanguage.TiobeRating.Value - targetLanguage.TiobeRating.Value) <= double.Epsilon)
 			return MatchType.Exact;
 
 		return MatchType.None;
 	}
 
-	public MatchType AppearanceYearMatch(ILanguage language)
+	public MatchType AppearanceYearMatch(ILanguage otherLanguage)
 	{
-		if (language.AppearanceYear == targetLanguage.AppearanceYear)
+		if (otherLanguage.AppearanceYear == targetLanguage.AppearanceYear)
 			return MatchType.Exact;
 
 		return MatchType.None;
