@@ -26,7 +26,10 @@
 
 	private async Task OnClicked()
 	{
-		snackbarMessage = await JsRuntime!.InvokeAsync<string>("shareResult", GetComparisonResults());
+		var comparisons = GetComparisonResults();
+		var shareContent = $"Found today's #prolangle language in {RevealedLanguages.Count} attempts!\n\n{comparisons}\nTry it yourself at https://prolangle.ricardoboss.de";
+
+		snackbarMessage = await JsRuntime!.InvokeAsync<string>("shareResult", shareContent);
 
 		await snackbar.Show()!;
 	}
