@@ -8,50 +8,44 @@
 @typeparam TEnum where TEnum : System.Enum
 
 @{
-    bool first = true;
-    bool any = false;
+	bool any = false;
 }
 
-@foreach (var flag in Enum.GetValues(typeof(TEnum)).Cast<TEnum>().Where(c => !Exclude.HasFlag(c)))
+@foreach (TEnum flag in Enum.GetValues(typeof(TEnum)).Cast<TEnum>().Where(c => !Exclude.HasFlag(c)))
 {
-    any = true;
+	if (!Value.HasFlag(flag) && !Overlap.HasFlag(flag))
+		continue;
 
-    if (!Value.HasFlag(flag) && !Overlap.HasFlag(flag))
-        continue;
+	any = true;
 
-    var className = Overlap.HasFlag(flag) ? "Overlap" : "";
+	var className = Overlap.HasFlag(flag) ? "overlap" : "";
 
-    var desc = MetadataProvider.ResolveDescription(flag);
-    var moreInfoUrl = MetadataProvider.ResolveMoreInfoUrl(flag);
+	var desc = MetadataProvider.ResolveDescription(flag);
+	var moreInfoUrl = MetadataProvider.ResolveMoreInfoUrl(flag);
 
-    var style = string.IsNullOrWhiteSpace(desc) ? "" : "border-bottom: 1px dotted black";
+	var style = string.IsNullOrWhiteSpace(desc) ? "" : "text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; text-decoration-thickness: 1px; cursor: help;";
 
-    if (!first)
-    {
-        <span>, </span>
-    }
+	string flagName = flag.GetDisplayName() ?? flag.ToString();
 
-    string flagName = flag.GetDisplayName() ?? flag.ToString();
-
-    <ExplanationPopover Content="@desc" Title="@flagName" Url="@moreInfoUrl">
-        <span class="@className" style="@style">@flagName</span>
-    </ExplanationPopover>
-
-    first = false;
+	<ExplanationPopover Content="@desc" Title="@flagName" Url="@moreInfoUrl" class="@className">
+		<span style="@style">@flagName</span>
+	</ExplanationPopover>
 }
 
 @if (!any)
 {
-    <span>N/A</span>
+	<span>N/A</span>
 }
 
 @code {
-    [Parameter]
-    public required TEnum Overlap { get; set; }
 
-    [Parameter]
-    public required TEnum Value { get; set; }
+	[Parameter]
+	public required TEnum Overlap { get; set; }
 
-    [Parameter]
-    public required TEnum Exclude { get; set; }
+	[Parameter]
+	public required TEnum Value { get; set; }
+
+	[Parameter]
+	public required TEnum Exclude { get; set; }
+
 }

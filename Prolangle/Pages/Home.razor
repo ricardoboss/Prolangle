@@ -1,7 +1,39 @@
 ﻿@page "/"
+@using Prolangle.Languages.Framework
+@using Prolangle.Services
+@using Prolangle.Components
 
-<PageTitle>Home</PageTitle>
+@inject GuessGame GuessGame
+@inject LanguagesProvider LanguagesProvider
 
-<h1>Hello, world!</h1>
+<Heading Size="HeadingSize.Is1">Guess a Language</Heading>
 
-Welcome to your new app.
+<MetadatumComparisonTable TargetLanguage="TargetLanguage" RevealedLanguages="RevealedLanguages" />
+
+@if (won)
+{
+	<Heading Size="HeadingSize.Is2">You won!</Heading>
+}
+else
+{
+	<LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
+}
+
+@code {
+
+	private List<ILanguage> AvailableLanguages => LanguagesProvider!.Languages.Where(l => !RevealedLanguages.Contains(l)).ToList();
+	private List<ILanguage> RevealedLanguages { get; } = [];
+	private ILanguage TargetLanguage => LanguagesProvider!.Languages.Single(l => l.Id == GuessGame!.TargetLanguageId);
+	private bool won;
+
+	private void OnLanguageSelected(ILanguage language)
+	{
+		RevealedLanguages.Add(language);
+
+		var result = GuessGame!.TargetLanguageId == language.Id;
+
+		if (result)
+			won = true;
+	}
+
+}

@@ -1,0 +1,53 @@
+@using Prolangle.Models
+
+<div class="match @MatchType">
+	@ChildContent
+</div>
+
+@code {
+
+	[Parameter]
+	public required MatchType MatchType { get; init; }
+
+	[Parameter]
+	public required RenderFragment ChildContent { get; init; }
+
+}
+
+<style>
+.match {
+	padding: 0.5em;
+	border-radius: 0.5em;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 0.25em;
+	height: 100%;
+	white-space: nowrap;
+}
+
+.match > * {
+	display: inline-block;
+	padding: 0.25em 0.45em;
+	background: rgba(255, 255, 255, 0.25);
+	color: black;
+	border-radius: 0.35em;
+}
+
+.match:not(.Exact) .overlap {
+	font-weight: bold;
+}
+
+.match.Exact {
+	background-color: #27AE60;
+}
+
+.match.Partial {
+	background-color: #d4880e;
+}
+
+.match.None {
+	background-color: #E74C3C;
+}
+</style>
