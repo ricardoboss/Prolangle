@@ -19,7 +19,7 @@ async function shareResult(text) {
         text: text,
     };
 
-    if (!navigator.canShare(shareData)) {
+    if (!navigator.share || !navigator.canShare(shareData)) {
         await navigator.clipboard.writeText(text);
 
         return "Result copied to clipboard.";
