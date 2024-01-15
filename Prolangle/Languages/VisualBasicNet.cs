@@ -29,5 +29,5 @@ public class VisualBasicNet : BaseLanguage
 	                                               Paradigms.EventDriven | Paradigms.Reflective;
 
 	public override double? TiobeRating { get; } = 1.60;
-	public override int AppearanceYear { get; } = 1991;
+	public override int AppearanceYear { get; } = 2001;
 }
