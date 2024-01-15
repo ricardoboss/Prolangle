@@ -7,16 +7,19 @@ public class LanguageSnippetProvider
 {
 	private readonly Func<int> _seedGenerator;
 
-	public LanguageSnippetProvider(Func<int> seedGenerator)
+	public LanguageSnippetProvider(GameSeeder seedGenerator)
 	{
-		_seedGenerator = seedGenerator;
+		_seedGenerator = seedGenerator.Seeder;
 
 		Snippets = this.GetType().Assembly.GetTypes()
 			.Where(t => typeof(ICodeSnippet).IsAssignableFrom(t) && t.IsClass)
 			.Select(t => (ICodeSnippet)Activator.CreateInstance(t)!)
 			.ToLookup(cs => cs.Language);
 
-		SupportedLanguages = Snippets.Select(g => g.Key).ToList();
+		SupportedLanguages = Snippets
+			.Select(g => g.Key)
+			.OrderBy(l => l.Name)
+			.ToList();
 	}
 
 	private ILookup<ILanguage, ICodeSnippet> Snippets { get; }

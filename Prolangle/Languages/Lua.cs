@@ -4,6 +4,7 @@ namespace Prolangle.Languages;
 
 public class Lua : BaseLanguage
 {
+	public static Lua Instance { get; } = new();
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name => "Lua";
 	public override TypeSystem Typing => TypeSystem.Weak | TypeSystem.Dynamic | TypeSystem.Duck;
