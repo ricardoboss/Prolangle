@@ -8,11 +8,12 @@
 @inject GuessGame GuessGame
 @inject LanguageSnippetProvider LanguageSnippetProvider
 
-<h1>Snippets</h1>
+<Heading Size="HeadingSize.Is1">Guess a Language</Heading>
+<Heading Size="HeadingSize.Is2">…based on a sample code snippet</Heading>
 
 @if (_won)
 {
-	<h2>You won!</h2>
+	<Heading Size="HeadingSize.Is3">You won!</Heading>
 }
 else
 {
