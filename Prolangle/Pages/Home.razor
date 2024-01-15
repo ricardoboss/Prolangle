@@ -8,7 +8,7 @@
 
 <Heading Size="HeadingSize.Is1">Guess a Language</Heading>
 
-<MetadatumComparisonTable TargetLanguage="TargetLanguage" RevealedLanguages="RevealedLanguages" />
+<MetadatumComparisonTable TargetLanguage="TargetLanguage" RevealedLanguages="RevealedLanguages"/>
 
 @if (won)
 {
@@ -27,14 +27,14 @@ else
 
 	private List<ILanguage> AvailableLanguages => LanguagesProvider!.Languages.Where(l => !RevealedLanguages.Contains(l)).ToList();
 	private List<ILanguage> RevealedLanguages { get; } = [];
-	private ILanguage TargetLanguage => LanguagesProvider!.Languages.Single(l => l.Id == GuessGame!.TargetLanguageId);
+	private ILanguage TargetLanguage => GuessGame!.MetadatumGameLanguage;
 	private bool won;
 
 	private void OnLanguageSelected(ILanguage language)
 	{
 		RevealedLanguages.Add(language);
 
-		var result = GuessGame!.TargetLanguageId == language.Id;
+		var result = GuessGame!.MetadatumGameLanguage.Id == language.Id;
 
 		if (result)
 			won = true;

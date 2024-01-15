@@ -26,10 +26,9 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new(builder.Host
 builder.Services.AddSingleton<LanguageMetadataProvider>();
 builder.Services.AddSingleton<LanguagesProvider>();
 
-builder.Services.AddTransient<GuessGame>(sp =>
+builder.Services.AddTransient<GameSeeder>(sp =>
 {
-	var lp = sp.GetRequiredService<LanguagesProvider>();
-	var logger = sp.GetRequiredService<ILogger<GuessGame>>();
+	var logger = sp.GetRequiredService<ILogger<GameSeeder>>();
 
 	var environment = sp.GetRequiredService<IWebAssemblyHostEnvironment>();
 
@@ -42,15 +41,28 @@ builder.Services.AddTransient<GuessGame>(sp =>
 		_ => throw new NotImplementedException()
 	};
 
-	return new(lp, logger, () => (int)(seeder % Math.Pow(2, 31)),
-		environment);
+	return new GameSeeder(() => (int)(seeder % Math.Pow(2, 31)));
 });
 
 builder.Services.AddTransient<LanguageSnippetProvider>(sp =>
 {
-	// TODO: seeder; try to unify some code with above
+	var seeder = sp.GetRequiredService<GameSeeder>();
 
-	return new(() => DateTime.Now.Hour);
+	return new LanguageSnippetProvider(seeder);
+});
+
+builder.Services.AddTransient<GuessGame>(sp =>
+{
+	var lp = sp.GetRequiredService<LanguagesProvider>();
+	var logger = sp.GetRequiredService<ILogger<GuessGame>>();
+
+	var environment = sp.GetRequiredService<IWebAssemblyHostEnvironment>();
+
+	var seeder = sp.GetRequiredService<GameSeeder>();
+
+	var snippetProvider = sp.GetRequiredService<LanguageSnippetProvider>();
+
+	return new GuessGame(lp, snippetProvider, logger, seeder, environment);
 });
 
 await builder.Build().RunAsync();
