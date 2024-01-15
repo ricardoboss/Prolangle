@@ -32,4 +32,8 @@ public enum SyntaxStyle
 	             "< >, and can be nested, to form a document tree.")]
 	[Display(Name = "XML")]
 	Xml,
+
+	[Description("In the visual syntax style, code is represented visually, " +
+	             "often as blocks that can be dragged and dropped.")]
+	Visual
 }
