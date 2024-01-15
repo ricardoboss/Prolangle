@@ -67,9 +67,23 @@ builder.Services.AddTransient<GuessGame>(sp =>
 
 builder.Services.AddTransient<LanguageSnippetProvider>(sp =>
 {
-	// TODO: seeder; try to unify some code with above
+	var seeder = sp.GetRequiredService<GameSeeder>();
 
-	return new(() => DateTime.Now.Hour);
+	return new LanguageSnippetProvider(seeder);
+});
+
+builder.Services.AddTransient<GuessGame>(sp =>
+{
+	var lp = sp.GetRequiredService<LanguagesProvider>();
+	var logger = sp.GetRequiredService<ILogger<GuessGame>>();
+
+	var environment = sp.GetRequiredService<IWebAssemblyHostEnvironment>();
+
+	var seeder = sp.GetRequiredService<GameSeeder>();
+
+	var snippetProvider = sp.GetRequiredService<LanguageSnippetProvider>();
+
+	return new GuessGame(lp, snippetProvider, logger, seeder, environment);
 });
 
 await builder.Build().RunAsync();
