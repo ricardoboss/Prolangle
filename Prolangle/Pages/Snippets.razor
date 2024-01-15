@@ -20,11 +20,7 @@ else
 	<LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
 }
 
-<code>
-	<pre>
-        @_concealedSourceCode
-    </pre>
-</code>
+<CodeSnippet>@_concealedSourceCode</CodeSnippet>
 
 <div style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 1em;">
 	@foreach (var language in RevealedLanguages)

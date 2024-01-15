@@ -1,0 +1,35 @@
+@implements IAsyncDisposable
+
+@inject IJSRuntime JS
+
+<pre class="snippet-game-code">
+	<code class="@Language">
+		@ChildContent
+	</code>
+</pre>
+
+@code {
+	private IJSObjectReference? jsModule;
+
+	[Parameter] public RenderFragment ChildContent { get; set; }
+	[Parameter] public string Language { get; set; } = "csharp";
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			    jsModule = await JS.InvokeAsync<IJSObjectReference>(
+			         "import", "./Components/CodeSnippet.razor.js");
+		}
+
+		await jsModule.InvokeVoidAsync("highlightSnippet", );
+	}
+
+	async ValueTask IAsyncDisposable.DisposeAsync()
+	{
+		if (jsModule is null )
+			return;
+
+		await jsModule.DisposeAsync();
+	}
+}
