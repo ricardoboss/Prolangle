@@ -53,7 +53,7 @@ else
 
 	protected override void OnInitialized()
 	{
-		TargetLanguage = GuessGame!.GetTargetLanguage(AvailableLanguages);
+		TargetLanguage = GuessGame!.SnippetGameLanguage;
 		Snippet = LanguageSnippetProvider!.GetSnippet(TargetLanguage);
 
 		_snippetRevealer = new SnippetRevealer(GuessGame, Snippet.SourceCode, useJitter: true);
