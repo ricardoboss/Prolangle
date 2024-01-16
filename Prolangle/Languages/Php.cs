@@ -2,7 +2,7 @@ using Prolangle.Languages.Framework;
 
 namespace Prolangle.Languages;
 
-public class Php : BaseLanguage
+public class Php : BaseLanguage, ILanguageSupportsSyntaxHighlighting
 {
 	private Php()
 	{
@@ -12,6 +12,7 @@ public class Php : BaseLanguage
 
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "PHP";
+	public string HighlightJsIdentifier { get; } = "php";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Weak;
 	public override bool Compiled { get; } = false;
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.ReferenceCounting;

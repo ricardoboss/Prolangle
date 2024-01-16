@@ -1,0 +1,56 @@
+@using Prolangle.Languages.Framework
+
+@implements IAsyncDisposable
+
+@inject IJSRuntime JsRuntime
+
+@inject ILogger<CodeSnippet> Logger
+
+<pre class="snippet-game-code">
+	<code class="@Language" @ref="_codeElement">
+		@ChildContent
+	</code>
+</pre>
+
+@code {
+	private IJSObjectReference? _jsModule;
+
+	[Parameter]
+	public required RenderFragment ChildContent { get; set; }
+
+	[Parameter]
+	public required ILanguage Language { get; set; }
+
+	ElementReference _codeElement;
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (Language is ILanguageSupportsSyntaxHighlighting highlighteableLanguage)
+		{
+			Logger.LogInformation("Preparing syntax highlighting for {Language}", Language.Name);
+
+			if (firstRender)
+			{
+				_jsModule = await JsRuntime.InvokeAsync<IJSObjectReference>(
+					"import", "./Components/CodeSnippet.razor.js");
+			}
+
+			if (_jsModule is not null)
+				await _jsModule.InvokeVoidAsync("CodeSnippet.highlightSnippet",
+					_codeElement, highlighteableLanguage.HighlightJsIdentifier);
+		}
+		else
+		{
+			Logger.LogInformation("No syntax highlighting because {Language} does not support it", Language.Name);
+		}
+	}
+
+	async ValueTask IAsyncDisposable.DisposeAsync()
+	{
+		if (_jsModule is null)
+			return;
+
+		await _jsModule.DisposeAsync();
+	}
+
+}

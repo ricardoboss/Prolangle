@@ -2,7 +2,7 @@ using Prolangle.Languages.Framework;
 
 namespace Prolangle.Languages;
 
-public class AppleScript : BaseLanguage
+public class AppleScript : BaseLanguage, ILanguageSupportsSyntaxHighlighting
 {
 	private AppleScript()
 	{
@@ -12,6 +12,7 @@ public class AppleScript : BaseLanguage
 
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "AppleScript";
+	public string HighlightJsIdentifier { get; } = "applescript";
 	public override TypeSystem Typing { get; } = TypeSystem.Weak | TypeSystem.Dynamic;
 	public override bool Compiled { get; } = true;
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.TracingGarbageCollection;
