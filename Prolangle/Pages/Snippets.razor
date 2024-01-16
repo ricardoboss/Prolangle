@@ -6,6 +6,7 @@
 @using Prolangle.Snippets
 
 @inject GuessGame GuessGame
+@inject GameSeeder GameSeeder
 @inject LanguageSnippetProvider LanguageSnippetProvider
 
 <Heading Size="HeadingSize.Is1">Guess a Language</Heading>
@@ -57,7 +58,7 @@ else
 		TargetLanguage = GuessGame!.SnippetGameLanguage;
 		Snippet = LanguageSnippetProvider!.GetSnippet(TargetLanguage);
 
-		_snippetRevealer = new SnippetRevealer(GuessGame, Snippet.SourceCode, useJitter: true);
+		_snippetRevealer = new SnippetRevealer(GameSeeder, Snippet.SourceCode, useJitter: true);
 
 		_concealedSourceCode = _snippetRevealer.RevealMore();
 	}
