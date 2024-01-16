@@ -6,6 +6,8 @@ public class SimpleCSharpSnippet : ICodeSnippet
 {
 	public ILanguage Language => Languages.CSharp.Instance;
 
+	public string Filename => "Program.cs";
+
 	public string SourceCode =>
 		"""
 		using System;

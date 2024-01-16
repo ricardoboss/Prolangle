@@ -6,6 +6,8 @@ public class TaskCSharpSnippet : ICodeSnippet
 {
 	public ILanguage Language => Languages.CSharp.Instance;
 
+	public string Filename => "AsyncTaskExample.cs";
+
 	public string SourceCode =>
 		"""
 		using System;
