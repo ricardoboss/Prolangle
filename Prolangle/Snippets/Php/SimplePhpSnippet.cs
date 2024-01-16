@@ -6,6 +6,8 @@ public class SimplePhpSnippet : ICodeSnippet
 {
 	public ILanguage Language => Languages.Php.Instance;
 
+	public string Filename => "hello-world.php";
+
 	public string SourceCode =>
 		"""
 		<?php
