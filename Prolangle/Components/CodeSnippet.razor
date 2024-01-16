@@ -1,35 +1,41 @@
 @implements IAsyncDisposable
 
-@inject IJSRuntime JS
+@inject IJSRuntime JsRuntime
 
 <pre class="snippet-game-code">
-	<code class="@Language">
+	<code class="@Language" @ref="_codeElement">
 		@ChildContent
 	</code>
 </pre>
 
 @code {
-	private IJSObjectReference? jsModule;
+	private IJSObjectReference? _jsModule;
 
-	[Parameter] public RenderFragment ChildContent { get; set; }
-	[Parameter] public string Language { get; set; } = "csharp";
+	[Parameter]
+	public required RenderFragment ChildContent { get; set; }
+
+	[Parameter]
+	public string Language { get; set; } = "csharp";
+
+	ElementReference _codeElement;
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
 		if (firstRender)
 		{
-			    jsModule = await JS.InvokeAsync<IJSObjectReference>(
-			         "import", "./Components/CodeSnippet.razor.js");
+			_jsModule = await JsRuntime.InvokeAsync<IJSObjectReference>(
+				"import", "./Components/CodeSnippet.razor.js");
 		}
 
-		await jsModule.InvokeVoidAsync("highlightSnippet", );
+		if (_jsModule is not null)
+			await _jsModule.InvokeVoidAsync("CodeSnippet.highlightSnippet", _codeElement);
 	}
 
 	async ValueTask IAsyncDisposable.DisposeAsync()
 	{
-		if (jsModule is null )
+		if (_jsModule is null)
 			return;
 
-		await jsModule.DisposeAsync();
+		await _jsModule.DisposeAsync();
 	}
 }

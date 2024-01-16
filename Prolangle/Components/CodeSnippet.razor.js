@@ -1,6 +1,6 @@
 export class CodeSnippet
 {
-    static highlight(elem) {
-        hljs.highlightBlock(elem);
+    static highlightSnippet(elem) {
+        hljs.highlightElement(elem);
     }
 }
