@@ -9,18 +9,19 @@ public class SnippetRevealerTests
 {
 	public SnippetRevealerTests()
 	{
+		GuessGameLogger = NullLogger<GuessGame>.Instance;
+
 		var environment = new Moq.Mock<IWebAssemblyHostEnvironment>();
 		environment.SetupGet(e => e.Environment).Returns("Development");
 		HostEnvironment = environment.Object;
 
 		LanguagesProvider = new LanguagesProvider();
-		GuessGameLogger = NullLogger<GuessGame>.Instance;
 	}
+
+	private ILogger<GuessGame> GuessGameLogger { get; }
 
 	private IWebAssemblyHostEnvironment HostEnvironment { get; }
 	private LanguagesProvider LanguagesProvider { get; }
-
-	private ILogger<GuessGame> GuessGameLogger { get; }
 
 	public static IEnumerable<object[]> TestData
 	{
@@ -57,8 +58,7 @@ public class SnippetRevealerTests
 	{
 		var seeder = new GameSeeder(() => 1_234);
 		var snippetProvider = new LanguageSnippetProvider(seeder);
-		var game = new GuessGame(LanguagesProvider, snippetProvider, GuessGameLogger, seeder, HostEnvironment);
-		var revealer = new SnippetRevealer(game, input, useJitter: false);
+		var revealer = new SnippetRevealer(seeder, input, useJitter: false);
 
 		Assert.Equal(expected10PercentOutput, revealer.RevealMore());
 		Assert.Equal(expected20PercentOutput, revealer.RevealMore());
@@ -106,8 +106,7 @@ public class SnippetRevealerTests
 	{
 		var seeder = new GameSeeder(() => 1_234);
 		var snippetProvider = new LanguageSnippetProvider(seeder);
-		var game = new GuessGame(LanguagesProvider, snippetProvider, GuessGameLogger, seeder, HostEnvironment);
-		var revealer = new SnippetRevealer(game, input, useJitter: true);
+		var revealer = new SnippetRevealer(seeder, input, useJitter: true);
 
 		Assert.Equal(expected10PercentOutput, revealer.RevealMore());
 		Assert.Equal(expected20PercentOutput, revealer.RevealMore());
