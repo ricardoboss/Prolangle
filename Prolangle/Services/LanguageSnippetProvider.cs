@@ -27,8 +27,6 @@ public class LanguageSnippetProvider
 
 	public ICodeSnippet GetSnippet(ILanguage language)
 	{
-		// FIXME: change this design so the LanguageSnippetProvider itselfdecides on the language
-
 		var random = new Random(_seedGenerator());
 
 		ICodeSnippet[] currentLanguageSnippets = Snippets[language].ToArray();
