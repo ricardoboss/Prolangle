@@ -22,3 +22,11 @@ public interface ILanguage
 
 	public int AppearanceYear { get; }
 }
+
+public interface ILanguageSupportsSyntaxHighlighting : ILanguage
+{
+	/// <summary>
+	/// The identifier, as listed at https://highlightjs.readthedocs.io/en/latest/supported-languages.html.
+	/// </summary>
+	public string HighlightJsIdentifier { get; }
+}

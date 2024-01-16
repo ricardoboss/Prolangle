@@ -2,11 +2,12 @@
 
 namespace Prolangle.Languages;
 
-public class CSharp : BaseLanguage
+public class CSharp : BaseLanguage, ILanguageSupportsSyntaxHighlighting
 {
 	public static CSharp Instance { get; } = new();
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "C#";
+	public string HighlightJsIdentifier { get; } = "csharp";
 
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Dynamic |
 	                                             TypeSystem.Safe | TypeSystem.Nominal | TypeSystem.Inferred;
