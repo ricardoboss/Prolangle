@@ -37,4 +37,10 @@ public enum Paradigms
 	             "generally expected from OOP. For example, it may lack " +
 	             "implementation inheritance.")]
 	ObjectBased = 1 << 12,
+
+	[Display(Name = "Block-based")]
+	[Description("A block-based language is one in which the program is " +
+	             "constructed by dragging blocks around, rather than typing " +
+	             "text. This is a form of visual programming.")]
+	BlockBased = 1 << 13,
 }
