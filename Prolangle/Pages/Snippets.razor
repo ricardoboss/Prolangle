@@ -20,7 +20,10 @@ else
 	<LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
 }
 
-<CodeSnippet Language="TargetLanguage!">@_concealedSourceCode</CodeSnippet>
+@if (_showSourceCode)
+{
+	<CodeSnippet Language="TargetLanguage!">@_concealedSourceCode</CodeSnippet>
+}
 
 <div style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 1em;">
 	@foreach (var language in RevealedLanguages)
@@ -44,21 +47,23 @@ else
 	private ICodeSnippet? Snippet { get; set; }
 	private bool _won;
 
+	private bool _showSourceCode = false;
+
 	private SnippetRevealer? _snippetRevealer;
 
 	private string? _concealedSourceCode;
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
 		TargetLanguage = GuessGame!.SnippetGameLanguage;
 		Snippet = LanguageSnippetProvider!.GetSnippet(TargetLanguage);
 
 		_snippetRevealer = new SnippetRevealer(GuessGame, Snippet.SourceCode, useJitter: true);
 
-		_concealedSourceCode = _snippetRevealer.RevealMore();
+		await UpdateConcealedSourceCode(_snippetRevealer!.RevealMore());
 	}
 
-	private void OnLanguageSelected(ILanguage language)
+	private async Task OnLanguageSelected(ILanguage language)
 	{
 		RevealedLanguages.Add(language);
 
@@ -69,13 +74,27 @@ else
 			_won = true;
 			_snippetRevealer!.Win();
 
-			_concealedSourceCode = Snippet!.SourceCode;
+			await UpdateConcealedSourceCode(Snippet!.SourceCode);
 		}
 		else
 		{
-			_concealedSourceCode = _snippetRevealer!.RevealMore();
+			await UpdateConcealedSourceCode(_snippetRevealer!.RevealMore());
 		}
 
+		StateHasChanged();
+	}
+
+	private async Task UpdateConcealedSourceCode(string newSourceCode)
+	{
+		_showSourceCode = false;
+		StateHasChanged();
+
+		// force Blazor to dispose the <CodeSnippet> component so JS gets cleaned up
+		await Task.Yield();
+
+		_concealedSourceCode = newSourceCode;
+
+		_showSourceCode = true;
 		StateHasChanged();
 	}
 }
