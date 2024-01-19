@@ -6,7 +6,7 @@ namespace Prolangle.Tests;
 public class LanguageMetadataProviderTests
 {
 	[Theory]
-	[InlineData(Applications.Scripts, false)]
+	[InlineData(Applications.Other, false)]
 	[InlineData(Applications.Configuration, true)]
 	public void TestDescription(Applications enumValue, bool expectNonEmptyResult)
 	{
