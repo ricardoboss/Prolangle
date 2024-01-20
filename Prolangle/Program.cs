@@ -25,8 +25,7 @@ builder.Services
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddSingleton<LanguageMetadataProvider>();
 builder.Services.AddSingleton<LanguagesProvider>();
-
-builder.Services.AddTransient<GameSeeder>(sp =>
+builder.Services.AddSingleton<GameSeeder>(sp =>
 {
 	var logger = sp.GetRequiredService<ILogger<GameSeeder>>();
 
@@ -44,14 +43,14 @@ builder.Services.AddTransient<GameSeeder>(sp =>
 	return new GameSeeder(() => (int)(seeder % Math.Pow(2, 31)));
 });
 
-builder.Services.AddTransient<LanguageSnippetProvider>(sp =>
+builder.Services.AddSingleton<LanguageSnippetProvider>(sp =>
 {
 	var seeder = sp.GetRequiredService<GameSeeder>();
 
 	return new LanguageSnippetProvider(seeder);
 });
 
-builder.Services.AddTransient<GuessGame>(sp =>
+builder.Services.AddSingleton<GuessGame>(sp =>
 {
 	var lp = sp.GetRequiredService<LanguagesProvider>();
 	var logger = sp.GetRequiredService<ILogger<GuessGame>>();
