@@ -4,6 +4,12 @@ namespace Prolangle.Languages;
 
 public class C : BaseLanguage
 {
+	private C()
+	{
+	}
+
+	public static C Instance { get; } = new();
+
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "C";
 

@@ -4,6 +4,12 @@ namespace Prolangle.Languages;
 
 public class Go : BaseLanguage
 {
+	private Go()
+	{
+	}
+
+	public static Go Instance { get; } = new();
+
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "Go";
 

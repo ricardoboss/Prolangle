@@ -4,6 +4,12 @@ namespace Prolangle.Languages;
 
 public class ObjectiveC : BaseLanguage
 {
+	private ObjectiveC()
+	{
+	}
+
+	public static ObjectiveC Instance { get; } = new();
+
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "Objective-C";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Strong;

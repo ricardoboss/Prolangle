@@ -4,6 +4,12 @@ namespace Prolangle.Languages;
 
 public class Assembly : BaseLanguage
 {
+	private Assembly()
+	{
+	}
+
+	public static Assembly Instance { get; } = new();
+
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "Assembly";
 

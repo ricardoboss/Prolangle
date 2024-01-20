@@ -4,6 +4,12 @@ namespace Prolangle.Languages;
 
 public class Css : BaseLanguage
 {
+	private Css()
+	{
+	}
+
+	public static Css Instance { get; } = new();
+
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "CSS";
 	public override TypeSystem Typing { get; } = TypeSystem.None;

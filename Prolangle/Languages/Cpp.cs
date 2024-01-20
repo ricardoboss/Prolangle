@@ -4,6 +4,12 @@ namespace Prolangle.Languages;
 
 public class Cpp : BaseLanguage
 {
+	private Cpp()
+	{
+	}
+
+	public static Cpp Instance { get; } = new();
+
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "C++";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Nominal | TypeSystem.Inferred;

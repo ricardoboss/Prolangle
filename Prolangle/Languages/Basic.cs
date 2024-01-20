@@ -4,6 +4,12 @@ namespace Prolangle.Languages;
 
 public class Basic : BaseLanguage
 {
+	private Basic()
+	{
+	}
+
+	public static Basic Instance { get; } = new();
+
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "BASIC";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Weak;

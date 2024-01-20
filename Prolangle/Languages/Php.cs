@@ -4,6 +4,12 @@ namespace Prolangle.Languages;
 
 public class Php : BaseLanguage
 {
+	private Php()
+	{
+	}
+
+	public static Php Instance { get; } = new();
+
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "PHP";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Weak;

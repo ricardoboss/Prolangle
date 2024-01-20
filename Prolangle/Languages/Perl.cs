@@ -4,6 +4,12 @@ namespace Prolangle.Languages;
 
 public class Perl : BaseLanguage
 {
+	private Perl()
+	{
+	}
+
+	public static Perl Instance { get; } = new();
+
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "Perl";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Weak;

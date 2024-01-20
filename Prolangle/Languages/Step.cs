@@ -4,6 +4,12 @@ namespace Prolangle.Languages;
 
 public class Step : BaseLanguage
 {
+	private Step()
+	{
+	}
+
+	public static Step Instance { get; } = new();
+
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "STEP";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Safe | TypeSystem.Nominal | TypeSystem.Manifest;

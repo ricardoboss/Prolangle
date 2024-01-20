@@ -1,0 +1,86 @@
+@page "/Snippets"
+
+@using Prolangle.Components
+@using Prolangle.Services
+@using Prolangle.Languages.Framework
+@using Prolangle.Snippets
+
+@inject GuessGame GuessGame
+@inject GameSeeder GameSeeder
+@inject LanguageSnippetProvider LanguageSnippetProvider
+
+<Heading Size="HeadingSize.Is1">Guess a Language</Heading>
+<Heading Size="HeadingSize.Is2">…based on a sample code snippet</Heading>
+
+@if (_won)
+{
+	<Heading Size="HeadingSize.Is3">You won!</Heading>
+}
+else
+{
+	<LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
+}
+
+<code>
+	<pre>
+        @_concealedSourceCode
+    </pre>
+</code>
+
+<div style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 1em;">
+	@foreach (var language in RevealedLanguages)
+	{
+		@if (language == TargetLanguage)
+		{
+			<span style="background: green; padding: 0.5em">@language.Name</span>
+		}
+		else
+		{
+			<span style="background: red; padding: 0.5em">@language.Name</span>
+		}
+	}
+</div>
+
+@code
+{
+	private IReadOnlyList<ILanguage> AvailableLanguages => LanguageSnippetProvider.SupportedLanguages.Where(l => !RevealedLanguages.Contains(l)).ToList();
+	private List<ILanguage> RevealedLanguages { get; } = [];
+	private ILanguage? TargetLanguage { get; set; }
+	private ICodeSnippet? Snippet { get; set; }
+	private bool _won;
+
+	private SnippetRevealer? _snippetRevealer;
+
+	private string? _concealedSourceCode;
+
+	protected override void OnInitialized()
+	{
+		TargetLanguage = GuessGame!.SnippetGameLanguage;
+		Snippet = LanguageSnippetProvider!.GetSnippet(TargetLanguage);
+
+		_snippetRevealer = new SnippetRevealer(GameSeeder, Snippet.SourceCode, useJitter: true);
+
+		_concealedSourceCode = _snippetRevealer.RevealMore();
+	}
+
+	private void OnLanguageSelected(ILanguage language)
+	{
+		RevealedLanguages.Add(language);
+
+		var result = TargetLanguage!.Id == language.Id;
+
+		if (result)
+		{
+			_won = true;
+			_snippetRevealer!.Win();
+
+			_concealedSourceCode = Snippet!.SourceCode;
+		}
+		else
+		{
+			_concealedSourceCode = _snippetRevealer!.RevealMore();
+		}
+
+		StateHasChanged();
+	}
+}

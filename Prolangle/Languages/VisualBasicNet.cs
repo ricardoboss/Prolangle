@@ -4,6 +4,12 @@ namespace Prolangle.Languages;
 
 public class VisualBasicNet : BaseLanguage
 {
+	private VisualBasicNet()
+	{
+	}
+
+	public static VisualBasicNet Instance { get; } = new();
+
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "Visual Basic (.NET)";
 
@@ -23,5 +29,5 @@ public class VisualBasicNet : BaseLanguage
 	                                               Paradigms.EventDriven | Paradigms.Reflective;
 
 	public override double? TiobeRating { get; } = 1.60;
-	public override int AppearanceYear { get; } = 1991;
+	public override int AppearanceYear { get; } = 2001;
 }

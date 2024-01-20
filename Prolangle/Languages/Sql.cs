@@ -4,6 +4,12 @@ namespace Prolangle.Languages;
 
 public class Sql : BaseLanguage
 {
+	private Sql()
+	{
+	}
+
+	public static Sql Instance { get; } = new();
+
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "SQL";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong ;

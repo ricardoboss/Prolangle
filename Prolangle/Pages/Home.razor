@@ -1,4 +1,5 @@
 ﻿@page "/"
+
 @using Prolangle.Languages.Framework
 @using Prolangle.Services
 @using Prolangle.Components
@@ -7,12 +8,13 @@
 @inject LanguagesProvider LanguagesProvider
 
 <Heading Size="HeadingSize.Is1">Guess a Language</Heading>
+<Heading Size="HeadingSize.Is2">…based on its properties</Heading>
 
-<MetadatumComparisonTable TargetLanguage="TargetLanguage" RevealedLanguages="RevealedLanguages" />
+<MetadatumComparisonTable TargetLanguage="TargetLanguage" RevealedLanguages="RevealedLanguages"/>
 
 @if (won)
 {
-	<Heading Size="HeadingSize.Is2">You won!</Heading>
+	<Heading Size="HeadingSize.Is3">You won!</Heading>
 
 	<ShareMetadatumComparisonButton TargetLanguage="TargetLanguage" RevealedLanguages="RevealedLanguages">
 		Share results
@@ -27,14 +29,14 @@ else
 
 	private List<ILanguage> AvailableLanguages => LanguagesProvider!.Languages.Where(l => !RevealedLanguages.Contains(l)).ToList();
 	private List<ILanguage> RevealedLanguages { get; } = [];
-	private ILanguage TargetLanguage => LanguagesProvider!.Languages.Single(l => l.Id == GuessGame!.TargetLanguageId);
+	private ILanguage TargetLanguage => GuessGame!.MetadatumGameLanguage;
 	private bool won;
 
 	private void OnLanguageSelected(ILanguage language)
 	{
 		RevealedLanguages.Add(language);
 
-		var result = GuessGame!.TargetLanguageId == language.Id;
+		var result = GuessGame!.MetadatumGameLanguage.Id == language.Id;
 
 		if (result)
 			won = true;

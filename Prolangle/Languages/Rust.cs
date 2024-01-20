@@ -4,6 +4,12 @@ namespace Prolangle.Languages;
 
 public class Rust : BaseLanguage
 {
+	private Rust()
+	{
+	}
+
+	public static Rust Instance { get; } = new();
+
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "Rust";
 	public override TypeSystem Typing { get; } = TypeSystem.Inferred | TypeSystem.Nominal | TypeSystem.Static | TypeSystem.Strong;

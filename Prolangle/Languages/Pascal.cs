@@ -4,6 +4,12 @@ namespace Prolangle.Languages;
 
 public class Pascal : BaseLanguage
 {
+	private Pascal()
+	{
+	}
+
+	public static Pascal Instance { get; } = new();
+
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "Pascal";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Safe;
