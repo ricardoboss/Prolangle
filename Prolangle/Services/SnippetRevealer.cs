@@ -27,7 +27,6 @@ public partial class SnippetRevealer(GameSeeder gameSeeder, string sourceCode, b
 			const int padding = 3;
 			int shiftedStart = revealStart - padding > 0 ? revealStart - padding : revealStart;
 			var jitter = random.Next(shiftedStart * -1, shiftedStart);
-			Console.WriteLine($"Jitter {jitter}");
 
 			revealStart += jitter;
 			revealEnd += jitter;
