@@ -38,31 +38,10 @@ builder.Services.AddTransient<GameSeeder>(sp =>
 	{
 		"Development" => DateTime.Now.Ticks,
 		"Production" => DateTime.Today.Ticks,
-		_ => throw new NotImplementedException()
+		_ => throw new NotImplementedException(),
 	};
 
 	return new GameSeeder(() => (int)(seeder % Math.Pow(2, 31)));
-});
-
-builder.Services.AddTransient<LanguageSnippetProvider>(sp =>
-{
-	var seeder = sp.GetRequiredService<GameSeeder>();
-
-	return new LanguageSnippetProvider(seeder);
-});
-
-builder.Services.AddTransient<GuessGame>(sp =>
-{
-	var lp = sp.GetRequiredService<LanguagesProvider>();
-	var logger = sp.GetRequiredService<ILogger<GuessGame>>();
-
-	var environment = sp.GetRequiredService<IWebAssemblyHostEnvironment>();
-
-	var seeder = sp.GetRequiredService<GameSeeder>();
-
-	var snippetProvider = sp.GetRequiredService<LanguageSnippetProvider>();
-
-	return new GuessGame(lp, snippetProvider, logger, seeder, environment);
 });
 
 builder.Services.AddTransient<LanguageSnippetProvider>(sp =>
