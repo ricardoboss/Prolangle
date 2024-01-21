@@ -27,7 +27,7 @@
 	private async Task OnClicked()
 	{
 		var shareContent = $"Found today's #prolangle language in {"attempt".ToQuantity(RevealedLanguages.Count)}!\n\n" +
-		                   "Try it yourself at https://prolangle.ricardoboss.de";
+		                   "Try it yourself at https://prolangle.ricardoboss.de/Snippets";
 
 		_snackbarMessage = await JsRuntime!.InvokeAsync<string>("shareResult", shareContent);
 
