@@ -24,23 +24,42 @@ else
 {
 	<LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
 
-	<p>
-		<Icon Name="IconName.Lightbulb" Padding="Padding.Is2" />
-		@if (guessCount == 0)
-		{
+	@if (guessCount == 0)
+	{
+		<p>
+			<Icon Name="IconName.Lightbulb" Padding="Padding.Is2"/>
+
 			<span>
 				Lost? Just try picking a language, or head to <NavLink href="/explanations">Explanations</NavLink>
 				for more info.
 			</span>
-		}
-		else
-		{
+		</p>
+	}
+	else
+	{
+		<p>
+			<Icon Name="IconName.Lightbulb" Padding="Padding.Is2"/>
+
+			<span>
+				Boxes are
+				<span class="match-hint-wrap Exact"><span class="match-hint">green</span></span>
+				if they're an exact match,
+				<span class="match-hint-wrap Partial"><span class="match-hint">orange</span></span>
+				if <em>some</em> of the properties (which will be in <strong>bold</strong>) match, and
+				<span class="match-hint-wrap None"><span class="match-hint">red</span></span>
+				if you got this aspect wrong.
+			</span>
+		</p>
+
+		<p>
+			<Icon Name="IconName.Lightbulb" Padding="Padding.Is2"/>
+
 			<span>
 				Some terms are <span class="popover-available-hint">underlined</span>. You can tap or click those to get
 				a quick explanation. Or, head to <NavLink href="/explanations">Explanations</NavLink> for more info.
 			</span>
-		}
-	</p>
+		</p>
+	}
 }
 
 @code {
@@ -66,3 +85,26 @@ else
 	}
 
 }
+
+<style>
+	.match-hint-wrap {
+	 	padding: 0.1em 0;
+	}
+
+	.match-hint {
+		background: rgba(255, 255, 255, 0.25);
+		padding: 0.1em
+	}
+
+	.match-hint-wrap.Exact {
+		background-color: #27AE60;
+	}
+
+	.match-hint-wrap.Partial {
+		background-color: #d4880e;
+	}
+
+	.match-hint-wrap.None {
+		background-color: #E74C3C;
+	}
+</style>
