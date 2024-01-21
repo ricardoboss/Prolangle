@@ -23,6 +23,24 @@
 else
 {
 	<LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
+
+	<p>
+		<Icon Name="IconName.Lightbulb" Padding="Padding.Is2" />
+		@if (guessCount == 0)
+		{
+			<span>
+				Lost? Just try picking a language, or head to <NavLink href="/explanations">Explanations</NavLink>
+				for more info.
+			</span>
+		}
+		else
+		{
+			<span>
+				Some terms are <span class="popover-available-hint">underlined</span>. You can tap or click those to get
+				a quick explanation. Or, head to <NavLink href="/explanations">Explanations</NavLink> for more info.
+			</span>
+		}
+	</p>
 }
 
 @code {
@@ -30,10 +48,15 @@ else
 	private List<ILanguage> AvailableLanguages => LanguagesProvider!.Languages.Where(l => !RevealedLanguages.Contains(l)).ToList();
 	private List<ILanguage> RevealedLanguages { get; } = [];
 	private ILanguage TargetLanguage => GuessGame!.MetadatumGameLanguage;
+
+	// revisit these fields once #22 is resolved
+	private int guessCount;
 	private bool won;
 
 	private void OnLanguageSelected(ILanguage language)
 	{
+		guessCount++;
+
 		RevealedLanguages.Add(language);
 
 		var result = GuessGame!.MetadatumGameLanguage.Id == language.Id;
