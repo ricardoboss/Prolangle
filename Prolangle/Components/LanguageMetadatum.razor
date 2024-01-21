@@ -1,3 +1,4 @@
+@using BlazorComponentUtilities
 @using System.Text
 @using Prolangle.Extensions
 @using Prolangle.Languages.Framework
@@ -18,16 +19,24 @@
 
 	any = true;
 
-	var className = Overlap.HasFlag(flag) ? "overlap" : "";
+	var cssClassBuilder = new CssBuilder();
+
+	if (Overlap.HasFlag(flag))
+		cssClassBuilder.AddClass("overlap");
 
 	var desc = MetadataProvider.ResolveDescription(flag);
 	var moreInfoUrl = MetadataProvider.ResolveMoreInfoUrl(flag);
 
-	var style = string.IsNullOrWhiteSpace(desc) ? "" : "text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; text-decoration-thickness: 1px; cursor: help;";
+	var style = "";
+	if (!string.IsNullOrWhiteSpace(desc))
+	{
+		cssClassBuilder.AddClass("popover-available-hint");
+		style = "cursor: help";
+	}
 
 	string flagName = flag.GetDisplayName() ?? flag.ToString();
 
-	<ExplanationPopover Content="@desc" Title="@flagName" Url="@moreInfoUrl" class="@className">
+	<ExplanationPopover Content="@desc" Title="@flagName" Url="@moreInfoUrl" class="@cssClassBuilder.Build()">
 		<span style="@style">@flagName</span>
 	</ExplanationPopover>
 }
