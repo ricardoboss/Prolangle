@@ -28,7 +28,7 @@ public class GuessGameTests
 	[InlineData(1_234, "Java", "Dart")]
 	public void TestLanguages(int seed, string expectedMetadatumGameLanguage, string expectedSnippetGameLanguage)
 	{
-		var seeder = new GameSeeder(() => seed);
+		var seeder = new GameSeeder(() => seed, DateTime.MinValue, DateTime.MinValue);
 		var languageSnippetProvider = new LanguageSnippetProvider(seeder);
 		var game = new GuessGame(LanguagesProvider, languageSnippetProvider, GuessGameLogger, seeder, HostEnvironment);
 

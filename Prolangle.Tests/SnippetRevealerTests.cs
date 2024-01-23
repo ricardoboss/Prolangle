@@ -56,7 +56,7 @@ public class SnippetRevealerTests
 		string expected80PercentOutput,
 		string expected90PercentOutput)
 	{
-		var seeder = new GameSeeder(() => 1_234);
+		var seeder = new GameSeeder(() => 1_234, DateTime.MinValue, DateTime.MinValue);
 		var snippetProvider = new LanguageSnippetProvider(seeder);
 		var revealer = new SnippetRevealer(seeder, input, useJitter: false);
 
@@ -104,7 +104,7 @@ public class SnippetRevealerTests
 		string expected80PercentOutput,
 		string expected90PercentOutput)
 	{
-		var seeder = new GameSeeder(() => 1_234);
+		var seeder = new GameSeeder(() => 1_234, DateTime.MinValue, DateTime.MinValue);
 		var snippetProvider = new LanguageSnippetProvider(seeder);
 		var revealer = new SnippetRevealer(seeder, input, useJitter: true);
 

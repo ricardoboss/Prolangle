@@ -1,0 +1,21 @@
+@using Prolangle.Services
+
+@inject GameSeeder GameSeeder;
+
+<p>
+	Next game in:
+	<strong>@((GameSeeder.NextGameTimestamp - DateTime.Now).ToString(@"hh\:mm\:ss"))</strong>
+</p>
+
+@code {
+
+	Timer? _timer;
+
+	protected override void OnInitialized()
+	{
+		_timer = new Timer(Refresh, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+	}
+
+	private void Refresh(object? state) => StateHasChanged();
+
+}
