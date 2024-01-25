@@ -7,6 +7,8 @@ public enum Applications
 {
 	None = 0,
 	Other = 1 << 0,
+
+	[Description("This language is commonly used to write mobile applications, like Android or iOS apps.")]
 	Mobile = 1 << 1,
 	Apple = 1 << 2,
 	General = 1 << 3,
