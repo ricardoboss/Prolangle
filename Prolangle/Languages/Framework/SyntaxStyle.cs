@@ -8,7 +8,7 @@ public enum SyntaxStyle
 	None,
 	Other,
 
-	[Description("In the assembly syntax style, you use mnemonics representing" +
+	[Description("In the assembly syntax style, you use mnemonics representing " +
 	             "machine instructions and can pass them arguments in the " +
 	             "form of registers, memory addresses, or immediate values.")]
 	Assembly,
