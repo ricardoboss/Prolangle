@@ -1,4 +1,3 @@
-using Blazorise;
 using Prolangle.Languages.Framework;
 using Prolangle.Services;
 using MatchType = Prolangle.Models.MatchType;
@@ -23,15 +22,15 @@ public class MetadatumComparisonServiceTests
 		Assert.Equal(expectedOverlap, overlap);
 	}
 
-	// [Theory]
-	// [InlineData("SQL", "SQL",  MatchType.Exact)]
-	// public void TestApplicationsMatch(string thisLanguageName, string thatLanguageName, MatchType expectedMatchType)
-	// {
-	// 	ILanguage thisLanguage = LanguagesProvider.Languages.Single(l => l.Name == thisLanguageName);
-	// 	ILanguage thatLanguage = LanguagesProvider.Languages.Single(l => l.Name == thatLanguageName);
-	//
-	// 	MatchType matchType = new MetadatumComparisonService(thisLanguage).ApplicationsMatch(thatLanguage);
-	//
-	// 	Assert.Equal(expectedMatchType, matchType);
-	// }
+	[Theory]
+	[InlineData("SQL", "SQL", MatchType.Exact)]
+	public void TestApplicationsMatch(string thisLanguageName, string thatLanguageName, MatchType expectedMatchType)
+	{
+		ILanguage thisLanguage = LanguagesProvider.Languages.Single(l => l.Name == thisLanguageName);
+		ILanguage thatLanguage = LanguagesProvider.Languages.Single(l => l.Name == thatLanguageName);
+
+		MatchType matchType = new MetadatumComparisonService(thisLanguage).ApplicationsMatch(thatLanguage);
+
+		Assert.Equal(expectedMatchType, matchType);
+	}
 }

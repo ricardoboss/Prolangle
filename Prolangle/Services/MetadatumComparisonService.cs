@@ -94,7 +94,7 @@ public class MetadatumComparisonService(ILanguage targetLanguage)
 		var overlap = ApplicationsOverlap(otherLanguage);
 
 		if (overlap == Applications.None)
-			return MatchType.None;
+			return otherLanguage.KnownForBuilding == Applications.None && targetLanguage.KnownForBuilding == Applications.None ? MatchType.Exact : MatchType.None;
 
 		if (targetLanguage.KnownForBuilding == otherLanguage.KnownForBuilding)
 			return MatchType.Exact;
