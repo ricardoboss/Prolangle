@@ -23,7 +23,7 @@ public class MetadatumComparisonServiceTests
 	}
 
 	[Theory]
-	[InlineData("SQL", "SQL",  MatchType.Exact)]
+	[InlineData("SQL", "SQL", MatchType.Exact)]
 	public void TestApplicationsMatch(string thisLanguageName, string thatLanguageName, MatchType expectedMatchType)
 	{
 		ILanguage thisLanguage = LanguagesProvider.Languages.Single(l => l.Name == thisLanguageName);
