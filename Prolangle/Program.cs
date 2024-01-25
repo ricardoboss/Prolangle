@@ -33,14 +33,25 @@ builder.Services.AddSingleton<GameSeeder>(sp =>
 
 	logger.LogInformation("Running in {Environment} environment", environment.Environment);
 
-	var seeder = environment.Environment switch
-	{
-		"Development" => DateTime.Now.Ticks,
-		"Production" => DateTime.Today.Ticks,
-		_ => throw new NotImplementedException(),
-	};
+	DateTime currentGameTimestamp, nextGameTimestamp;
 
-	return new GameSeeder(() => (int)(seeder % Math.Pow(2, 31)));
+	switch (environment.Environment)
+	{
+		case "Development":
+			currentGameTimestamp = DateTime.Now;
+			nextGameTimestamp = DateTime.Now.AddHours(1);
+			break;
+		case "Production":
+			currentGameTimestamp = DateTime.Today;
+			nextGameTimestamp = DateTime.Today.AddDays(1);
+			break;
+		default:
+			throw new NotImplementedException();
+	}
+
+	var seeder = (int)(currentGameTimestamp.Ticks % Math.Pow(2, 31));
+
+	return new GameSeeder(() => seeder, currentGameTimestamp, nextGameTimestamp);
 });
 
 builder.Services.AddSingleton<LanguageSnippetProvider>(sp =>

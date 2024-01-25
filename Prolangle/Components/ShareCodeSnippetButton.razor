@@ -1,0 +1,37 @@
+@using Prolangle.Languages.Framework
+@using Humanizer
+
+@inject IJSRuntime JsRuntime
+
+<Button @onclick="OnClicked">
+	@ChildContent
+</Button>
+
+<Snackbar @ref="_snackbar">
+	<SnackbarBody>
+		@_snackbarMessage
+	</SnackbarBody>
+</Snackbar>
+
+@code {
+
+	[Parameter]
+	public required RenderFragment ChildContent { get; set; }
+
+	[Parameter]
+	public required IReadOnlyList<ILanguage> RevealedLanguages { get; set; }
+
+	Snackbar _snackbar = null!;
+	string _snackbarMessage = "";
+
+	private async Task OnClicked()
+	{
+		var shareContent = $"Found today's #prolangle language in {"attempt".ToQuantity(RevealedLanguages.Count)}!\n\n" +
+		                   "Try it yourself at https://prolangle.ricardoboss.de/Snippets";
+
+		_snackbarMessage = await JsRuntime!.InvokeAsync<string>("shareResult", shareContent);
+
+		await _snackbar.Show()!;
+	}
+
+}

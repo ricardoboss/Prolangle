@@ -15,6 +15,16 @@
 @if (_won)
 {
 	<Heading Size="HeadingSize.Is3">You won!</Heading>
+
+	<Div Padding="Padding.Is1.FromBottom">
+		<ShareCodeSnippetButton RevealedLanguages="RevealedLanguages">
+			Share results
+		</ShareCodeSnippetButton>
+	</Div>
+
+	<Div Padding="Padding.Is1.FromBottom">
+		<NextGameTimer />
+	</Div>
 }
 else
 {
