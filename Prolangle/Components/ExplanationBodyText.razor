@@ -10,12 +10,12 @@
 
 	var desc = MetadataProvider.ResolveDescription(Value);
 
-	<Div Margin="Margin.Is3.FromBottom">
+	<Div Margin="Margin.Is3.FromBottom.Is3.FromStart">
 		<Heading Size="HeadingSize.Is5" Margin="Margin.Is1.FromBottom">
 			@flagName
 		</Heading>
 
-		<Paragraph>
+		<Paragraph Margin="Margin.Is3.FromStart">
 			@if (!string.IsNullOrWhiteSpace(desc))
 			{
 				@desc
