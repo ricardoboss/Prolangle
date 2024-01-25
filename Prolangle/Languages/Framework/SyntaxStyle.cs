@@ -8,6 +8,8 @@ public enum SyntaxStyle
 	None,
 	Other,
 
+	[Description("In the assembly syntax style, each line starts with a short " +
+	             "command string, optionally followed by one or more parameters.")]
 	Assembly,
 
 	[Description("The C syntax style is perhaps most recognizable by blocks " +
