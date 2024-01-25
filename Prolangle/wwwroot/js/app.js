@@ -25,7 +25,11 @@ async function shareResult(text) {
         return "Result copied to clipboard.";
     }
 
-    await navigator.share(shareData);
+    try {
+        await navigator.share(shareData);
+    } catch (e) {
+        console.warn('Error occurred during share sheet: ', e);
+    }
 
     return "Share dialog opened.";
 }
