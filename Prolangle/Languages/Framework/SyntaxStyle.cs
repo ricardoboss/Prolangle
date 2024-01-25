@@ -8,9 +8,8 @@ public enum SyntaxStyle
 	None,
 	Other,
 
-	[Description("In the assembly syntax style, you use mnemonics representing " +
-	             "machine instructions and can pass them arguments in the " +
-	             "form of registers, memory addresses, or immediate values.")]
+	[Description("In the assembly syntax style, each line starts with a short " +
+	             "command string, optionally followed by one or more parameters.")]
 	Assembly,
 
 	[Description("The C syntax style is perhaps most recognizable by blocks " +
