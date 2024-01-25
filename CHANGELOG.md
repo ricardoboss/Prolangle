@@ -1,3 +1,7 @@
+# _Waiting for deployment_
+
+* Snippets Game Visual Rework https://github.com/ricardoboss/Prolangle/pull/114
+
 # 2024-01-25.1
 
 * Configure as PWA https://github.com/ricardoboss/Prolangle/pull/67
