@@ -1,3 +1,20 @@
-# Changelog
+# 2024-01-25.1
 
-* Initial entry. Add your changes _above_.
+* #67
+* #112
+* #106
+* #109
+* #108
+* #102
+* #99
+* #104
+* #103
+* #102
+
+# 2024-01-21.1
+
+* #100
+* #96
+* #70
+
+Older deployments are not documented.
