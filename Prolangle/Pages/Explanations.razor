@@ -12,6 +12,14 @@
 <hr />
 
 <Div>
+	<Heading Size="HeadingSize.Is4" id="applications">Known for building / Applications</Heading>
+
+	@foreach (Applications application in Enum.GetValues<Applications>()
+		          .OrderBy(t => t.ToString()))
+	{
+		<ExplanationBodyText Value="@application"/>
+	}
+
 	<Heading Size="HeadingSize.Is4" id="syntax-styles">Syntax styles</Heading>
 
 	@foreach (SyntaxStyle syntaxStyle in Enum.GetValues<SyntaxStyle>()
