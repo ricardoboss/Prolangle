@@ -42,7 +42,7 @@ public enum Applications
 	[Description("This language is commonly used to write applications for education purposes.")]
 	Education = 1 << 12,
 
-	[Description("This language is commonly used to write applications for traning, developing and using artificial intelligence.")]
+	[Description("This language is commonly used to write applications for training, developing and using artificial intelligence.")]
 	Ai = 1 << 13,
 
 	[Description("This language is commonly used to write applications for scientific purposes.")]
