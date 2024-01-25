@@ -9,6 +9,34 @@
 @inject GameSeeder GameSeeder
 @inject LanguageSnippetProvider LanguageSnippetProvider
 
+<style>
+	code {
+		background: transparent;
+	}
+
+	.snippet-language {
+		padding: 0.5em;
+    	border-radius: 0.5em;
+    	color: var(--color-on-match-inner);
+	}
+
+	.snippet-language > span {
+		padding: 0.3em 0.5em;
+        background: var(--color-match-inner);
+        border-radius: 0.35em;
+    }
+
+	.snippet-language-match {
+		color: var(--color-on-exact-match);
+		background-color: var(--color-exact-match);
+	}
+
+	.snippet-language-no-match {
+		color: var(--color-on-no-match);
+		background-color: var(--color-no-match);
+	}
+</style>
+
 <Heading Size="HeadingSize.Is1">Guess a Language</Heading>
 <Heading Size="HeadingSize.Is2">…based on a sample code snippet</Heading>
 
@@ -40,14 +68,18 @@ else
 <div style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 1em;">
 	@foreach (var language in RevealedLanguages)
 	{
-		@if (language == TargetLanguage)
-		{
-			<span style="background: green; padding: 0.5em">@language.Name</span>
-		}
-		else
-		{
-			<span style="background: red; padding: 0.5em">@language.Name</span>
-		}
+			@if (language == TargetLanguage)
+			{
+				<span class="snippet-language snippet-language-match">
+					<span>@language.Name</span>
+				</span>
+			}
+			else
+			{
+				<span class="snippet-language snippet-language-no-match">
+					<span>@language.Name</span>
+				</span>
+			}
 	}
 </div>
 
