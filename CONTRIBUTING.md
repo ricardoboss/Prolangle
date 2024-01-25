@@ -89,9 +89,10 @@ sections of this document to see if you should [report a bug](#report-a-bug), [r
     - If you are doing something else, name it `<short-description>`
     - The branch name should be in `kebab-case`
 3. Make your changes
-4. Commit and push your changes
-5. Create a pull request against the `main` branch
-6. Wait for the pull request to be reviewed and be ready to make changes if necessary
+4. Summarize your changes in the [`CHANGELOG.md`]
+5. Commit and push your changes
+6. Create a pull request against the `main` branch
+7. Wait for the pull request to be reviewed and be ready to make changes if necessary
 
 ## Everything else
 
@@ -119,3 +120,5 @@ By contributing to this repository, you agree to license your contributions unde
 [Snippets to add]: https://github.com/ricardoboss/Prolangle/issues/90
 
 [projects license]: ./LICENSE
+
+[`CHANGELOG.md`]: ./CHANGELOG.md
