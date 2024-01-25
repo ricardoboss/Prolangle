@@ -28,7 +28,7 @@ async function shareResult(text) {
     try {
         await navigator.share(shareData);
     } catch (e) {
-        console.warn(`Error occurred during share sheet: ${e}`);
+        console.warn('Error occurred during share sheet: ', e);
     }
 
     return "Share dialog opened.";
