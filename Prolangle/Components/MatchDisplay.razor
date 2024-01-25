@@ -25,13 +25,14 @@
 	gap: 0.25em;
 	height: 100%;
 	white-space: nowrap;
+	color: var(--color-on-match-inner);
 }
 
 .match > * {
 	display: inline-block;
 	padding: 0.25em 0.45em;
 	background: var(--color-match-inner);
-	color: black;
+	color: inherit;
 	border-radius: 0.35em;
 }
 
@@ -40,14 +41,17 @@
 }
 
 .match.Exact {
+	color: var(--color-on-exact-match);
 	background-color: var(--color-exact-match);
 }
 
 .match.Partial {
+	color: var(--color-on-partial-match);
 	background-color: var(--color-partial-match);
 }
 
 .match.None {
+	color: var(--color-on-no-match);
 	background-color: var(--color-no-match);
 }
 </style>

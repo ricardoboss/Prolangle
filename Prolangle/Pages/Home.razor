@@ -88,23 +88,29 @@ else
 
 <style>
 	.match-hint-wrap {
-	 	padding: 0.1em 0;
+	 	padding: 0.25em;
+		border-radius: 0.25em;
+	 	display: inline-block;
 	}
 
 	.match-hint {
 		background: var(--color-match-inner);
-		padding: 0.1em
+		border-radius: 0.25em;
+		padding: 0.25em 0.15em;
 	}
 
 	.match-hint-wrap.Exact {
+		color: var(--color-on-exact-match);
 		background-color: var(--color-exact-match);
 	}
 
 	.match-hint-wrap.Partial {
+		color: var(--color-on-partial-match);
 		background-color: var(--color-partial-match);
 	}
 
 	.match-hint-wrap.None {
+		color: var(--color-on-no-match);
 		background-color: var(--color-no-match);
 	}
 </style>
