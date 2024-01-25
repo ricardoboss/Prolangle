@@ -25,13 +25,14 @@
 	gap: 0.25em;
 	height: 100%;
 	white-space: nowrap;
+	color: var(--color-on-match-inner);
 }
 
 .match > * {
 	display: inline-block;
 	padding: 0.25em 0.45em;
-	background: rgba(255, 255, 255, 0.25);
-	color: black;
+	background: var(--color-match-inner);
+	color: inherit;
 	border-radius: 0.35em;
 }
 
@@ -40,14 +41,17 @@
 }
 
 .match.Exact {
-	background-color: #27AE60;
+	color: var(--color-on-exact-match);
+	background-color: var(--color-exact-match);
 }
 
 .match.Partial {
-	background-color: #d4880e;
+	color: var(--color-on-partial-match);
+	background-color: var(--color-partial-match);
 }
 
 .match.None {
-	background-color: #E74C3C;
+	color: var(--color-on-no-match);
+	background-color: var(--color-no-match);
 }
 </style>

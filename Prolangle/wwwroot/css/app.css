@@ -1,6 +1,17 @@
 @import "loading-progress.css";
 @import "blazor-error-ui.css";
 
+:root {
+    --color-exact-match: #27AE60;
+    --color-on-exact-match: #000000;
+    --color-partial-match: #d4880e;
+    --color-on-partial-match: #000000;
+    --color-no-match: #E74C3C;
+    --color-on-no-match: #000000;
+    --color-match-inner: rgba(255, 255, 255, 0.25);
+    --color-on-match-inner: #000000;
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
