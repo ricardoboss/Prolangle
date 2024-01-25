@@ -1,5 +1,6 @@
 @using Prolangle.Languages.Framework
 @using System.Text
+@using Humanizer
 @using Prolangle.Models
 @using Prolangle.Services
 @inject IJSRuntime JsRuntime
@@ -27,7 +28,7 @@
 	private async Task OnClicked()
 	{
 		var comparisons = GetComparisonResults();
-		var shareContent = $"Found today's #prolangle language in {RevealedLanguages.Count} attempts!\n\n{comparisons}\nTry it yourself at https://prolangle.ricardoboss.de";
+		var shareContent = $"Found today's #prolangle language in {"attempt".ToQuantity(RevealedLanguages.Count)}!\n\n{comparisons}\nTry it yourself at https://prolangle.ricardoboss.de";
 
 		snackbarMessage = await JsRuntime!.InvokeAsync<string>("shareResult", shareContent);
 
