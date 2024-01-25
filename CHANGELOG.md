@@ -4,6 +4,8 @@
 
 # 2024-01-25.1
 
+## Features
+
 * Configure as PWA https://github.com/ricardoboss/Prolangle/pull/67
 * Add "Known For Building" descriptions to explanations page https://github.com/ricardoboss/Prolangle/pull/112
 * Add description for Assembly syntax style https://github.com/ricardoboss/Prolangle/pull/106
@@ -11,6 +13,9 @@
 * Added description for mobile applications https://github.com/ricardoboss/Prolangle/pull/108
 * Countdown until next game https://github.com/ricardoboss/Prolangle/pull/102
 * Share button for Code Snippets game https://github.com/ricardoboss/Prolangle/pull/99
+
+## Fixes
+
 * Fix comparison for Applications.None https://github.com/ricardoboss/Prolangle/pull/104
 * Catch share cancellation https://github.com/ricardoboss/Prolangle/pull/103
 
