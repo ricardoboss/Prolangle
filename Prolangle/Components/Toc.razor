@@ -13,6 +13,14 @@
 		position: sticky;
 		top: 5rem;
 	}
+
+	.toc > .title {
+		color: var(--color-secondary);
+	}
+
+	li.toc-item a:link, li.toc-item a:visited, li.toc-item a:hover, li.toc-item a:active {
+      color: var(--color-secondary);
+    }
 </style>
 
 <Div class="toc">
@@ -24,7 +32,7 @@
 			var href = $"{PageUrl}/#{section.Id}";
 			var style = section.Id == ActiveSectionId ? "font-weight: bold" : "";
 
-			<li>
+			<li class="toc-item">
 				<NavLink href="@href" style="@style">@(section.ChildContent)</NavLink>
 			</li>
 		}
