@@ -12,7 +12,7 @@ namespace Prolangle.Pages;
 
 public partial class Explanations : ComponentBase, IAsyncDisposable
 {
-	private Toc? Toc;
+	private Toc? _toc;
 
 	private IScrollSpy? _scrollSpy;
 
@@ -53,13 +53,7 @@ public partial class Explanations : ComponentBase, IAsyncDisposable
 	}
 
 	private void ScrollSpy_ScrollSectionSectionCentered(object? sender, ScrollSectionCenteredEventArgs e)
-	{
-		Console.WriteLine("section centered");
-		if (Toc is null)
-			return;
-
-		Toc.SetActiveSection(e.Id);
-	}
+		=> _toc?.SetActiveSection(e.Id);
 
 	public async ValueTask DisposeAsync()
 	{
