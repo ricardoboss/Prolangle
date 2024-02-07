@@ -1,36 +1,49 @@
 ﻿@using Blazored.Typeahead
 @using Prolangle.Languages.Framework
 
-<div>
+<style>
+	.language-selection-wrapper {
+		display: flex;
+		justify-content: space-between;
+	}
+</style>
+
+<Div class="language-selection-wrapper" Margin="Margin.Is2.OnY">
 	<BlazoredTypeahead SearchMethod="Search"
-	                   placeholder="Type the name of a language…"
-                       TValue="ILanguage"
-                       TItem="ILanguage"
-                       ShowDropDownOnFocus="true"
-                       MaximumSuggestions="100"
-                       Value="SelectedLanguage"
-                       ValueChanged="l => OnLanguageSelected.InvokeAsync(l)"
-                       ValueExpression="@(() => SelectedLanguage)">
-        <SelectedTemplate>
-            @context.Name
-        </SelectedTemplate>
-        <ResultTemplate>
-            @context.Name
-        </ResultTemplate>
-    </BlazoredTypeahead>
-</div>
+					   placeholder="Type the name of a language…"
+					   ShowDropDownOnFocus="true"
+					   MaximumSuggestions="100"
+					   @bind-Value="SelectedLanguage">
+		<SelectedTemplate>
+			@context.Name
+		</SelectedTemplate>
+		<ResultTemplate>
+			@context.Name
+		</ResultTemplate>
+	</BlazoredTypeahead>
+
+	<Button @onclick="Guess" Margin="Margin.Is2.FromStart">Guess</Button>
+</Div>
 
 @code {
 
-    private ILanguage? SelectedLanguage { get; set; }
+	private ILanguage? SelectedLanguage { get; set; }
 
-    private Task<IEnumerable<ILanguage>> Search(string query)
-        => Task.FromResult(AvailableLanguages
-            .Where(language => language.Name.Contains(query, StringComparison.OrdinalIgnoreCase)));
+	private Task<IEnumerable<ILanguage>> Search(string query)
+		=> Task.FromResult(AvailableLanguages
+			.Where(language => language.Name.Contains(query, StringComparison.OrdinalIgnoreCase)));
 
-    [Parameter]
-    public required IReadOnlyList<ILanguage> AvailableLanguages { get; set; }
+	[Parameter]
+	public required IReadOnlyList<ILanguage> AvailableLanguages { get; set; }
 
-    [Parameter]
-    public EventCallback<ILanguage> OnLanguageSelected { get; set; }
+	[Parameter]
+	public EventCallback<ILanguage> OnLanguageSelected { get; set; }
+
+	private async Task Guess()
+	{
+		await OnLanguageSelected.InvokeAsync(SelectedLanguage);
+
+		SelectedLanguage = null;
+	}
+
 }
