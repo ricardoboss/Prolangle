@@ -22,7 +22,7 @@
 		</ResultTemplate>
 	</BlazoredTypeahead>
 
-	<Button @onclick="() => OnLanguageSelected.InvokeAsync(SelectedLanguage)" Margin="Margin.Is2.FromStart">Guess</Button>
+	<Button @onclick="Guess" Margin="Margin.Is2.FromStart">Guess</Button>
 </Div>
 
 @code {
@@ -38,5 +38,12 @@
 
 	[Parameter]
 	public EventCallback<ILanguage> OnLanguageSelected { get; set; }
+
+	private async Task Guess()
+	{
+		await OnLanguageSelected.InvokeAsync(SelectedLanguage);
+
+		SelectedLanguage = null;
+	}
 
 }
