@@ -33,6 +33,7 @@ public partial class SnippetRevealer(GameSeeder gameSeeder, string sourceCode, b
 		concealedCode = concealedCode[..revealStart] + sourceCode.Substring(revealStart, revealEnd - revealStart) +
 		                concealedCode[revealEnd..];
 
+		// sets the progress to reveal for the _next_ iteration of guessing
 		RevealedProgress += 0.05;
 
 		return concealedCode;
