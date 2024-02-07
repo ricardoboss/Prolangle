@@ -19,6 +19,8 @@
 
 * Snippets Game Visual Rework https://github.com/ricardoboss/Prolangle/pull/114
 * Language selection no longer immediately submits https://github.com/ricardoboss/Prolangle/issues/76
+* The snippets game has been made harder. Previously, you saw 10% of the code, and each guess gave you another 10%.for
+Now, you initially see just 3%, and each guess gives you 5%.
 
 # 2024-01-25.1
 
