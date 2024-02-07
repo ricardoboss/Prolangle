@@ -23,52 +23,52 @@ public class SnippetRevealerTests
 	private IWebAssemblyHostEnvironment HostEnvironment { get; }
 	private LanguagesProvider LanguagesProvider { get; }
 
+	private const string Snippet = "Console.WriteLine(message); Console.WriteLine(anotherMessage);";
+
 	public static IEnumerable<object[]> TestData
 	{
 		get
 		{
 			yield return
 			[
-				"Console.WriteLine(message);",
-				"••••••••••••eL•••••••••••••",
-				"••••••••••iteLin•••••••••••",
-				"•••••••••riteLine••••••••••",
-				"••••••••WriteLine(•••••••••",
-				"••••••e.WriteLine(me•••••••",
-				"•••••le.WriteLine(mes••••••",
-				"••••ole.WriteLine(mess•••••",
-				"••nsole.WriteLine(messag•••",
-				"•onsole.WriteLine(message••"
+				"••••••••••••••••••••••••••• ••n•••••••••••••••••••••••••••••••",
+				"••••••••••••••••••••••••••• Conso•••••••••••••••••••••••••••••",
+				"••••••••••••••••••••••••••; Console•••••••••••••••••••••••••••",
+				"•••••••••••••••••••••••••); Console.••••••••••••••••••••••••••",
+				"•••••••••••••••••••••••ge); Console.Wr••••••••••••••••••••••••",
+				"••••••••••••••••••••••age); Console.Wri•••••••••••••••••••••••",
+				"••••••••••••••••••••ssage); Console.Write•••••••••••••••••••••",
+				"•••••••••••••••••••essage); Console.WriteL••••••••••••••••••••",
+				"•••••••••••••••••(message); Console.WriteLin••••••••••••••••••",
 			];
 		}
 	}
 
 	[Theory]
 	[MemberData(nameof(TestData))]
-	public void Test(string input,
-		string expected10PercentOutput,
-		string expected20PercentOutput,
-		string expected30PercentOutput,
-		string expected40PercentOutput,
-		string expected50PercentOutput,
-		string expected60PercentOutput,
-		string expected70PercentOutput,
-		string expected80PercentOutput,
-		string expected90PercentOutput)
+	public void Test(string expected3PercentOutput,
+					 string expected8PercentOutput,
+					 string expected13PercentOutput,
+					 string expected18PercentOutput,
+					 string expected23PercentOutput,
+					 string expected28PercentOutput,
+					 string expected33PercentOutput,
+					 string expected38PercentOutput,
+					 string expected43PercentOutput)
 	{
 		var seeder = new GameSeeder(() => 1_234, DateTime.MinValue, DateTime.MinValue);
 		var snippetProvider = new LanguageSnippetProvider(seeder);
-		var revealer = new SnippetRevealer(seeder, input, useJitter: false);
+		var revealer = new SnippetRevealer(seeder, Snippet, useJitter: false);
 
-		Assert.Equal(expected10PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected20PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected30PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected40PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected50PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected60PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected70PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected80PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected90PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected3PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected8PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected13PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected18PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected23PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected28PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected33PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected38PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected43PercentOutput, revealer.RevealMore());
 	}
 
 	public static IEnumerable<object[]> TestDataWithJitter
@@ -77,45 +77,43 @@ public class SnippetRevealerTests
 		{
 			yield return
 			[
-				"Console.WriteLine(message);",
-				"••••••••••it•••••••••••••••",
-				"••••••••WriteL•••••••••••••",
-				"•••••••.WriteLi••••••••••••",
-				"••••••e.WriteLin•••••••••••",
-				"•••••le.WriteLine(m••••••••",
-				"••••ole.WriteLine(me•••••••",
-				"•••sole.WriteLine(mes••••••",
-				"•onsole.WriteLine(messa••••",
-				"Console.WriteLine(messag•••"
+				"••••••••••••••••••••••••e•• ••••••••••••••••••••••••••••••••••",
+				"••••••••••••••••••••••age); ••••••••••••••••••••••••••••••••••",
+				"•••••••••••••••••••••sage); Co••••••••••••••••••••••••••••••••",
+				"••••••••••••••••••••ssage); Con•••••••••••••••••••••••••••••••",
+				"••••••••••••••••••message); Conso•••••••••••••••••••••••••••••",
+				"••••••••••••••••••message); Console•••••••••••••••••••••••••••",
+				"••••••••••••••••e(message); Console.W•••••••••••••••••••••••••",
+				"•••••••••••••••ne(message); Console.Wr••••••••••••••••••••••••",
+				"••••••••••••••ine(message); Console.Write•••••••••••••••••••••",
 			];
 		}
 	}
 
 	[Theory]
 	[MemberData(nameof(TestDataWithJitter))]
-	public void TestWithJitter(string input,
-		string expected10PercentOutput,
-		string expected20PercentOutput,
-		string expected30PercentOutput,
-		string expected40PercentOutput,
-		string expected50PercentOutput,
-		string expected60PercentOutput,
-		string expected70PercentOutput,
-		string expected80PercentOutput,
-		string expected90PercentOutput)
+	public void TestWithJitter(string expected3PercentOutput,
+							   string expected8PercentOutput,
+							   string expected13PercentOutput,
+							   string expected18PercentOutput,
+							   string expected23PercentOutput,
+							   string expected28PercentOutput,
+							   string expected33PercentOutput,
+							   string expected38PercentOutput,
+							   string expected43PercentOutput)
 	{
 		var seeder = new GameSeeder(() => 1_234, DateTime.MinValue, DateTime.MinValue);
 		var snippetProvider = new LanguageSnippetProvider(seeder);
-		var revealer = new SnippetRevealer(seeder, input, useJitter: true);
+		var revealer = new SnippetRevealer(seeder, Snippet, useJitter: true);
 
-		Assert.Equal(expected10PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected20PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected30PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected40PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected50PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected60PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected70PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected80PercentOutput, revealer.RevealMore());
-		Assert.Equal(expected90PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected3PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected8PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected13PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected18PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected23PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected28PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected33PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected38PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected43PercentOutput, revealer.RevealMore());
 	}
 }
