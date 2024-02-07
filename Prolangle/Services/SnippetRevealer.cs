@@ -7,12 +7,10 @@ namespace Prolangle.Services;
 /// <param name="useJitter">Whether to introduce random shift, rather than always reveal code from the same center.</param>
 public partial class SnippetRevealer(GameSeeder gameSeeder, string sourceCode, bool useJitter)
 {
-	private double RevealedProgress { get; set; } = 0.0;
+	private double RevealedProgress { get; set; } = 0.03;
 
 	public string RevealMore()
 	{
-		RevealedProgress += 0.1;
-
 		// replace all non-whitespaces with a bullet
 		var concealedCode = NonWhitespaceRegex().Replace(sourceCode, "•");
 
@@ -34,6 +32,8 @@ public partial class SnippetRevealer(GameSeeder gameSeeder, string sourceCode, b
 
 		concealedCode = concealedCode[..revealStart] + sourceCode.Substring(revealStart, revealEnd - revealStart) +
 		                concealedCode[revealEnd..];
+
+		RevealedProgress += 0.05;
 
 		return concealedCode;
 	}
