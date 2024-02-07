@@ -1,6 +1,7 @@
 # _Waiting for deployment_
 
 * Snippets Game Visual Rework https://github.com/ricardoboss/Prolangle/pull/114
+* Language selection no longer immediately submits #76
 
 # 2024-01-25.1
 
