@@ -4,6 +4,7 @@
 
 * Snippets Game Visual Rework https://github.com/ricardoboss/Prolangle/pull/114
 * Language selection no longer immediately submits https://github.com/ricardoboss/Prolangle/issues/76
+* The *Explanations* page now features a table of contents https://github.com/ricardoboss/Prolangle/pull/118
 
 # 2024-01-25.1
 
