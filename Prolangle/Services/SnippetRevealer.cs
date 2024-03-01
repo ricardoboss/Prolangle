@@ -15,8 +15,10 @@ public partial class SnippetRevealer(GameSeeder gameSeeder, string sourceCode, b
 		var concealedCode = NonWhitespaceRegex().Replace(sourceCode, "•");
 
 		// reveal RevealedProgress % from the middle of the snippet using the original source code
-		var revealStart = (int)(concealedCode.Length / 2f - concealedCode.Length * RevealedProgress / 2);
-		var revealEnd = (int)(concealedCode.Length / 2f + concealedCode.Length * RevealedProgress / 2);
+		var revealDivisor = Math.Max(5, concealedCode.Length * RevealedProgress);
+
+		var revealStart = (int)(concealedCode.Length / 2f - revealDivisor / 2);
+		var revealEnd = (int)(concealedCode.Length / 2f + revealDivisor / 2);
 
 		if (useJitter)
 		{
