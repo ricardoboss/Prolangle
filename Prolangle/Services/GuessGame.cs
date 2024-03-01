@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Prolangle.Extensions;
 using Prolangle.Languages.Framework;
 
 namespace Prolangle.Services;
@@ -13,25 +14,23 @@ public class GuessGame
 	{
 		Seeder = seedGenerator.Seeder;
 
-		MetadatumGameLanguage = _PickRandomLanguage(provider.Languages);
+		MetadatumGameLanguage = _PickRandomLanguage(provider.Languages, seedGenerator);
 
 		if (environment.IsDevelopment())
 			logger.LogInformation("Metadatum target language is {Language}", MetadatumGameLanguage.Name);
 
-		SnippetGameLanguage = _PickRandomLanguage(snippetProvider.SupportedLanguages);
+		SnippetGameLanguage = _PickRandomLanguage(snippetProvider.SupportedLanguages, seedGenerator);
 
 		if (environment.IsDevelopment())
 			logger.LogInformation("Snippet target language is {Language}", SnippetGameLanguage.Name);
 	}
 
-	private ILanguage _PickRandomLanguage(IEnumerable<ILanguage> availableLanguages)
+	private ILanguage _PickRandomLanguage(IEnumerable<ILanguage> availableLanguages,
+		GameSeeder seeder)
 	{
-		var random = new Random(Seeder());
-
 		ILanguage[] shuffledLanguages = availableLanguages.ToArray();
-		random.Shuffle(shuffledLanguages);
 
-		return shuffledLanguages.First();
+		return shuffledLanguages.PickWeightedRandom(seeder);
 	}
 
 	public ILanguage MetadatumGameLanguage { get; }
