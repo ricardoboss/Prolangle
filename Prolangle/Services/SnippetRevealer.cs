@@ -7,18 +7,18 @@ namespace Prolangle.Services;
 /// <param name="useJitter">Whether to introduce random shift, rather than always reveal code from the same center.</param>
 public partial class SnippetRevealer(GameSeeder gameSeeder, string sourceCode, bool useJitter)
 {
-	private double RevealedProgress { get; set; } = 0.0;
+	private double RevealedProgress { get; set; } = 0.03;
 
 	public string RevealMore()
 	{
-		RevealedProgress += 0.1;
-
 		// replace all non-whitespaces with a bullet
 		var concealedCode = NonWhitespaceRegex().Replace(sourceCode, "•");
 
 		// reveal RevealedProgress % from the middle of the snippet using the original source code
-		var revealStart = (int)(concealedCode.Length / 2f - concealedCode.Length * RevealedProgress / 2);
-		var revealEnd = (int)(concealedCode.Length / 2f + concealedCode.Length * RevealedProgress / 2);
+		var revealDivisor = Math.Max(5, concealedCode.Length * RevealedProgress);
+
+		var revealStart = (int)(concealedCode.Length / 2f - revealDivisor / 2);
+		var revealEnd = (int)(concealedCode.Length / 2f + revealDivisor / 2);
 
 		if (useJitter)
 		{
@@ -34,6 +34,9 @@ public partial class SnippetRevealer(GameSeeder gameSeeder, string sourceCode, b
 
 		concealedCode = concealedCode[..revealStart] + sourceCode.Substring(revealStart, revealEnd - revealStart) +
 		                concealedCode[revealEnd..];
+
+		// sets the progress to reveal for the _next_ iteration of guessing
+		RevealedProgress += 0.05;
 
 		return concealedCode;
 	}
