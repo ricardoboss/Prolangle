@@ -9,7 +9,7 @@ public static class LanguageEnumerablePickExtensions
 	public static ILanguage PickWeightedRandom(this IEnumerable<ILanguage> languages,
 		GameSeeder seeder)
 	{
-		var randomizer = new StaticWeightedRandomizer<ILanguage>();
+		var randomizer = new StaticWeightedRandomizer<ILanguage>(seeder.Seeder());
 
 		foreach (ILanguage language in languages)
 		{
