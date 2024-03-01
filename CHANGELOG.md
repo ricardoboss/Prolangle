@@ -1,5 +1,7 @@
 # _Waiting for deployment_
 
+* The randomly chosen languages are now weighted to show commonly-known languages less often https://github.com/ricardoboss/Prolangle/issues/121
+
 # 2024-02-07.1
 
 * Snippets Game Visual Rework https://github.com/ricardoboss/Prolangle/pull/114
