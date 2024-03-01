@@ -3,36 +3,56 @@
 @using Prolangle.Languages.Framework
 @using Prolangle.Components
 
+@code {
+	private List<ExplanationSection> Sections { get; } = [];
+}
+
+@inject NavigationManager NavigationManager
+
 <Heading Size="HeadingSize.Is3">Explanations</Heading>
 
 <Paragraph>
 	This page contains explanations of the various syntax styles and type systems different programming languages use.
 </Paragraph>
 
-<hr />
+<hr/>
 
-<Div>
-	<Heading Size="HeadingSize.Is4" id="applications">Known for building / Applications</Heading>
+<CascadingValue Value="this" IsFixed>
+	<LayoutContent>
+		<Container>
+			<Row>
+				<Column ColumnSize="ColumnSize.Is2">
+					<Toc Sections="@Sections" @ref="_toc" PageUrl="/explanations"/>
+				</Column>
 
-	@foreach (Applications application in Enum.GetValues<Applications>()
-		          .OrderBy(t => t.ToString()))
-	{
-		<ExplanationBodyText Value="@application"/>
-	}
+				<Column ColumnSize="ColumnSize.Is10">
+					<Div>
+						<ExplanationSection Size="HeadingSize.Is4" Id="applications">Known for building / Applications</ExplanationSection>
 
-	<Heading Size="HeadingSize.Is4" id="syntax-styles">Syntax styles</Heading>
+						@foreach (Applications application in Enum.GetValues<Applications>()
+							          .OrderBy(t => t.ToString()))
+						{
+							<ExplanationBodyText Value="@application"/>
+						}
 
-	@foreach (SyntaxStyle syntaxStyle in Enum.GetValues<SyntaxStyle>()
-		          .OrderBy(t => t.ToString()))
-	{
-		<ExplanationBodyText Value="@syntaxStyle"/>
-	}
+						<ExplanationSection Size="HeadingSize.Is4" Id="syntax-styles">Syntax styles</ExplanationSection>
 
-	<Heading Size="HeadingSize.Is4" id="type-systems">Type systems</Heading>
+						@foreach (SyntaxStyle syntaxStyle in Enum.GetValues<SyntaxStyle>()
+							          .OrderBy(t => t.ToString()))
+						{
+							<ExplanationBodyText Value="@syntaxStyle"/>
+						}
 
-	@foreach (TypeSystem typeSystem in Enum.GetValues<TypeSystem>()
-		          .OrderBy(t => t.ToString()))
-	{
-		<ExplanationBodyText Value="@typeSystem"/>
-	}
-</Div>
+						<ExplanationSection Size="HeadingSize.Is4" Id="type-systems">Type systems</ExplanationSection>
+
+						@foreach (TypeSystem typeSystem in Enum.GetValues<TypeSystem>()
+							          .OrderBy(t => t.ToString()))
+						{
+							<ExplanationBodyText Value="@typeSystem"/>
+						}
+					</Div>
+				</Column>
+			</Row>
+		</Container>
+	</LayoutContent>
+</CascadingValue>

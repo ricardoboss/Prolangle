@@ -3,6 +3,7 @@ using Blazorise.Bulma;
 using Blazorise.Icons.FontAwesome;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor.Services;
 using Prolangle;
 using Prolangle.Services;
 
@@ -21,6 +22,8 @@ builder.Services
 	})
 	.AddBulmaProviders()
 	.AddFontAwesomeIcons();
+
+builder.Services.AddMudBlazorScrollSpy();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddSingleton<LanguageMetadataProvider>();

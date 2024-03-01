@@ -10,6 +10,8 @@
     --color-on-no-match: #000000;
     --color-match-inner: rgba(255, 255, 255, 0.25);
     --color-on-match-inner: #000000;
+
+    --color-secondary: #666;
 }
 
 html, body {

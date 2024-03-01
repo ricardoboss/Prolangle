@@ -1,0 +1,57 @@
+@code {
+/*
+ * This heavily borrows from MudBlazor,
+ * Copyright (c) MudBlazor 2021, licensed under MIT:
+ * https://github.com/MudBlazor/MudBlazor/commit/62a4cee1a48eb97288be4d26f1e3b706d63df2bf
+ */
+}
+
+@inject NavigationManager NavigationManager
+
+<style>
+	.toc {
+		position: sticky;
+		top: 5rem;
+	}
+
+	.toc > .title {
+		color: var(--color-secondary);
+	}
+
+	li.toc-item a:link, li.toc-item a:visited, li.toc-item a:hover, li.toc-item a:active {
+      color: var(--color-secondary);
+    }
+</style>
+
+<Div class="toc">
+	<Heading Size="HeadingSize.Is5">Contents</Heading>
+
+	<ul>
+		@foreach (var section in Sections)
+		{
+			var href = $"{PageUrl}/#{section.Id}";
+			var style = section.Id == ActiveSectionId ? "font-weight: bold" : "";
+
+			<li class="toc-item">
+				<NavLink href="@href" style="@style">@(section.ChildContent)</NavLink>
+			</li>
+		}
+	</ul>
+</Div>
+
+@code {
+	string ActiveSectionId { get; set; } = "";
+
+	[Parameter]
+	public required string PageUrl { get; set; }
+
+	[Parameter]
+	public required List<ExplanationSection> Sections { get; set; }
+
+	public void SetActiveSection(string sectionId)
+	{
+		ActiveSectionId = sectionId;
+
+		StateHasChanged();
+	}
+}
