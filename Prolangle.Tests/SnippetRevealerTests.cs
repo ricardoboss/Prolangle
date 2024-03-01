@@ -23,6 +23,54 @@ public class SnippetRevealerTests
 	private IWebAssemblyHostEnvironment HostEnvironment { get; }
 	private LanguagesProvider LanguagesProvider { get; }
 
+	private const string VeryShortSnippet = "Console.WriteLine(message);";
+
+	public static IEnumerable<object[]> VeryShortTestData
+	{
+		get
+		{
+			yield return
+			[
+				"•••••••••••teLin•••••••••••",
+				"•••••••••••teLin•••••••••••",
+				"•••••••••••teLin•••••••••••",
+				"•••••••••••teLin•••••••••••",
+				"••••••••••iteLin•••••••••••",
+				"•••••••••riteLine••••••••••",
+				"•••••••••riteLine••••••••••",
+				"••••••••WriteLine(•••••••••",
+				"•••••••.WriteLine(m••••••••",
+			];
+		}
+	}
+
+	[Theory]
+	[MemberData(nameof(VeryShortTestData))]
+	public void VeryShortTest(string expected3PercentOutput,
+		string expected8PercentOutput,
+		string expected13PercentOutput,
+		string expected18PercentOutput,
+		string expected23PercentOutput,
+		string expected28PercentOutput,
+		string expected33PercentOutput,
+		string expected38PercentOutput,
+		string expected43PercentOutput)
+	{
+		var seeder = new GameSeeder(() => 1_234, DateTime.MinValue, DateTime.MinValue);
+		var snippetProvider = new LanguageSnippetProvider(seeder);
+		var revealer = new SnippetRevealer(seeder, VeryShortSnippet, useJitter: false);
+
+		Assert.Equal(expected3PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected8PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected13PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected18PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected23PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected28PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected33PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected38PercentOutput, revealer.RevealMore());
+		Assert.Equal(expected43PercentOutput, revealer.RevealMore());
+	}
+
 	private const string Snippet = "Console.WriteLine(message); Console.WriteLine(anotherMessage);";
 
 	public static IEnumerable<object[]> TestData
@@ -31,7 +79,7 @@ public class SnippetRevealerTests
 		{
 			yield return
 			[
-				"••••••••••••••••••••••••••• ••n•••••••••••••••••••••••••••••••",
+				"••••••••••••••••••••••••••• Conso•••••••••••••••••••••••••••••",
 				"••••••••••••••••••••••••••• Conso•••••••••••••••••••••••••••••",
 				"••••••••••••••••••••••••••; Console•••••••••••••••••••••••••••",
 				"•••••••••••••••••••••••••); Console.••••••••••••••••••••••••••",
@@ -77,7 +125,7 @@ public class SnippetRevealerTests
 		{
 			yield return
 			[
-				"••••••••••••••••••••••••e•• ••••••••••••••••••••••••••••••••••",
+				"••••••••••••••••••••••age); ••••••••••••••••••••••••••••••••••",
 				"••••••••••••••••••••••age); ••••••••••••••••••••••••••••••••••",
 				"•••••••••••••••••••••sage); Co••••••••••••••••••••••••••••••••",
 				"••••••••••••••••••••ssage); Con•••••••••••••••••••••••••••••••",
