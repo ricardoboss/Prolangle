@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="Prolangle.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BlazorComponentUtilities" Version="1.8.0" />
     <PackageReference Include="Blazored.Typeahead" Version="4.7.0" />
     <PackageReference Include="Blazorise.Bulma" Version="1.4.2" />

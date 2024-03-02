@@ -12,14 +12,21 @@ public static class LanguageEnumerablePickExtensions
 		var randomizer = new StaticWeightedRandomizer<ILanguage>(seeder.Seeder());
 
 		foreach (ILanguage language in languages)
-		{
-			// we weigh a language's TIOBE rating against frequency in
-			// which the language should appear
-			var weight = language.TiobeRating is null or 0 ? 100 : 100 / language.TiobeRating;
-
-			randomizer.Add(language, (int)weight);
-		}
+			randomizer.Add(language, GetWeightFromTiobeRating(language.TiobeRating));
 
 		return randomizer.NextWithReplacement();
+	}
+
+	/// <summary>
+	/// We weigh a language's TIOBE rating against the frequency in
+	/// which the language should appear. I.e., _more commonly_-used
+	/// languages become the language to guess _less_ often.
+	/// </summary>
+	internal static int GetWeightFromTiobeRating(double? tiobeRating)
+	{
+		if (tiobeRating is null or 0)
+			return 100;
+
+		return (int)(100.0 / tiobeRating.Value);
 	}
 }

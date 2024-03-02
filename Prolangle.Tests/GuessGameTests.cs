@@ -24,8 +24,9 @@ public class GuessGameTests
 	private LanguagesProvider LanguagesProvider { get; }
 
 	[Theory]
-	[InlineData(1_000, "C", "Assembly")]
-	[InlineData(1_234, "Java", "Dart")]
+	[InlineData(1_000, "STEP", "STEP")]
+	[InlineData(1_001, "Objective-C", "C#")]
+	[InlineData(1_234, "Pascal", "JavaScript")]
 	public void TestLanguages(int seed, string expectedMetadatumGameLanguage, string expectedSnippetGameLanguage)
 	{
 		var seeder = new GameSeeder(() => seed, DateTime.MinValue, DateTime.MinValue);
