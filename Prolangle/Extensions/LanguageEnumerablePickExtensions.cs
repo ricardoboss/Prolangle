@@ -27,6 +27,6 @@ public static class LanguageEnumerablePickExtensions
 		if (tiobeRating is null or 0)
 			return 100;
 
-		return (int)Math.Max(100.0 / tiobeRating.Value, 99.0);
+		return (int)Math.Min(100.0 / tiobeRating.Value, 99.0);
 	}
 }
