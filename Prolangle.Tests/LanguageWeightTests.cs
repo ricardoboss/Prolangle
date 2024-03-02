@@ -14,16 +14,16 @@ public class LanguageWeightTests
 	[InlineData(0.0, 100)]
 
 	// fictional languages
-	[InlineData(0.5, 200)]
-	[InlineData(1.0, 100)]
-	[InlineData(20.0, 99)]
+	[InlineData(0.5, 99)]
+	[InlineData(1.0, 99)]
+	[InlineData(20.0, 5)]
 
 	// real-world examples
-	[InlineData(0.47, 212)] // Dart
-	[InlineData(0.79, 126)] // Rust
-	[InlineData(1.11, 99)] // Assembly
-	[InlineData(2.9, 99)] // JS
-	[InlineData(11.44, 99)] // C
+	[InlineData(0.47, 99)] // Dart
+	[InlineData(0.79, 99)] // Rust
+	[InlineData(1.11, 90)] // Assembly
+	[InlineData(2.9, 34)] // JS
+	[InlineData(11.44, 8)] // C
 	public void TestLanguageWeight(double? tiobeRating, int expectedWeight)
 	{
 		var actualWeight = LanguageEnumerablePickExtensions.GetWeightFromTiobeRating(tiobeRating);
