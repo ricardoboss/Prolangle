@@ -1,6 +1,7 @@
 # _Waiting for deployment_
 
 * The *Explanations* page now features a table of contents https://github.com/ricardoboss/Prolangle/pull/118
+* Added TypeScript https://github.com/ricardoboss/Prolangle/pull/125
 
 # 2024-02-07.1
 
