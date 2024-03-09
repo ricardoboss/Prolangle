@@ -2,9 +2,9 @@ using Prolangle.Languages.Framework;
 
 namespace Prolangle.Snippets.Javascript;
 
-public class SimpleJavascriptSnippet : ICodeSnippet
+public class SimpleJavaScriptSnippet : ICodeSnippet
 {
-	public ILanguage Language => Languages.Javascript.Instance;
+	public ILanguage Language => Languages.JavaScript.Instance;
 
 	public string Filename => "script.js";
 

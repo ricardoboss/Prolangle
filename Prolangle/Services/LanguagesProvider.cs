@@ -31,7 +31,7 @@ public class LanguagesProvider
 			yield return GraphQl.Instance;
 			yield return Html.Instance;
 			yield return Java.Instance;
-			yield return Javascript.Instance;
+			yield return JavaScript.Instance;
 			yield return Lua.Instance;
 			yield return Markdown.Instance;
 			yield return ObjectiveC.Instance;
@@ -47,6 +47,7 @@ public class LanguagesProvider
 			yield return Sql.Instance;
 			yield return Step.Instance;
 			yield return Swift.Instance;
+			yield return TypeScript.Instance;
 			yield return VisualBasicClassic.Instance;
 			yield return VisualBasicNet.Instance;
 			yield return Xml.Instance;
