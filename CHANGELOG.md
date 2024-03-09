@@ -1,5 +1,7 @@
 # _Waiting for deployment_
 
+* Added TypeScript https://github.com/ricardoboss/Prolangle/pull/125
+
 # 2024-10-15.1
 
 * The language selection shows a clearer message if you've previously tried the same one before https://github.com/ricardoboss/Prolangle/pull/132 
