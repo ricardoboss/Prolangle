@@ -6,7 +6,7 @@
         <entry key="http://localhost:5064 ASPNETCORE_ENVIRONMENT" value="Development" />
       </map>
     </option>
-    <option name="exePath" value="$USER_HOME$/.nuget/packages/microsoft.aspnetcore.components.webassembly.devserver/8.0.0/tools/blazor-devserver.dll" />
+    <option name="exePath" value="$USER_HOME$/.nuget/packages/microsoft.aspnetcore.components.webassembly.devserver/8.0.2/tools/blazor-devserver.dll" />
     <option name="programParameters" value="" />
     <option name="projectFilePath" value="$PROJECT_DIR$/Prolangle/Prolangle.csproj" />
     <option name="projectTfm" value="net8.0" />
