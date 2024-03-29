@@ -50,6 +50,14 @@
 						{
 							<ExplanationBodyText Value="@typeSystem"/>
 						}
+
+						<ExplanationSection Size="HeadingSize.Is4" Id="paradigms">Paradigms</ExplanationSection>
+
+						@foreach (Paradigms paradigm in Enum.GetValues<Paradigms>()
+							          .OrderBy(t => t.ToString()))
+						{
+							<ExplanationBodyText Value="@paradigm"/>
+						}
 					</Div>
 				</Column>
 			</Row>
