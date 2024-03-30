@@ -4,6 +4,7 @@
 * Added the Markdown language https://github.com/ricardoboss/Prolangle/pull/129
 * Added the Scratch language https://github.com/ricardoboss/Prolangle/pull/128
 * In the *Properties* game, properties are now sorted alphabetically https://github.com/ricardoboss/Prolangle/pull/130 
+* Added the Brainfuck language
 
 # 2024-02-07.1
 
