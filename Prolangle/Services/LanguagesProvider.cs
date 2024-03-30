@@ -27,6 +27,7 @@ public class LanguagesProvider
 			yield return Java.Instance;
 			yield return Javascript.Instance;
 			yield return Lua.Instance;
+			yield return Markdown.Instance;
 			yield return ObjectiveC.Instance;
 			yield return Pascal.Instance;
 			yield return Perl.Instance;
