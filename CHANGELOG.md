@@ -3,6 +3,7 @@
 * The *Explanations* page now features a table of contents https://github.com/ricardoboss/Prolangle/pull/118
 * Added the Markdown language https://github.com/ricardoboss/Prolangle/pull/129
 * Added the Scratch language https://github.com/ricardoboss/Prolangle/pull/128
+* In the *Properties* game, properties are now sorted alphabetically. 
 
 # 2024-02-07.1
 
