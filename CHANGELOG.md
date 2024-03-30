@@ -1,7 +1,7 @@
 # _Waiting for deployment_
 
 * The *Explanations* page now features a table of contents https://github.com/ricardoboss/Prolangle/pull/118
-* Added the Markdown language 
+* Added the Markdown language https://github.com/ricardoboss/Prolangle/pull/129
 * Added the Scratch language https://github.com/ricardoboss/Prolangle/pull/128
 
 # 2024-02-07.1
