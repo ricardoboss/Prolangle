@@ -35,6 +35,7 @@ public class LanguagesProvider
 			yield return Python.Instance;
 			yield return Ruby.Instance;
 			yield return Rust.Instance;
+			yield return Scratch.Instance;
 			yield return Sql.Instance;
 			yield return Step.Instance;
 			yield return Swift.Instance;
