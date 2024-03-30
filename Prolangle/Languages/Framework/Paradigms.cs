@@ -43,4 +43,9 @@ public enum Paradigms
 	             "constructed by dragging blocks around, rather than typing " +
 	             "text. This is a form of visual programming.")]
 	BlockBased = 1 << 13,
+
+	[Description("An esoteric language isn't meant to be used in production " +
+	             "code, but was rather designed as a proof of concept, or as a " +
+	             "joke.")]
+	Esoteric = 1 << 4
 }
