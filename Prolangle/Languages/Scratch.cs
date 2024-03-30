@@ -4,6 +4,12 @@ namespace Prolangle.Languages;
 
 public class Scratch : BaseLanguage
 {
+	private Scratch()
+	{
+	}
+
+	public static Scratch Instance { get; } = new();
+
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name => "Scratch";
 	public override TypeSystem Typing => TypeSystem.Structural | TypeSystem.Dynamic | TypeSystem.Safe;
