@@ -24,7 +24,8 @@
 }
 else
 {
-	<LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
+	<LanguageSelection AvailableLanguages="@AvailableLanguages" AlreadyPickedLanguages="@RevealedLanguages"
+	                   OnLanguageSelected="@OnLanguageSelected"/>
 
 	@if (guessCount == 0)
 	{
