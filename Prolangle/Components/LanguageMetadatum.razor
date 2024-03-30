@@ -12,7 +12,11 @@
 	bool any = false;
 }
 
-@foreach (TEnum flag in Enum.GetValues(typeof(TEnum)).Cast<TEnum>().Where(c => !Exclude.HasFlag(c)))
+@foreach ((TEnum flag, string displayName) in Enum.GetValues(typeof(TEnum))
+	          .Cast<TEnum>()
+	          .Where(f => !Exclude.HasFlag(f))
+	          .Select(f => (Flag: f, displayName: f.GetDisplayNameOrFallback()))
+	          .OrderBy(x => x.displayName))
 {
 	if (!Value.HasFlag(flag) && !Overlap.HasFlag(flag))
 		continue;
@@ -34,7 +38,7 @@
 		style = "cursor: help";
 	}
 
-	string flagName = flag.GetDisplayName() ?? flag.ToString();
+	string flagName = displayName;
 
 	<ExplanationPopover Content="@desc" Title="@flagName" Url="@moreInfoUrl" class="@cssClassBuilder.Build()">
 		<span style="@style">@flagName</span>
