@@ -8,7 +8,7 @@
 	var desc = MetadataProvider.ResolveDescription(MemoryManagement);
 	var style = string.IsNullOrWhiteSpace(desc) ? "" : "border-bottom: 1px dotted black";
 
-	var flagName = MemoryManagement.GetDisplayName() ?? MemoryManagement.ToString();
+	var flagName = MemoryManagement.GetDisplayNameOrFallback();
 }
 
 <ExplanationPopover Content="@desc" Title="@flagName">

@@ -6,7 +6,7 @@ namespace Prolangle.Extensions;
 
 public static class EnumExtensions
 {
-	public static string? GetDisplayName<TEnum>(this TEnum value)
+	private static string? GetDisplayName<TEnum>(this TEnum value)
 		where TEnum : System.Enum
 	{
 		var memberInfo = typeof(TEnum).GetMember(value.ToString());
@@ -14,5 +14,11 @@ public static class EnumExtensions
 		var attr = enumValueMemberInfo?.GetCustomAttribute<DisplayAttribute>();
 
 		return attr?.Name;
+	}
+
+	public static string GetDisplayNameOrFallback<TEnum>(this TEnum value)
+		where TEnum : System.Enum
+	{
+		return value.GetDisplayName() ?? value.ToString();
 	}
 }

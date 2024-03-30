@@ -6,7 +6,7 @@
 @typeparam TEnum where TEnum : System.Enum
 
 @{
-	var flagName = Value.GetDisplayName() ?? Value.ToString();
+	var flagName = Value.GetDisplayNameOrFallback();
 
 	var desc = MetadataProvider.ResolveDescription(Value);
 
