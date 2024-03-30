@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Reflection;
 using NetArchTest.Rules;
 using Prolangle.Languages.Framework;
@@ -24,11 +25,12 @@ public class LanguageTests
 	{
 		IEnumerable<ConstructorInfo> constructors =
 			Types.InAssembly(typeof(BaseLanguage).Assembly)
-			.That().Inherit(typeof(BaseLanguage))
-			.GetTypes()
-			.SelectMany(t => t.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance));
+				.That().Inherit(typeof(BaseLanguage))
+				.GetTypes()
+				.SelectMany(
+					t => t.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance));
 
-		Assert.True(constructors.All(ctor=>!ctor.IsPublic));
+		Assert.True(constructors.All(ctor => !ctor.IsPublic));
 	}
 
 	/// <summary>
@@ -46,5 +48,20 @@ public class LanguageTests
 		var providedLanguages = new LanguagesProvider().Languages;
 
 		Assert.Equal(expectedLanguages.Count(), providedLanguages.Count());
+	}
+
+	[Fact]
+	public void LanguageNamesAreUnique()
+	{
+		var types = Types.InAssembly(typeof(BaseLanguage).Assembly)
+			.That().Inherit(typeof(BaseLanguage))
+			.GetTypes()
+			.ToImmutableList();
+
+		var languageNames = types
+			.Select(t => ((BaseLanguage)Activator.CreateInstance(t, nonPublic: true))!.Name)
+			.Distinct();
+
+		Assert.Equal(types.Count, languageNames.Count());
 	}
 }
