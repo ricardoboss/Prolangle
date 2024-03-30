@@ -16,6 +16,7 @@ public class LanguagesProvider
 		{
 			yield return AppleScript.Instance;
 			yield return Assembly.Instance;
+			yield return Bash.Instance;
 			yield return Basic.Instance;
 			yield return Brainfuck.Instance;
 			yield return C.Instance;
