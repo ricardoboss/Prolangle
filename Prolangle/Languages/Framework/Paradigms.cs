@@ -47,5 +47,5 @@ public enum Paradigms
 	[Description("An esoteric language isn't meant to be used in production " +
 	             "code, but was rather designed as a proof of concept, or as a " +
 	             "joke.")]
-	Esoteric = 1 << 4
+	Esoteric = 1 << 14
 }
