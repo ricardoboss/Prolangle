@@ -1,5 +1,7 @@
 # _Waiting for deployment_
 
+* Fixed an issue with the esoteric languages
+
 # 2024-09-04.1
 
 * The *Explanations* page now features a table of contents https://github.com/ricardoboss/Prolangle/pull/118
