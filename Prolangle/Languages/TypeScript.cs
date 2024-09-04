@@ -20,8 +20,7 @@ public class TypeScript : BaseLanguage
 	public override Applications KnownForBuilding => Applications.Client | Applications.Server | Applications.Web;
 
 	public override Paradigms Paradigms =>
-		Paradigms.EventDriven | Paradigms.Functional | Paradigms.Imperative |
-		Paradigms.Procedural | Paradigms.ObjectOriented | Paradigms.Generic;
+		Paradigms.EventDriven | Paradigms.Functional | Paradigms.ObjectOriented | Paradigms.Generic;
 
 	public override double? TiobeRating => 0.37;
 	public override int AppearanceYear => 2012;
