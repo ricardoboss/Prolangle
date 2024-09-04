@@ -12,7 +12,7 @@ public class TypeScript : BaseLanguage
 
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name => "TypeScript";
-	public override TypeSystem Typing => TypeSystem.Duck | TypeSystem.Structural | TypeSystem.Strong | TypeSystem.Static;
+	public override TypeSystem Typing => TypeSystem.Structural | TypeSystem.Strong | TypeSystem.Static;
 	public override bool Compiled => true;
 	public override MemoryManagement MemoryManagement => MemoryManagement.TracingGarbageCollection;
 	public override SyntaxStyle SyntaxStyle => SyntaxStyle.C;
