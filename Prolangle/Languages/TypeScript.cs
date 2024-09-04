@@ -17,10 +17,7 @@ public class TypeScript : BaseLanguage
 	public override MemoryManagement MemoryManagement => MemoryManagement.TracingGarbageCollection;
 	public override SyntaxStyle SyntaxStyle => SyntaxStyle.C;
 
-	public override Applications KnownForBuilding =>
-		Applications.Client | Applications.Configuration |
-		Applications.Server | Applications.Web |
-		Applications.Scripts;
+	public override Applications KnownForBuilding => Applications.Client | Applications.Server | Applications.Web;
 
 	public override Paradigms Paradigms =>
 		Paradigms.EventDriven | Paradigms.Functional | Paradigms.Imperative |
