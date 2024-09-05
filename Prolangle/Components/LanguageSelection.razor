@@ -23,7 +23,7 @@
 		<NotFoundTemplate>
 			<span style="font-style: italic">
 				@if (!string.IsNullOrWhiteSpace(Query) &&
-				     AlreadyPickedLanguages.Any(l => l.Name.Equals(Query, StringComparison.InvariantCultureIgnoreCase)))
+				     RevealedLanguages.Any(l => l.Name.Equals(Query, StringComparison.InvariantCultureIgnoreCase)))
 				{
 					<span>You've already tried that language!</span>
 				}
@@ -54,7 +54,7 @@
 	public required IReadOnlyList<ILanguage> AvailableLanguages { get; set; }
 
 	[Parameter]
-	public required IReadOnlyList<ILanguage> AlreadyPickedLanguages { get; set; }
+	public required IReadOnlyList<ILanguage> RevealedLanguages { get; set; }
 
 	[Parameter]
 	public EventCallback<ILanguage> OnLanguageSelected { get; set; }
