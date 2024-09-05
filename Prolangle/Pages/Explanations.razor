@@ -27,7 +27,7 @@
 
 				<Column ColumnSize="ColumnSize.Is10">
 					<Div>
-						<ExplanationSection Size="HeadingSize.Is4" Id="applications">Known for building / Applications</ExplanationSection>
+						<ExplanationSection IsFirst="true" Size="HeadingSize.Is4" Id="applications">Known for building / Applications</ExplanationSection>
 
 						@foreach (Applications application in Enum.GetValues<Applications>()
 							          .Except([Applications.None, Applications.Other])
