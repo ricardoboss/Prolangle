@@ -56,35 +56,32 @@ public enum Paradigms
 	             "iterate over them.")]
 	Reflective = 1 << 8,
 
-	[Display(Name = "Task-driven")]
-	TaskDriven = 1 << 9,
-
 	[Description("A concurrent language offers strong language-level support " +
 	             "for calls to run concurrently, i.e., for them to overlap " +
 	             "each other, and still succeed safely.")]
-	Concurrent = 1 << 10,
+	Concurrent = 1 << 9,
 
 	[Display(Name = "Natural language")]
 	[Description("In a natural programming language, the syntax is heavily " +
 	             "inspired by 'natural languages', i.e. languages such as " +
 	             "English that humans use to communicate with each other.")]
-	NaturalLanguage = 1 << 11,
+	NaturalLanguage = 1 << 10,
 
 	[Display(Name = "Object-based")]
 	[Description("An object-based language is similar to an object-oriented " +
 	             "language, but does not support the full feature set " +
 	             "generally expected from OOP. For example, it may lack " +
 	             "implementation inheritance.")]
-	ObjectBased = 1 << 12,
+	ObjectBased = 1 << 11,
 
 	[Display(Name = "Block-based")]
 	[Description("A block-based language is one in which the program is " +
 	             "constructed by dragging blocks around, rather than typing " +
 	             "text. This is a form of visual programming.")]
-	BlockBased = 1 << 13,
+	BlockBased = 1 << 12,
 
 	[Description("An esoteric language isn't meant to be used in production " +
 	             "code, but was rather designed as a proof of concept, or as a " +
 	             "joke.")]
-	Esoteric = 1 << 14
+	Esoteric = 1 << 13
 }
