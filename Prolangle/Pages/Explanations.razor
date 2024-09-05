@@ -27,9 +27,10 @@
 
 				<Column ColumnSize="ColumnSize.Is10">
 					<Div>
-						<ExplanationSection Size="HeadingSize.Is4" Id="applications">Known for building / Applications</ExplanationSection>
+						<ExplanationSection IsFirst="true" Size="HeadingSize.Is4" Id="applications">Known for building / Applications</ExplanationSection>
 
 						@foreach (Applications application in Enum.GetValues<Applications>()
+							          .Except([Applications.None, Applications.Other])
 							          .OrderBy(t => t.ToString()))
 						{
 							<ExplanationBodyText Value="@application"/>
@@ -38,6 +39,7 @@
 						<ExplanationSection Size="HeadingSize.Is4" Id="syntax-styles">Syntax styles</ExplanationSection>
 
 						@foreach (SyntaxStyle syntaxStyle in Enum.GetValues<SyntaxStyle>()
+							          .Except([SyntaxStyle.None, SyntaxStyle.Other])
 							          .OrderBy(t => t.ToString()))
 						{
 							<ExplanationBodyText Value="@syntaxStyle"/>
@@ -46,9 +48,19 @@
 						<ExplanationSection Size="HeadingSize.Is4" Id="type-systems">Type systems</ExplanationSection>
 
 						@foreach (TypeSystem typeSystem in Enum.GetValues<TypeSystem>()
+							          .Except([TypeSystem.None, TypeSystem.Other])
 							          .OrderBy(t => t.ToString()))
 						{
 							<ExplanationBodyText Value="@typeSystem"/>
+						}
+
+						<ExplanationSection Size="HeadingSize.Is4" Id="paradigms">Paradigms</ExplanationSection>
+
+						@foreach (Paradigms paradigm in Enum.GetValues<Paradigms>()
+							          .Except([Paradigms.None])
+							          .OrderBy(t => t.ToString()))
+						{
+							<ExplanationBodyText Value="@paradigm"/>
 						}
 					</Div>
 				</Column>

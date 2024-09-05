@@ -1,6 +1,7 @@
 # _Waiting for deployment_
 
 * The language selection shows a clearer message if you've previously tried the same one before https://github.com/ricardoboss/Prolangle/pull/132 
+* Lots more language paradigms have been explained https://github.com/ricardoboss/Prolangle/pull/127
 
 # 2024-09-04.2
 

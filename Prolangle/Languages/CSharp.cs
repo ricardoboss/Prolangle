@@ -27,8 +27,7 @@ public class CSharp : BaseLanguage
 
 	public override Paradigms Paradigms { get; } = Paradigms.ObjectOriented | Paradigms.Functional |
 	                                               Paradigms.Structured | Paradigms.Imperative | Paradigms.Generic |
-	                                               Paradigms.Reflective | Paradigms.EventDriven | Paradigms.TaskDriven |
-	                                               Paradigms.Concurrent;
+	                                               Paradigms.Reflective | Paradigms.EventDriven | Paradigms.Concurrent;
 
 	public override double? TiobeRating { get; } = 7.3;
 	public override int AppearanceYear { get; } = 2000;
