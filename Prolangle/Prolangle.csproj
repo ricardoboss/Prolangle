@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="Prolangle.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BlazorComponentUtilities" Version="1.8.0" />
     <PackageReference Include="Blazored.Typeahead" Version="4.7.0" />
     <PackageReference Include="Blazorise.Bulma" Version="1.4.2" />
@@ -17,6 +21,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.2" PrivateAssets="all" />
     <PackageReference Include="MudBlazor" Version="6.17.0" />
+    <PackageReference Include="WeightedRandomizer" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
