@@ -5,7 +5,7 @@ using Prolangle.Languages.Framework;
 
 namespace Prolangle.Services;
 
-public class LanguagesProvider : ILanguagesProvider
+public class DefaultLanguagesProvider : ILanguagesProvider
 {
 	private readonly Lazy<IReadOnlyList<ILanguage>> languages = new(() => LanguageEnumerable.ToList());
 

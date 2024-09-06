@@ -1,10 +1,7 @@
 using System.Text.Json.Serialization;
-using Prolangle.Interfaces;
-using Prolangle.Languages.Framework;
-using Prolangle.Models;
 using Prolangle.Services;
 
-namespace Prolangle;
+namespace Prolangle.Serialization;
 
 [JsonSerializable(typeof(Dictionary<int, PropertiesGuessGame>))]
 [JsonSerializable(typeof(Dictionary<int, SnippetsGuessGame>))]

@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using Prolangle;
 using Prolangle.Interfaces;
+using Prolangle.Serialization;
 using Prolangle.Services;
+using AppSerializerContext = Prolangle.Serialization.AppSerializerContext;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -28,10 +30,19 @@ builder.Services
 
 builder.Services.AddMudBlazorScrollSpy();
 
+var languagesProvider = new DefaultLanguagesProvider();
+
+builder.Services.AddSingleton<ILanguagesProvider>(languagesProvider);
 builder.Services.AddBlazoredLocalStorageAsSingleton(o =>
 {
 	foreach (IJsonTypeInfoResolver resolver in AppSerializerContext.Default.Options.TypeInfoResolverChain)
 		o.JsonSerializerOptions.TypeInfoResolverChain.Add(resolver);
+
+	var languageConverter = new LanguageConverter(languagesProvider);
+	o.JsonSerializerOptions.Converters.Add(languageConverter);
+
+	var gameSeedConverter = new GameSeedConverter();
+	o.JsonSerializerOptions.Converters.Add(gameSeedConverter);
 });
 builder.Services.AddSingleton<IGameHistoryManager, LocalStorageGameHistoryManager>();
 builder.Services.AddSingleton<IGuessGameProvider, DefaultGuessGameProvider>();
@@ -41,7 +52,6 @@ builder.Services.AddSingleton<DefaultTargetChooser>();
 builder.Services.AddSingleton<ITargetLanguageChooser>(sp => sp.GetRequiredService<DefaultTargetChooser>());
 builder.Services.AddSingleton<ITargetSnippetChooser>(sp => sp.GetRequiredService<DefaultTargetChooser>());
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddSingleton<ILanguagesProvider, LanguagesProvider>();
+builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new(builder.HostEnvironment.BaseAddress) });
 
 await builder.Build().RunAsync();
