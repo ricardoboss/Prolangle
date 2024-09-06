@@ -14,8 +14,8 @@ public class MetadatumComparisonServiceTests
 	[InlineData("Java", "Java",  TypeSystem.Safe | TypeSystem.Strong | TypeSystem.Static | TypeSystem.Manifest | TypeSystem.Nominal)]
 	public void TestTypingOverlap(string thisLanguageName, string thatLanguageName, TypeSystem expectedOverlap)
 	{
-		ILanguage thisLanguage = LanguagesProvider.Languages.Single(l => l.Name == thisLanguageName);
-		ILanguage thatLanguage = LanguagesProvider.Languages.Single(l => l.Name == thatLanguageName);
+		ILanguage thisLanguage = LanguagesProvider.PropertiesGameLanguages.Single(l => l.Name == thisLanguageName);
+		ILanguage thatLanguage = LanguagesProvider.PropertiesGameLanguages.Single(l => l.Name == thatLanguageName);
 
 		TypeSystem overlap = new MetadatumComparisonService(thisLanguage).TypingOverlap(thatLanguage);
 
@@ -26,8 +26,8 @@ public class MetadatumComparisonServiceTests
 	[InlineData("SQL", "SQL", MatchType.Exact)]
 	public void TestApplicationsMatch(string thisLanguageName, string thatLanguageName, MatchType expectedMatchType)
 	{
-		ILanguage thisLanguage = LanguagesProvider.Languages.Single(l => l.Name == thisLanguageName);
-		ILanguage thatLanguage = LanguagesProvider.Languages.Single(l => l.Name == thatLanguageName);
+		ILanguage thisLanguage = LanguagesProvider.PropertiesGameLanguages.Single(l => l.Name == thisLanguageName);
+		ILanguage thatLanguage = LanguagesProvider.PropertiesGameLanguages.Single(l => l.Name == thatLanguageName);
 
 		MatchType matchType = new MetadatumComparisonService(thisLanguage).ApplicationsMatch(thatLanguage);
 

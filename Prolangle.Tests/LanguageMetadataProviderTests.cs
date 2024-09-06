@@ -11,7 +11,7 @@ public class LanguageMetadataProviderTests
 	public void TestDescription(Applications enumValue, bool expectNonEmptyResult)
 	{
 		var provider = new LanguageMetadataProvider();
-		var result = provider.ResolveDescription(enumValue);
+		var result = LanguageMetadataProvider.ResolveDescription(enumValue);
 
 		if (expectNonEmptyResult)
 		{
@@ -30,7 +30,7 @@ public class LanguageMetadataProviderTests
 	public void TestMoreInfoUrl(MemoryManagement enumValue, bool expectNonEmptyResult)
 	{
 		var provider = new LanguageMetadataProvider();
-		var result = provider.ResolveMoreInfoUrl(enumValue);
+		var result = LanguageMetadataProvider.ResolveMoreInfoUrl(enumValue);
 
 		if (expectNonEmptyResult)
 		{

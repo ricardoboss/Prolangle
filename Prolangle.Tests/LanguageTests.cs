@@ -45,7 +45,7 @@ public class LanguageTests
 			.That().Inherit(typeof(BaseLanguage))
 			.GetTypes();
 
-		var providedLanguages = new LanguagesProvider().Languages;
+		var providedLanguages = new LanguagesProvider().PropertiesGameLanguages;
 
 		Assert.Equal(expectedLanguages.Count(), providedLanguages.Count());
 	}

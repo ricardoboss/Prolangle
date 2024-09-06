@@ -2,10 +2,8 @@
 @using Prolangle.Services
 @using Prolangle.Extensions
 
-@inject LanguageMetadataProvider MetadataProvider
-
 @{
-	var desc = MetadataProvider.ResolveDescription(MemoryManagement);
+	var desc = LanguageMetadataProvider.ResolveDescription(MemoryManagement);
 	var style = string.IsNullOrWhiteSpace(desc) ? "" : "border-bottom: 1px dotted black";
 
 	var flagName = MemoryManagement.GetDisplayNameOrFallback();

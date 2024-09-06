@@ -4,8 +4,6 @@
 @using Prolangle.Languages.Framework
 @using Prolangle.Services
 
-@inject LanguageMetadataProvider MetadataProvider;
-
 @typeparam TEnum where TEnum : System.Enum
 
 @{
@@ -28,8 +26,8 @@
 	if (Overlap.HasFlag(flag))
 		cssClassBuilder.AddClass("overlap");
 
-	var desc = MetadataProvider.ResolveDescription(flag);
-	var moreInfoUrl = MetadataProvider.ResolveMoreInfoUrl(flag);
+	var desc = LanguageMetadataProvider.ResolveDescription(flag);
+	var moreInfoUrl = LanguageMetadataProvider.ResolveMoreInfoUrl(flag);
 
 	var style = "";
 	if (!string.IsNullOrWhiteSpace(desc))

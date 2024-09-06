@@ -4,10 +4,10 @@ using Prolangle.Languages.Framework;
 
 namespace Prolangle.Services;
 
-public class LanguageMetadataProvider
+public static class LanguageMetadataProvider
 {
-	public string? ResolveDescription<TEnum>(TEnum value)
-		where TEnum : System.Enum
+	public static string? ResolveDescription<TEnum>(TEnum value)
+		where TEnum : Enum
 	{
 		var memberInfo = typeof(TEnum).GetMember(value.ToString());
 		var enumValueMemberInfo = memberInfo.FirstOrDefault(m => m.DeclaringType == typeof(TEnum));
@@ -16,7 +16,7 @@ public class LanguageMetadataProvider
 		return attr?.Description ?? null;
 	}
 
-	public string? ResolveMoreInfoUrl<TEnum>(TEnum value)
+	public static string? ResolveMoreInfoUrl<TEnum>(TEnum value)
 		where TEnum : Enum
 	{
 		var memberInfo = typeof(TEnum).GetMember(value.ToString());

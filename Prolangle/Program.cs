@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization.Metadata;
+using Blazored.LocalStorage;
 using Blazorise;
 using Blazorise.Bulma;
 using Blazorise.Icons.FontAwesome;
@@ -5,6 +7,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using Prolangle;
+using Prolangle.Interfaces;
 using Prolangle.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -25,57 +28,20 @@ builder.Services
 
 builder.Services.AddMudBlazorScrollSpy();
 
+builder.Services.AddBlazoredLocalStorageAsSingleton(o =>
+{
+	foreach (IJsonTypeInfoResolver resolver in AppSerializerContext.Default.Options.TypeInfoResolverChain)
+		o.JsonSerializerOptions.TypeInfoResolverChain.Add(resolver);
+});
+builder.Services.AddSingleton<IGameHistoryManager, LocalStorageGameHistoryManager>();
+builder.Services.AddSingleton<IGuessGameProvider, DefaultGuessGameProvider>();
+builder.Services.AddSingleton<ISnippetsProvider, DefaultSnippetsProvider>();
+
+builder.Services.AddSingleton<DefaultTargetChooser>();
+builder.Services.AddSingleton<ITargetLanguageChooser>(sp => sp.GetRequiredService<DefaultTargetChooser>());
+builder.Services.AddSingleton<ITargetSnippetChooser>(sp => sp.GetRequiredService<DefaultTargetChooser>());
+
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddSingleton<LanguageMetadataProvider>();
-builder.Services.AddSingleton<LanguagesProvider>();
-builder.Services.AddSingleton<GameSeeder>(sp =>
-{
-	var logger = sp.GetRequiredService<ILogger<GameSeeder>>();
-
-	var environment = sp.GetRequiredService<IWebAssemblyHostEnvironment>();
-
-	logger.LogInformation("Running in {Environment} environment", environment.Environment);
-
-	DateTime currentGameTimestamp, nextGameTimestamp;
-
-	switch (environment.Environment)
-	{
-		case "Development":
-			currentGameTimestamp = DateTime.Now;
-			nextGameTimestamp = DateTime.Now.AddHours(1);
-			break;
-		case "Production":
-			currentGameTimestamp = DateTime.Today;
-			nextGameTimestamp = DateTime.Today.AddDays(1);
-			break;
-		default:
-			throw new NotImplementedException();
-	}
-
-	var seeder = (int)(currentGameTimestamp.Ticks % Math.Pow(2, 31));
-
-	return new GameSeeder(() => seeder, currentGameTimestamp, nextGameTimestamp);
-});
-
-builder.Services.AddSingleton<LanguageSnippetProvider>(sp =>
-{
-	var seeder = sp.GetRequiredService<GameSeeder>();
-
-	return new LanguageSnippetProvider(seeder);
-});
-
-builder.Services.AddSingleton<GuessGame>(sp =>
-{
-	var lp = sp.GetRequiredService<LanguagesProvider>();
-	var logger = sp.GetRequiredService<ILogger<GuessGame>>();
-
-	var environment = sp.GetRequiredService<IWebAssemblyHostEnvironment>();
-
-	var seeder = sp.GetRequiredService<GameSeeder>();
-
-	var snippetProvider = sp.GetRequiredService<LanguageSnippetProvider>();
-
-	return new GuessGame(lp, snippetProvider, logger, seeder, environment);
-});
+builder.Services.AddSingleton<ILanguagesProvider, LanguagesProvider>();
 
 await builder.Build().RunAsync();

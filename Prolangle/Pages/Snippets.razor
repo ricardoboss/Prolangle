@@ -1,13 +1,11 @@
 @page "/Snippets"
-
 @using Prolangle.Components
-@using Prolangle.Services
+@using Prolangle.Interfaces
 @using Prolangle.Languages.Framework
+@using Prolangle.Services
 @using Prolangle.Snippets
 
-@inject GuessGame GuessGame
-@inject GameSeeder GameSeeder
-@inject LanguageSnippetProvider LanguageSnippetProvider
+@inject IGuessGameProvider GameProvider
 
 <style>
 	code {
@@ -40,7 +38,7 @@
 <Heading Size="HeadingSize.Is1">Guess a Language</Heading>
 <Heading Size="HeadingSize.Is2">…based on a sample code snippet</Heading>
 
-@if (_won)
+@if (Won)
 {
 	<Heading Size="HeadingSize.Is3">You won!</Heading>
 
@@ -61,7 +59,7 @@ else
 
 <code>
 	<pre>
-        @_concealedSourceCode
+        @concealedSourceCode
     </pre>
 </code>
 
@@ -85,42 +83,39 @@ else
 
 @code
 {
-	private IReadOnlyList<ILanguage> AvailableLanguages => LanguageSnippetProvider.SupportedLanguages.Where(l => !RevealedLanguages.Contains(l)).ToList();
-	private List<ILanguage> RevealedLanguages { get; } = [];
-	private ILanguage? TargetLanguage { get; set; }
-	private ICodeSnippet? Snippet { get; set; }
-	private bool _won;
+	private ISnippetsGuessGame GuessGame { get; set; } = null!;
+	private SnippetRevealer snippetRevealer = null!;
+	private string concealedSourceCode = "";
 
-	private SnippetRevealer? _snippetRevealer;
+	private IReadOnlyList<ILanguage> AvailableLanguages => GuessGame.RemainingLanguages.ToList();
+	private List<ILanguage> RevealedLanguages => GuessGame.Guesses.ToList();
+	private ILanguage TargetLanguage => GuessGame.TargetLanguage;
+	private ICodeSnippet Snippet => GuessGame.Snippet;
+	private bool Won => GuessGame.HasWon;
 
-	private string? _concealedSourceCode;
-
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
-		TargetLanguage = GuessGame!.SnippetGameLanguage;
-		Snippet = LanguageSnippetProvider!.GetSnippet(TargetLanguage);
+		await base.OnInitializedAsync();
 
-		_snippetRevealer = new SnippetRevealer(GameSeeder, Snippet.SourceCode, useJitter: true);
+		snippetRevealer = new SnippetRevealer(Snippet.SourceCode, useJitter: true);
 
-		_concealedSourceCode = _snippetRevealer.RevealMore();
+		concealedSourceCode = snippetRevealer.RevealMore();
+
+		GuessGame = await GameProvider.GetOrCreateSnippetsGame();
 	}
 
 	private void OnLanguageSelected(ILanguage language)
 	{
-		RevealedLanguages.Add(language);
+		GuessGame.GuessLanguage(language);
 
-		var result = TargetLanguage!.Id == language.Id;
-
-		if (result)
+		if (GuessGame.HasWon)
 		{
-			_won = true;
-			_snippetRevealer!.Win();
-
-			_concealedSourceCode = Snippet!.SourceCode;
+			snippetRevealer.Win();
+			concealedSourceCode = Snippet.SourceCode;
 		}
 		else
 		{
-			_concealedSourceCode = _snippetRevealer!.RevealMore();
+			concealedSourceCode = snippetRevealer.RevealMore();
 		}
 
 		StateHasChanged();

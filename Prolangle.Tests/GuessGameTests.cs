@@ -29,7 +29,7 @@ public class GuessGameTests
 	public void TestLanguages(int seed, string expectedMetadatumGameLanguage, string expectedSnippetGameLanguage)
 	{
 		var seeder = new GameSeeder(() => seed, DateTime.MinValue, DateTime.MinValue);
-		var languageSnippetProvider = new LanguageSnippetProvider(seeder);
+		var languageSnippetProvider = new DefaultSnippetsProvider(seeder);
 		var game = new GuessGame(LanguagesProvider, languageSnippetProvider, GuessGameLogger, seeder, HostEnvironment);
 
 		Assert.Equal(expectedMetadatumGameLanguage, game.MetadatumGameLanguage.Name);
