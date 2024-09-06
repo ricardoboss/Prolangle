@@ -4,6 +4,7 @@
 * Lots more language paradigms have been explained https://github.com/ricardoboss/Prolangle/pull/127
 * The snippets game has been made harder. Previously, you saw 10% of the code, and each guess gave you another 10%.
 Now, you initially see just 3%, and each guess gives you 5%.
+* Added the Smalltalk language https://github.com/ricardoboss/Prolangle/pull/136
 
 # 2024-09-04.2
 
