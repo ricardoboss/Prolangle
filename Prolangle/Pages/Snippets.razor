@@ -44,6 +44,31 @@
 {
 	<Heading Size="HeadingSize.Is3">You won!</Heading>
 
+	@if (Snippet is IAttributedCodeSnippet attributedSnippet)
+	{
+		<Paragraph Margin="Margin.Is2.FromBottom">
+			This snippet was
+
+			@if (Uri.TryCreate(attributedSnippet.Attribution, UriKind.Absolute, out Uri? uri))
+			{
+				<span> from: <a href="@uri">@uri</a></span>
+			}
+			else
+			{
+				<span> written by @attributedSnippet.Attribution</span>
+			}
+
+			@if (attributedSnippet.License is not { Length: > 0 } license)
+			{
+				<span>.</span>
+			}
+			else
+			{
+				<span>, licensed as follows: <strong style="font-weight: 500">@license</strong>.</span>
+			}
+		</Paragraph>
+	}
+
 	<Div Padding="Padding.Is1.FromBottom">
 		<ShareCodeSnippetButton RevealedLanguages="RevealedLanguages">
 			Share results
@@ -51,7 +76,7 @@
 	</Div>
 
 	<Div Padding="Padding.Is1.FromBottom">
-		<NextGameTimer />
+		<NextGameTimer/>
 	</Div>
 }
 else
@@ -69,18 +94,18 @@ else
 <div style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 1em;">
 	@foreach (var language in RevealedLanguages)
 	{
-			@if (language == TargetLanguage)
-			{
-				<span class="snippet-language snippet-language-match">
-					<span>@language.Name</span>
-				</span>
-			}
-			else
-			{
-				<span class="snippet-language snippet-language-no-match">
-					<span>@language.Name</span>
-				</span>
-			}
+		@if (language == TargetLanguage)
+		{
+			<span class="snippet-language snippet-language-match">
+				<span>@language.Name</span>
+			</span>
+		}
+		else
+		{
+			<span class="snippet-language snippet-language-no-match">
+				<span>@language.Name</span>
+			</span>
+		}
 	}
 </div>
 
