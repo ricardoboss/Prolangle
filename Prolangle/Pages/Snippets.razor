@@ -44,10 +44,16 @@
 {
 	<Heading Size="HeadingSize.Is3">You won!</Heading>
 
-	@if (Snippet is IAttributedCodeSnippet attributedSnippet)
+	@if (Snippet is not IAttributedCodeSnippet attributedSnippet)
 	{
 		<Paragraph Margin="Margin.Is2.FromBottom">
-			This snippet was
+			This snippet was <code>@Snippet.Filename</code>.
+		</Paragraph>
+	}
+	else
+	{
+		<Paragraph Margin="Margin.Is2.FromBottom">
+			This snippet, <code>@attributedSnippet.Filename</code>, was
 
 			@if (Uri.TryCreate(attributedSnippet.Attribution, UriKind.Absolute, out Uri? uri))
 			{
