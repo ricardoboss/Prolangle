@@ -18,6 +18,7 @@ public class LanguagesProvider
 			yield return Assembly.Instance;
 			yield return Bash.Instance;
 			yield return Basic.Instance;
+			yield return Batch.Instance;
 			yield return Brainfuck.Instance;
 			yield return C.Instance;
 			yield return Cpp.Instance;
