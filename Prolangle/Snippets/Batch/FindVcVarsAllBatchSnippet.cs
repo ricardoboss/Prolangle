@@ -2,7 +2,7 @@ using Prolangle.Languages.Framework;
 
 namespace Prolangle.Snippets.Batch;
 
-public class FindVcVarsAllBatchSnippet : ICodeSnippet
+public class FindVcVarsAllBatchSnippet : IAttributedCodeSnippet
 {
 	public ILanguage Language => Languages.Batch.Instance;
 
@@ -66,4 +66,7 @@ public class FindVcVarsAllBatchSnippet : ICodeSnippet
 		:ERROR
 		EXIT /B 1
 		""";
+
+	public string Attribution => "https://www.nuget.org/packages/Microsoft.DotNet.ILCompiler/";
+	public string License => "MIT; Copyright (c) .NET Foundation and Contributors";
 }
