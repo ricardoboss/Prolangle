@@ -5,7 +5,7 @@ namespace Prolangle.Snippets.Brainfuck;
 /// <summary>
 /// https://en.wikipedia.org/w/index.php?title=Brainfuck&oldid=1216286405#Hello_World!
 /// </summary>
-public class VerboseBrainfuckSnippet : ICodeSnippet
+public class VerboseBrainfuckSnippet : IAttributedCodeSnippet
 {
 	public ILanguage Language => Languages.Brainfuck.Instance;
 
@@ -57,4 +57,7 @@ public class VerboseBrainfuckSnippet : ICodeSnippet
 		>>+.                    Add 1 to Cell #5 gives us an exclamation point
 		>++.                    And finally a newline from Cell #6
 		""";
+
+	public string Attribution => "https://en.wikipedia.org/w/index.php?title=Brainfuck&oldid=1216286405#Hello_World!";
+	public string? License => "Creative Commons Attribution-ShareAlike License";
 }

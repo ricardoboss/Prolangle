@@ -2,7 +2,7 @@ using Prolangle.Languages.Framework;
 
 namespace Prolangle.Snippets.Assembly;
 
-public class HelloAssemblySnippet : ICodeSnippet
+public class HelloAssemblySnippet : IAttributedCodeSnippet
 {
 	public ILanguage Language => Languages.Assembly.Instance;
 
@@ -25,4 +25,7 @@ public class HelloAssemblySnippet : ICodeSnippet
 		          section   .data
 		message:  db        "Hello, World", 10      ; note the newline at the end
 		""";
+
+	public string Attribution => "https://stackoverflow.com/q/61533696";
+	public string License => "CC BY-SA 4.0";
 }

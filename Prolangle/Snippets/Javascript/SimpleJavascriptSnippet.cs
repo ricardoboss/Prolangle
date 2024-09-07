@@ -7,6 +7,7 @@ public class SimpleJavascriptSnippet : ICodeSnippet
 	public ILanguage Language => Languages.Javascript.Instance;
 
 	public string Filename => "script.js";
+
 	public string SourceCode =>
 		"""
 		function setContent() {
