@@ -2,7 +2,7 @@ using Prolangle.Languages.Framework;
 
 namespace Prolangle.Snippets.Cobol;
 
-public class HelloWorldCobolSnippet : ICodeSnippet
+public class HelloWorldCobolSnippet : ICodeSnippet, IAttributedCodeSnippet
 {
 	public ILanguage Language => Languages.Cobol.Instance;
 
@@ -17,4 +17,6 @@ public class HelloWorldCobolSnippet : ICodeSnippet
 		    DISPLAY 'HELLO WORLD'.
 		    STOP RUN.
 		""";
+
+	public string Attribution => "https://www.ibmmainframer.com/cobol-tutorial/cobol-hello-world/";
 }
