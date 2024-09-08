@@ -25,7 +25,7 @@ public class GuessGameTests
 
 	[Theory]
 	[InlineData(1_000, "Brainfuck", "Batch")]
-	[InlineData(1_234, "HTML", "CSS")]
+	[InlineData(1_234, "Go", "CSS")]
 	public void TestLanguages(int seed, string expectedMetadatumGameLanguage, string expectedSnippetGameLanguage)
 	{
 		var seeder = new GameSeeder(() => seed, DateTime.MinValue, DateTime.MinValue);
