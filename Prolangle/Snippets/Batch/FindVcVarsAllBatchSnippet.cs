@@ -2,7 +2,7 @@ using Prolangle.Languages.Framework;
 
 namespace Prolangle.Snippets.Batch;
 
-public class FindVcVarsAllBatchSnippet : IAttributedCodeSnippet
+public class FindVcVarsAllBatchSnippet : IAttributedCodeSnippet, ILicensedCodeSnippet
 {
 	public ILanguage Language => Languages.Batch.Instance;
 

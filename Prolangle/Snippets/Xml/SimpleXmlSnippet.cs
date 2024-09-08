@@ -29,5 +29,4 @@ public class SimpleXmlSnippet : IAttributedCodeSnippet
 
 	public string Attribution =>
 		"https://docs.actian.com/integrationmanager/1.6/index.html#page/User/Example_Messages.htm";
-	public string? License => null;
 }

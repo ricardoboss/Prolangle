@@ -64,13 +64,13 @@
 				<span> written by @attributedSnippet.Attribution</span>
 			}
 
-			@if (attributedSnippet.License is not { Length: > 0 } license)
+			@if (Snippet is not ILicensedCodeSnippet licensedSnippet)
 			{
 				<span>.</span>
 			}
 			else
 			{
-				<span>, licensed as follows: <strong style="font-weight: 500">@license</strong>.</span>
+				<span>, licensed as follows: <strong style="font-weight: 500">@licensedSnippet.License</strong>.</span>
 			}
 		</Paragraph>
 	}

@@ -7,10 +7,4 @@ public interface IAttributedCodeSnippet : ICodeSnippet
 	/// has won.
 	/// </summary>
 	string Attribution { get; }
-
-	/// <summary>
-	/// The license for this code snippet. If set, will be revealed when the
-	/// user has won.
-	/// </summary>
-	string? License { get; }
 }

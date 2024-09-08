@@ -2,7 +2,7 @@ using Prolangle.Languages.Framework;
 
 namespace Prolangle.Snippets.Assembly;
 
-public class HelloAssemblySnippet : IAttributedCodeSnippet
+public class HelloAssemblySnippet : IAttributedCodeSnippet, ILicensedCodeSnippet
 {
 	public ILanguage Language => Languages.Assembly.Instance;
 
