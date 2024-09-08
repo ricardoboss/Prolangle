@@ -40,7 +40,7 @@
 <Heading Size="HeadingSize.Is1">Guess a Language</Heading>
 <Heading Size="HeadingSize.Is2">…based on a sample code snippet</Heading>
 
-@if (_won)
+@if (_won && Snippet is not null)
 {
 	<Heading Size="HeadingSize.Is3">You won!</Heading>
 
