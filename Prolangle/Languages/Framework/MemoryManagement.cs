@@ -5,7 +5,13 @@ namespace Prolangle.Languages.Framework;
 
 public enum MemoryManagement
 {
+	[Description("""
+                 In some languages, you cannot manage memory at all. For
+                 example, this can mean that all variables are always in the
+                 stack, not the heap.
+                 """)]
 	None,
+
 	Other,
 
 	[Display(Name = "Tracing garbage collection")]

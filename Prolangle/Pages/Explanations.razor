@@ -36,6 +36,15 @@
 							<ExplanationBodyText Value="@typeSystem"/>
 						}
 
+						<ExplanationSection Size="HeadingSize.Is4" Id="memory-management">Memory management</ExplanationSection>
+
+						@foreach (MemoryManagement memoryManagement in Enum.GetValues<MemoryManagement>()
+							          .Except([MemoryManagement.Other])
+							          .OrderBy(t => t.ToString()))
+						{
+							<ExplanationBodyText Value="@memoryManagement"/>
+						}
+
 						<ExplanationSection Size="HeadingSize.Is4" Id="syntax-styles">Syntax styles</ExplanationSection>
 
 						@foreach (SyntaxStyle syntaxStyle in Enum.GetValues<SyntaxStyle>()
