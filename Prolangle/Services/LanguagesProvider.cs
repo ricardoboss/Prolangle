@@ -26,6 +26,7 @@ public class LanguagesProvider
 			yield return Cobol.Instance;
 			yield return Css.Instance;
 			yield return Dart.Instance;
+			yield return Fortran.Instance;
 			yield return Go.Instance;
 			yield return Html.Instance;
 			yield return Java.Instance;
