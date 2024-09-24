@@ -61,6 +61,9 @@
 
 	private async Task Guess()
 	{
+		if (SelectedLanguage is null)
+			return;
+
 		await OnLanguageSelected.InvokeAsync(SelectedLanguage);
 
 		SelectedLanguage = null;
