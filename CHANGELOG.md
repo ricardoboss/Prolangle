@@ -9,6 +9,7 @@ Now, you initially see just 3%, and each guess gives you 5%.
 * Added the Batch language https://github.com/ricardoboss/Prolangle/pull/141
 * Added the COBOL language https://github.com/ricardoboss/Prolangle/pull/139
 * Added the Fortran language https://github.com/ricardoboss/Prolangle/pull/144
+* Added the GraphQL language https://github.com/ricardoboss/Prolangle/pull/151
 * Added the Smalltalk language https://github.com/ricardoboss/Prolangle/pull/136
 * After having won the code snippets game, you're now shown the file name, attribution, and license, if we didn't 
 write it ourselves.
