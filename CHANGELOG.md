@@ -12,6 +12,7 @@ Now, you initially see just 3%, and each guess gives you 5%.
 * Added the Smalltalk language https://github.com/ricardoboss/Prolangle/pull/136
 * After having won the code snippets game, you're now shown the file name, attribution, and license, if we didn't 
 write it ourselves.
+* Fixed an error that sometimes occurred after selecting a language https://github.com/ricardoboss/Prolangle/pull/147
 
 # 2024-09-04.2
 
