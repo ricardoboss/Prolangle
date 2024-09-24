@@ -5,8 +5,13 @@
 * Memory management is now also on the Explanations page https://github.com/ricardoboss/Prolangle/pull/145
 * The snippets game has been made harder. Previously, you saw 10% of the code, and each guess gave you another 10%.
 Now, you initially see just 3%, and each guess gives you 5%.
-* Added the Smalltalk language https://github.com/ricardoboss/Prolangle/pull/136
 * Added the Bash language https://github.com/ricardoboss/Prolangle/pull/131
+* Added the Batch language https://github.com/ricardoboss/Prolangle/pull/141
+* Added the COBOL language https://github.com/ricardoboss/Prolangle/pull/139
+* Added the Fortran language https://github.com/ricardoboss/Prolangle/pull/144
+* Added the Smalltalk language https://github.com/ricardoboss/Prolangle/pull/136
+* After having won the code snippets game, you're now shown the file name, attribution, and license, if we didn't 
+write it ourselves.
 
 # 2024-09-04.2
 

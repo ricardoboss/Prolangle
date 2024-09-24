@@ -18,12 +18,15 @@ public class LanguagesProvider
 			yield return Assembly.Instance;
 			yield return Bash.Instance;
 			yield return Basic.Instance;
+			yield return Batch.Instance;
 			yield return Brainfuck.Instance;
 			yield return C.Instance;
 			yield return Cpp.Instance;
 			yield return CSharp.Instance;
+			yield return Cobol.Instance;
 			yield return Css.Instance;
 			yield return Dart.Instance;
+			yield return Fortran.Instance;
 			yield return Go.Instance;
 			yield return Html.Instance;
 			yield return Java.Instance;
