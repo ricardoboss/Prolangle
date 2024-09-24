@@ -28,6 +28,7 @@ public class LanguagesProvider
 			yield return Dart.Instance;
 			yield return Fortran.Instance;
 			yield return Go.Instance;
+			yield return GraphQl.Instance;
 			yield return Html.Instance;
 			yield return Java.Instance;
 			yield return Javascript.Instance;
