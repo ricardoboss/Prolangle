@@ -36,7 +36,7 @@ public partial class Explanations : ComponentBase, IAsyncDisposable
 		{
 			_scrollSpy.ScrollSectionSectionCentered += ScrollSpy_ScrollSectionSectionCentered;
 
-			await _scrollSpy.StartSpying("page-section");
+			await _scrollSpy.StartSpying(containerSelector: "html", sectionClassSelector: "page-section");
 		}
 	}
 
