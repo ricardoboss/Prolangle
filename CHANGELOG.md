@@ -1,5 +1,7 @@
 # _Waiting for deployment_
 
+# 2024-10-15.1
+
 * The language selection shows a clearer message if you've previously tried the same one before https://github.com/ricardoboss/Prolangle/pull/132 
 * Lots more language paradigms have been explained https://github.com/ricardoboss/Prolangle/pull/127
 * Memory management is now also on the Explanations page https://github.com/ricardoboss/Prolangle/pull/145
