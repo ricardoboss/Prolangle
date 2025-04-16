@@ -2,13 +2,13 @@ using Prolangle.Languages.Framework;
 
 namespace Prolangle.Languages;
 
-public class Javascript : BaseLanguage
+public class JavaScript : BaseLanguage
 {
-	private Javascript()
+	private JavaScript()
 	{
 	}
 
-	public static Javascript Instance { get; } = new();
+	public static JavaScript Instance { get; } = new();
 
 	public override Guid Id { get; } = Guid.NewGuid();
 	public override string Name { get; } = "JavaScript";
