@@ -2,7 +2,7 @@ using Prolangle.Languages.Framework;
 
 namespace Prolangle.Snippets.Ruby;
 
-public class Person : IAttributedCodeSnippet, ILicensedCodeSnippet
+public class PersonRubySnippet : IAttributedCodeSnippet, ILicensedCodeSnippet
 {
 	public ILanguage Language => Languages.Ruby.Instance;
 	public string Filename => "person.rb";
