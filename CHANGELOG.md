@@ -1,7 +1,8 @@
 # _Waiting for deployment_
 
-* Added TypeScript https://github.com/ricardoboss/Prolangle/pull/125
 * Added Logo https://github.com/ricardoboss/Prolangle/pull/156
+* Added code snippets for Ruby https://github.com/ricardoboss/Prolangle/issues/153
+* Added TypeScript https://github.com/ricardoboss/Prolangle/pull/125
 
 # 2024-10-15.1
 
