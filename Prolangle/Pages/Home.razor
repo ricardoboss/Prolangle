@@ -159,8 +159,7 @@ else
 			Data = guess,
 		});
 
-		var result = Game.SolutionId == language.Id;
-		if (result)
+		if (Game.SolutionId == language.Id)
 			won = true;
 
 		Logger.LogInformation("Added guess {Guess} (won = {Won})", guess, won);
