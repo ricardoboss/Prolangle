@@ -26,6 +26,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\changelog.yml = .github\workflows\changelog.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{46D98A1E-C11D-4D33-AAAB-B40822A48C73}"
+	ProjectSection(SolutionItems) = preProject
+		docs\Game Persistence.md = docs\Game Persistence.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,5 +48,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C3E5C557-BA0C-42F0-BC30-F3F785110446} = {C7B512EC-4A5B-418B-BE91-91C15DD9F7CA}
+		{46D98A1E-C11D-4D33-AAAB-B40822A48C73} = {2F0B2902-9BCC-435A-AC7C-8021DE379FC9}
 	EndGlobalSection
 EndGlobal
