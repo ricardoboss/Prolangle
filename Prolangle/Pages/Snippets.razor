@@ -181,7 +181,13 @@ else
 
 			Logger.LogInformation("Loaded {GuessCount} guess(es)", guesses.Count);
 
-			_won = RevealedLanguages.Any(l => Game.SolutionId == l.Id);
+			if (RevealedLanguages.Any(l => Game.SolutionId == l.Id))
+			{
+				_won = true;
+				_snippetRevealer!.Win();
+
+				_concealedSourceCode = Snippet!.SourceCode;
+			}
 		}
 		else
 		{
