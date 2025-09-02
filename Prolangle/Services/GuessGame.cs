@@ -13,6 +13,8 @@ public class GuessGame
 	{
 		Seeder = seedGenerator.Seeder;
 
+		Seed = Seeder();
+
 		MetadatumGameLanguage = _PickRandomLanguage(provider.Languages);
 
 		if (environment.IsDevelopment())
@@ -26,13 +28,15 @@ public class GuessGame
 
 	private ILanguage _PickRandomLanguage(IEnumerable<ILanguage> availableLanguages)
 	{
-		var random = new Random(Seeder());
+		var random = new Random(Seed);
 
 		ILanguage[] shuffledLanguages = availableLanguages.ToArray();
 		random.Shuffle(shuffledLanguages);
 
 		return shuffledLanguages.First();
 	}
+
+	public int Seed { get; }
 
 	public ILanguage MetadatumGameLanguage { get; }
 

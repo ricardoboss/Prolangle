@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using Prolangle;
+using Prolangle.Models.Db;
 using Prolangle.Services;
+using TG.Blazor.IndexedDB;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -41,8 +43,8 @@ builder.Services.AddSingleton<GameSeeder>(sp =>
 	switch (environment.Environment)
 	{
 		case "Development":
-			currentGameTimestamp = DateTime.Now;
-			nextGameTimestamp = DateTime.Now.AddHours(1);
+			currentGameTimestamp = DateTime.Today.AddHours(DateTime.Now.Hour);
+			nextGameTimestamp = DateTime.Today.AddHours(DateTime.Now.Hour + 1);
 			break;
 		case "Production":
 			currentGameTimestamp = DateTime.Today;
@@ -76,6 +78,39 @@ builder.Services.AddSingleton<GuessGame>(sp =>
 	var snippetProvider = sp.GetRequiredService<LanguageSnippetProvider>();
 
 	return new GuessGame(lp, snippetProvider, logger, seeder, environment);
+});
+
+builder.Services.AddIndexedDB(o =>
+{
+	o.DbName = "Prolangle";
+	o.Version = 1;
+
+	o.Stores.Add(new StoreSchema
+	{
+		DbVersion = 1,
+		Name = Game.StoreName,
+		PrimaryKey = new IndexSpec { Name = "AutoId", Auto = true },
+		Indexes =
+		[
+			new IndexSpec { Name = nameof(Game.Id), Unique = true, Auto = false, KeyPath = nameof(Game.Id) },
+			new IndexSpec { Name = nameof(Game.TypeId), Unique = false, Auto = false, KeyPath = nameof(Game.TypeId) },
+			new IndexSpec
+				{ Name = nameof(Game.PlayedAt), Unique = false, Auto = false, KeyPath = nameof(Game.PlayedAt) },
+		],
+	});
+
+	o.Stores.Add(new StoreSchema
+	{
+		DbVersion = 1,
+		Name = Guess.StoreName,
+		PrimaryKey = new IndexSpec { Name = "AutoId", Auto = true },
+		Indexes =
+		[
+			new IndexSpec { Name = nameof(Guess.GameId), Auto = false, KeyPath = nameof(Guess.GameId) },
+			new IndexSpec { Name = nameof(Guess.PlayedAt), Auto = false, KeyPath = nameof(Guess.PlayedAt) },
+			new IndexSpec { Name = nameof(Guess.LanguageId), Auto = false, KeyPath = nameof(Guess.LanguageId) },
+		],
+	});
 });
 
 await builder.Build().RunAsync();
