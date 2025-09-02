@@ -10,7 +10,7 @@ public class Xml : BaseLanguage
 
 	public static Xml Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("213a6b08-ce20-4d6a-bdb1-c232169bd43a");
 	public override string Name { get; } = "XML";
 	public override TypeSystem Typing { get; } = TypeSystem.None;
 	public override bool Compiled { get; } = false;

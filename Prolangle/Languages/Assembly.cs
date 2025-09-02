@@ -10,7 +10,7 @@ public class Assembly : BaseLanguage
 
 	public static Assembly Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("ea0f31ff-2648-4aa7-b1f9-ac96f40a0277");
 	public override string Name { get; } = "Assembly";
 
 	public override TypeSystem Typing { get; } = TypeSystem.None;

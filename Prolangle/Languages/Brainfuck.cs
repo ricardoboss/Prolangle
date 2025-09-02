@@ -10,7 +10,7 @@ public class Brainfuck : BaseLanguage
 
 	public static Brainfuck Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("25491faa-6a2c-4ce4-93e9-103841a12f87");
 	public override string Name { get; } = "Brainfuck";
 	public override TypeSystem Typing { get; } = TypeSystem.None;
 	public override bool Compiled { get; } = false;

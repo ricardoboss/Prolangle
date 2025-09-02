@@ -10,7 +10,7 @@ public class CSharp : BaseLanguage
 
 	public static CSharp Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("3b821499-c78f-4064-8340-b29e649e24d0");
 	public override string Name { get; } = "C#";
 
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Dynamic |

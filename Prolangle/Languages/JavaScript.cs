@@ -10,7 +10,7 @@ public class JavaScript : BaseLanguage
 
 	public static JavaScript Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("d164d006-a6bd-4460-9401-0eef90adcf4b");
 	public override string Name { get; } = "JavaScript";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Weak | TypeSystem.Duck;
 	public override bool Compiled { get; } = false;

@@ -10,7 +10,7 @@ public class Swift : BaseLanguage
 
 	public static Swift Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("5033031b-a563-4624-912d-bda606a3fa2c");
 	public override string Name { get; } = "Swift";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Inferred;
 	public override bool Compiled { get; } = true;

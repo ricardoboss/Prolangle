@@ -10,7 +10,7 @@ public class Go : BaseLanguage
 
 	public static Go Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("df50bed7-c9d8-4356-ba8a-9cf916a1ea9f");
 	public override string Name { get; } = "Go";
 
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Inferred | TypeSystem.Strong |

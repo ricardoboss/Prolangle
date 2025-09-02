@@ -10,7 +10,7 @@ public class Cpp : BaseLanguage
 
 	public static Cpp Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("95fd7716-70c0-4d8f-811b-38932542d18e");
 	public override string Name { get; } = "C++";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Nominal | TypeSystem.Inferred;
 	public override bool Compiled { get; } = true;

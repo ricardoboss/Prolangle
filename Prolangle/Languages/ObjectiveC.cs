@@ -10,7 +10,7 @@ public class ObjectiveC : BaseLanguage
 
 	public static ObjectiveC Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("fd7fa43d-528f-4511-846f-1163f98611b0");
 	public override string Name { get; } = "Objective-C";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Strong;
 	public override bool Compiled { get; } = true;

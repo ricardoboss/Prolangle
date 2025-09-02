@@ -10,7 +10,7 @@ public class PowerShell : BaseLanguage
 
 	public static PowerShell Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("7910f039-6839-4159-afcb-d2a75d702ada");
 	public override string Name { get; } = "PowerShell";
 
 	public override TypeSystem Typing { get; } =

@@ -10,7 +10,7 @@ public class Html : BaseLanguage
 
 	public static Html Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("431ec49b-1dde-4d00-80f3-f65f1ac9eafb");
 	public override string Name { get; } = "HTML";
 	public override TypeSystem Typing { get; } = TypeSystem.None;
 	public override bool Compiled { get; } = false;

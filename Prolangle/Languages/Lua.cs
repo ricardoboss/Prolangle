@@ -10,7 +10,7 @@ public class Lua : BaseLanguage
 
 	public static Lua Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("d31fa4ec-6e6e-4e0b-8d0a-af308483cb78");
 	public override string Name => "Lua";
 	public override TypeSystem Typing => TypeSystem.Weak | TypeSystem.Dynamic | TypeSystem.Duck;
 	public override bool Compiled => false;

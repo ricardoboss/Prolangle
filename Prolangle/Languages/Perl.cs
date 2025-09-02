@@ -10,7 +10,7 @@ public class Perl : BaseLanguage
 
 	public static Perl Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("426b5bc8-a316-4e77-986d-e7c0d51279fc");
 	public override string Name { get; } = "Perl";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Weak;
 	public override bool Compiled { get; } = false;

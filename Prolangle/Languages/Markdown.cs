@@ -10,7 +10,7 @@ public class Markdown : BaseLanguage
 
 	public static Markdown Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("3aa2a78f-ad7e-490a-ad55-df84966c61de");
 	public override string Name { get; } = "Markdown";
 	public override TypeSystem Typing { get; } = TypeSystem.None;
 	public override bool Compiled { get; } = false;
