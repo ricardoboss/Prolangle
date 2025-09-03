@@ -20,10 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Components\ExplanationPopover.razor.js">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
+    <ProjectReference Include="..\Prolangle.Languages\Prolangle.Languages.csproj" />
+    <ProjectReference Include="..\Prolangle.Snippets\Prolangle.Snippets.csproj" />
   </ItemGroup>
 
 </Project>

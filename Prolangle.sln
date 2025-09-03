@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 		CHANGELOG.md = CHANGELOG.md
 		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prolangle.Tests", "Prolangle.Tests\Prolangle.Tests.csproj", "{7D716373-8C2B-4874-BE6B-0FE55E7BD230}"
@@ -31,6 +32,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{46D98A1E-C
 		docs\Game Persistence.md = docs\Game Persistence.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prolangle.Languages", "Prolangle.Languages\Prolangle.Languages.csproj", "{ADCA3232-C135-4906-BCCD-6E267D105163}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prolangle.Snippets", "Prolangle.Snippets\Prolangle.Snippets.csproj", "{D8EA2426-59F2-4FBD-83B0-356353757B1A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +50,14 @@ Global
 		{7D716373-8C2B-4874-BE6B-0FE55E7BD230}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D716373-8C2B-4874-BE6B-0FE55E7BD230}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D716373-8C2B-4874-BE6B-0FE55E7BD230}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADCA3232-C135-4906-BCCD-6E267D105163}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADCA3232-C135-4906-BCCD-6E267D105163}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADCA3232-C135-4906-BCCD-6E267D105163}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADCA3232-C135-4906-BCCD-6E267D105163}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8EA2426-59F2-4FBD-83B0-356353757B1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8EA2426-59F2-4FBD-83B0-356353757B1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8EA2426-59F2-4FBD-83B0-356353757B1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8EA2426-59F2-4FBD-83B0-356353757B1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C3E5C557-BA0C-42F0-BC30-F3F785110446} = {C7B512EC-4A5B-418B-BE91-91C15DD9F7CA}

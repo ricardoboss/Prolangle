@@ -1,0 +1,5 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\Prolangle.Languages\Prolangle.Languages.csproj" />
+  </ItemGroup>
+</Project>
