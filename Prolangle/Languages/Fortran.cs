@@ -10,7 +10,7 @@ public class Fortran : BaseLanguage
 
 	public static Fortran Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("5b71dc9d-d39a-49d3-8de4-f6f9ea9c3843");
 	public override string Name { get; } = "Fortran";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Manifest;
 	public override bool Compiled { get; } = true;

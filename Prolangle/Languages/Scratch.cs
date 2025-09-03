@@ -10,7 +10,7 @@ public class Scratch : BaseLanguage
 
 	public static Scratch Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("b2c42fc9-f6da-490d-8063-d03177cc3ce4");
 	public override string Name => "Scratch";
 	public override TypeSystem Typing => TypeSystem.Structural | TypeSystem.Dynamic | TypeSystem.Safe;
 	public override bool Compiled => false;

@@ -10,7 +10,7 @@ public class VisualBasicNet : BaseLanguage
 
 	public static VisualBasicNet Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("0f9cd4dc-fce4-4139-ae4f-4020ee2030fa");
 	public override string Name { get; } = "Visual Basic (.NET)";
 
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Inferred |

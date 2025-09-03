@@ -10,7 +10,7 @@ public class Basic : BaseLanguage
 
 	public static Basic Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("4bc3c586-734a-4c49-a3ef-62c3619f8b30");
 	public override string Name { get; } = "BASIC";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Weak;
 	public override bool Compiled { get; } = false;

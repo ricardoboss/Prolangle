@@ -10,7 +10,7 @@ public class Pascal : BaseLanguage
 
 	public static Pascal Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("281a520a-7a71-405c-8336-8a0f0850b1d4");
 	public override string Name { get; } = "Pascal";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Safe;
 	public override bool Compiled { get; } = true;

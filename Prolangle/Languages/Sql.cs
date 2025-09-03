@@ -10,7 +10,7 @@ public class Sql : BaseLanguage
 
 	public static Sql Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("e063d9c3-7caf-4da7-ab5e-557cb266f093");
 	public override string Name { get; } = "SQL";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong ;
 	public override bool Compiled { get; } = false;

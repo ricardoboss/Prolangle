@@ -10,7 +10,7 @@ public class Css : BaseLanguage
 
 	public static Css Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("a6a1f0de-3e91-41c6-9053-79db435e8360");
 	public override string Name { get; } = "CSS";
 	public override TypeSystem Typing { get; } = TypeSystem.None;
 	public override bool Compiled { get; } = false;

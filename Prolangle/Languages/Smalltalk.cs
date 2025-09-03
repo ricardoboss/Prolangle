@@ -10,7 +10,7 @@ public class Smalltalk : BaseLanguage
 
 	public static Smalltalk Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("f91b854e-c899-4963-a0e6-706919b4bf3e");
 	public override string Name { get; } = "Smalltalk";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic;
 	public override bool Compiled { get; } = true;

@@ -10,7 +10,7 @@ public class Dart : BaseLanguage
 
 	public static Dart Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("d287b72e-159d-4f37-bbbd-674de8b0aaa1");
 	public override string Name { get; } = "Dart";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Inferred;
 	public override bool Compiled { get; } = true;

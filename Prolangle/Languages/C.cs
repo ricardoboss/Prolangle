@@ -10,7 +10,7 @@ public class C : BaseLanguage
 
 	public static C Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("2f608e2f-97e7-4b4d-8aa7-6ddff6283c64");
 	public override string Name { get; } = "C";
 
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Weak | TypeSystem.Manifest | TypeSystem.Nominal;

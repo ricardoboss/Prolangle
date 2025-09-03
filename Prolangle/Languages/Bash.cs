@@ -10,7 +10,7 @@ public class Bash : BaseLanguage
 
 	public static Bash Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("1ebfba11-e4df-43fd-b87d-8ea9737054a6");
 	public override string Name { get; } = "Bash";
 
 	public override TypeSystem Typing { get; } =

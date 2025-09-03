@@ -3,6 +3,7 @@
 * Added TypeScript https://github.com/ricardoboss/Prolangle/pull/125
 * Added Logo https://github.com/ricardoboss/Prolangle/pull/156
 * (internal) Updated dependencies
+* Persist guesses https://github.com/ricardoboss/Prolangle/pull/157 (Fixes https://github.com/ricardoboss/Prolangle/issues/22)
 
 # 2024-10-15.1
 

@@ -10,7 +10,7 @@ public class Java : BaseLanguage
 
 	public static Java Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("b7336e09-2a81-4b8a-ba13-688a1f691882");
 	public override string Name { get; } = "Java";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Safe | TypeSystem.Nominal | TypeSystem.Manifest;
 	public override bool Compiled { get; } = true;

@@ -10,7 +10,7 @@ public class Batch : BaseLanguage
 
 	public static Batch Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("9577f4a2-fd9e-4b4b-bdd8-65e08b6cc5d5");
 	public override string Name { get; } = "Batch";
 	public override TypeSystem Typing { get; } = TypeSystem.None;
 	public override bool Compiled { get; } = false;

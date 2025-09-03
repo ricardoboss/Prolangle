@@ -10,7 +10,7 @@ public class TypeScript : BaseLanguage
 
 	public static TypeScript Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("fe698a96-977d-4f57-9af9-7360fe3aed26");
 	public override string Name => "TypeScript";
 	public override TypeSystem Typing => TypeSystem.Structural | TypeSystem.Strong | TypeSystem.Static;
 	public override bool Compiled => true;

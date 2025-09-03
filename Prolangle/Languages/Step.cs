@@ -10,7 +10,7 @@ public class Step : BaseLanguage
 
 	public static Step Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("10db572b-4635-4070-b532-1f955299cb76");
 	public override string Name { get; } = "STEP";
 	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Safe | TypeSystem.Nominal | TypeSystem.Manifest;
 	public override bool Compiled { get; } = false;

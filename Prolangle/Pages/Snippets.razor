@@ -3,11 +3,15 @@
 @using Prolangle.Components
 @using Prolangle.Services
 @using Prolangle.Languages.Framework
+@using Prolangle.Models.Db
 @using Prolangle.Snippets
+@using TG.Blazor.IndexedDB
 
 @inject GuessGame GuessGame
 @inject GameSeeder GameSeeder
 @inject LanguageSnippetProvider LanguageSnippetProvider
+@inject IndexedDBManager DbManager
+@inject ILogger<Snippets> Logger;
 
 <style>
 	code {
@@ -117,33 +121,101 @@ else
 
 @code
 {
-	private IReadOnlyList<ILanguage> AvailableLanguages => LanguageSnippetProvider.SupportedLanguages.Where(l => !RevealedLanguages.Contains(l)).ToList();
+	private List<ILanguage> AvailableLanguages => LanguageSnippetProvider.SupportedLanguages.Where(l => !RevealedLanguages.Contains(l)).ToList();
 	private List<ILanguage> RevealedLanguages { get; } = [];
 	private ILanguage? TargetLanguage { get; set; }
 	private ICodeSnippet? Snippet { get; set; }
+	private Game? Game;
 	private bool _won;
 
 	private SnippetRevealer? _snippetRevealer;
 
 	private string? _concealedSourceCode;
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
-		TargetLanguage = GuessGame!.SnippetGameLanguage;
-		Snippet = LanguageSnippetProvider!.GetSnippet(TargetLanguage);
+		await DbManager.OpenDb();
 
+		DbManager.ActionCompleted += (_, args) => Logger.LogInformation("IndexedDB: {Message} => {Outcome}", args.Message, args.Outcome);
+	}
+
+	protected override async Task OnParametersSetAsync()
+	{
+		var games = await DbManager.GetRecords<Game>(Game.StoreName);
+		var game = games.FirstOrDefault(g => g.Seed == GuessGame.Seed && g.TypeId == GameType.SnippetsGameTypeId);
+
+		Logger.LogInformation("Tried to load game for today: {Game}", game);
+
+		if (game == null)
+		{
+			game = new()
+			{
+				Id = Guid.NewGuid(),
+				Seed = GuessGame.Seed,
+				PlayedAt = DateTimeOffset.Now,
+				SolutionId = GuessGame.SnippetGameLanguage.Id,
+				TypeId = GameType.SnippetsGameTypeId,
+			};
+
+			await DbManager.AddRecord<Game>(new()
+			{
+				Storename = Game.StoreName,
+				Data = game,
+			});
+
+			Logger.LogInformation("Created new game: {Game}", game);
+		}
+
+		Game = game;
+		TargetLanguage = AvailableLanguages.Find(l => l.Id == game.SolutionId);
+		Snippet = LanguageSnippetProvider.GetSnippet(TargetLanguage!);
 		_snippetRevealer = new SnippetRevealer(GameSeeder, Snippet.SourceCode, useJitter: true);
 
 		_concealedSourceCode = _snippetRevealer.RevealMore();
+		var allGuesses = await DbManager.GetRecords<Guess>(Guess.StoreName);
+		var guesses = allGuesses?.Where(g => g.GameId == game.Id).ToList();
+
+		if (guesses is { Count: > 0 })
+		{
+			RevealedLanguages.AddRange(guesses.OrderBy(g => g.PlayedAt).Select(g => AvailableLanguages.Single(l => l.Id == g.LanguageId)));
+
+			Logger.LogInformation("Loaded {GuessCount} guess(es)", guesses.Count);
+
+			if (RevealedLanguages.Any(l => Game.SolutionId == l.Id))
+			{
+				_won = true;
+				_snippetRevealer!.Win();
+
+				_concealedSourceCode = Snippet!.SourceCode;
+			}
+		}
+		else
+		{
+			Logger.LogInformation("No guesses for game yet.");
+		}
 	}
 
-	private void OnLanguageSelected(ILanguage language)
+	private async void OnLanguageSelected(ILanguage language)
 	{
+		if (Game == null)
+			return;
+
 		RevealedLanguages.Add(language);
 
-		var result = TargetLanguage!.Id == language.Id;
+		var guess = new Guess
+		{
+			GameId = Game.Id,
+			LanguageId = language.Id,
+			PlayedAt = DateTimeOffset.Now,
+		};
 
-		if (result)
+		await DbManager.AddRecord<Guess>(new()
+		{
+			Storename = Guess.StoreName,
+			Data = guess,
+		});
+
+		if (Game.SolutionId == language.Id)
 		{
 			_won = true;
 			_snippetRevealer!.Win();
@@ -154,6 +226,8 @@ else
 		{
 			_concealedSourceCode = _snippetRevealer!.RevealMore();
 		}
+
+		Logger.LogInformation("Added guess {Guess} (won = {Won})", guess, _won);
 
 		StateHasChanged();
 	}

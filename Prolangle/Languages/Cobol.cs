@@ -10,7 +10,7 @@ public class Cobol : BaseLanguage
 
 	public static Cobol Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("315f183d-b753-4def-a8bf-df8b21fa8694");
 	public override string Name { get; } = "COBOL";
 
 	public override TypeSystem Typing { get; } = TypeSystem.Static |

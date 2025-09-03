@@ -10,7 +10,7 @@ public class GraphQl : BaseLanguage
 
 	public static GraphQl Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("3ba54e43-cacf-4885-b5a7-ba1ebe805270");
 	public override string Name { get; } = "GraphQL";
 
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Strong;

@@ -3,14 +3,21 @@
 @using Prolangle.Languages.Framework
 @using Prolangle.Services
 @using Prolangle.Components
+@using Prolangle.Models.Db
+@using TG.Blazor.IndexedDB
 
 @inject GuessGame GuessGame
 @inject LanguagesProvider LanguagesProvider
+@inject IndexedDBManager DbManager
+@inject ILogger<Home> Logger;
 
 <Heading Size="HeadingSize.Is1">Guess a Language</Heading>
 <Heading Size="HeadingSize.Is2">…based on its properties</Heading>
 
-<MetadatumComparisonTable TargetLanguage="TargetLanguage" RevealedLanguages="RevealedLanguages"/>
+@if (TargetLanguage != null)
+{
+	<MetadatumComparisonTable TargetLanguage="TargetLanguage" RevealedLanguages="RevealedLanguages"/>
+}
 
 @if (won)
 {
@@ -20,7 +27,7 @@
 		Share results
 	</ShareMetadatumComparisonButton>
 
-	<NextGameTimer />
+	<NextGameTimer/>
 }
 else
 {
@@ -69,31 +76,104 @@ else
 
 	private List<ILanguage> AvailableLanguages => LanguagesProvider!.Languages.Where(l => !RevealedLanguages.Contains(l)).ToList();
 	private List<ILanguage> RevealedLanguages { get; } = [];
-	private ILanguage TargetLanguage => GuessGame!.MetadatumGameLanguage;
+	private ILanguage? TargetLanguage { get; set; }
+	private Game? Game;
 
 	// revisit these fields once #22 is resolved
 	private int guessCount;
 	private bool won;
 
-	private void OnLanguageSelected(ILanguage language)
+	protected override async Task OnInitializedAsync()
 	{
+		await DbManager.OpenDb();
+
+		DbManager.ActionCompleted += (_, args) => Logger.LogInformation("IndexedDB: {Message} => {Outcome}", args.Message, args.Outcome);
+	}
+
+	protected override async Task OnParametersSetAsync()
+	{
+		var games = await DbManager.GetRecords<Game>(Game.StoreName);
+		var game = games.FirstOrDefault(g => g.Seed == GuessGame.Seed && g.TypeId == GameType.PropertiesGameTypeId);
+
+		Logger.LogInformation("Tried to load game for today: {Game}", game);
+
+		if (game == null)
+		{
+			game = new()
+			{
+				Id = Guid.NewGuid(),
+				Seed = GuessGame.Seed,
+				PlayedAt = DateTimeOffset.Now,
+				SolutionId = GuessGame.MetadatumGameLanguage.Id,
+				TypeId = GameType.PropertiesGameTypeId,
+			};
+
+			await DbManager.AddRecord<Game>(new()
+			{
+				Storename = Game.StoreName,
+				Data = game,
+			});
+
+			Logger.LogInformation("Created new game: {Game}", game);
+		}
+
+		Game = game;
+		TargetLanguage = AvailableLanguages.Find(l => l.Id == game.SolutionId);
+
+		var allGuesses = await DbManager.GetRecords<Guess>(Guess.StoreName);
+		var guesses = allGuesses?.Where(g => g.GameId == game.Id).ToList();
+
+		if (guesses is { Count: > 0 })
+		{
+			RevealedLanguages.AddRange(guesses.OrderBy(g => g.PlayedAt).Select(g => AvailableLanguages.Single(l => l.Id == g.LanguageId)));
+
+			Logger.LogInformation("Loaded {GuessCount} guess(es)", guesses.Count);
+
+			won = RevealedLanguages.Any(l => Game.SolutionId == l.Id);
+		}
+		else
+		{
+			Logger.LogInformation("No guesses for game yet.");
+		}
+	}
+
+	private async void OnLanguageSelected(ILanguage language)
+	{
+		if (Game == null)
+			return;
+
 		guessCount++;
 
 		RevealedLanguages.Add(language);
 
-		var result = GuessGame!.MetadatumGameLanguage.Id == language.Id;
+		var guess = new Guess
+		{
+			GameId = Game.Id,
+			LanguageId = language.Id,
+			PlayedAt = DateTimeOffset.Now,
+		};
 
-		if (result)
+		await DbManager.AddRecord<Guess>(new()
+		{
+			Storename = Guess.StoreName,
+			Data = guess,
+		});
+
+		if (Game.SolutionId == language.Id)
 			won = true;
+
+		Logger.LogInformation("Added guess {Guess} (won = {Won})", guess, won);
+
+		StateHasChanged();
 	}
 
 }
 
 <style>
 	.match-hint-wrap {
-	 	padding: 0.25em;
+		padding: 0.25em;
 		border-radius: 0.25em;
-	 	display: inline-block;
+		display: inline-block;
 	}
 
 	.match-hint {

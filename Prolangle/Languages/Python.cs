@@ -10,7 +10,7 @@ public class Python : BaseLanguage
 
 	public static Python Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("e7b27431-f92d-4f4b-b30a-db85805c0344");
 	public override string Name { get; } = "Python";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Strong | TypeSystem.Duck;
 	public override bool Compiled { get; } = false;

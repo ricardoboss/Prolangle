@@ -10,7 +10,7 @@ public class Rust : BaseLanguage
 
 	public static Rust Instance { get; } = new();
 
-	public override Guid Id { get; } = Guid.NewGuid();
+	public override Guid Id { get; } = Guid.Parse("ecd3e090-ae7a-491e-a629-7a96d68400e3");
 	public override string Name { get; } = "Rust";
 	public override TypeSystem Typing { get; } = TypeSystem.Inferred | TypeSystem.Nominal | TypeSystem.Static | TypeSystem.Strong;
 	public override bool Compiled { get; } = true;
