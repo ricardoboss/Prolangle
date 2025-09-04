@@ -10,5 +10,6 @@ public enum TokenType
 	Comment,
 	Operator,
 	Punctuation,
+	Identifier,
 	Other,
 }

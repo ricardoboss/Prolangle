@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Prolangle.Abstractions.Services;
 
 /// <summary>
@@ -6,4 +8,5 @@ namespace Prolangle.Abstractions.Services;
 /// <param name="StartIndex">The start index of this token (inclusive) in the source code.</param>
 /// <param name="Text">The display text of this token.</param>
 /// <param name="Type">The meaning of the token.</param>
+[DebuggerDisplay("[{StartIndex}] \"{Text}\" ({Type})")]
 public record CodeToken(int StartIndex, string Text, TokenType Type);
