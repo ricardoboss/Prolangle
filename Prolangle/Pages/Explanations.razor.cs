@@ -26,7 +26,7 @@ public partial class Explanations : ComponentBase, IAsyncDisposable
 		_scrollSpy = ScrollSpyFactory.Create();
 
 		var relativePath = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
-		if (relativePath.Contains('#') == true)
+		if (relativePath.Contains('#', StringComparison.Ordinal))
 			_anchor = relativePath.Split(["#"], StringSplitOptions.RemoveEmptyEntries)[1];
 	}
 

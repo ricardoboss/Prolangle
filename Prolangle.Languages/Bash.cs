@@ -16,7 +16,7 @@ public class Bash : BaseLanguage
 	public override TypeSystem Typing { get; } =
 		TypeSystem.Weak | TypeSystem.Dynamic;
 
-	public override bool Compiled { get; } = false;
+	public override bool Compiled { get; }
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.None;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Other;
 

@@ -1,9 +1,10 @@
+using Blism;
 using Prolangle.Abstractions.Languages;
 
 namespace Prolangle.Abstractions.Services;
 
 /// <summary>
-/// Converts source code to a list of <see cref="CodeToken"/>s.
+/// Converts source code to a list of <see cref="SyntaxToken{TTokenType}"/>s.
 /// </summary>
 public interface ICodeTokenizer
 {
@@ -12,6 +13,6 @@ public interface ICodeTokenizer
 	/// </summary>
 	/// <param name="language">The language the code is written in</param>
 	/// <param name="code">The source code to tokenize</param>
-	/// <returns>An enumerable set of <see cref="CodeToken"/>s</returns>
-	IReadOnlyList<CodeToken> Tokenize(ILanguage language, string code);
+	/// <returns>An enumerable set of <see cref="SyntaxToken{TTokenType}"/>s</returns>
+	IEnumerable<SyntaxToken<GeneralTokenType>> Tokenize(ILanguage language, string code);
 }

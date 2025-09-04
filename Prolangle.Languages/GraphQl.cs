@@ -15,7 +15,7 @@ public class GraphQl : BaseLanguage
 
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Strong;
 
-	public override bool Compiled { get; } = false;
+	public override bool Compiled { get; }
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.None;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
 
@@ -24,6 +24,6 @@ public class GraphQl : BaseLanguage
 
 	public override Paradigms Paradigms { get; } = Paradigms.Declarative;
 
-	public override double? TiobeRating { get; } = null;
+	public override double? TiobeRating { get; }
 	public override int AppearanceYear { get; } = 2015;
 }

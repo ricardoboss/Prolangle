@@ -1,3 +1,4 @@
+using Blism;
 using Prolangle.Abstractions.Languages;
 
 namespace Prolangle.Abstractions.Services;
@@ -16,6 +17,6 @@ public interface ICodeConcealer
 	/// <param name="revealedOffset">The offset at which to start revealing tokens</param>
 	/// <param name="revealedPercent">The extent of the revealed tokens (both in front of and behind <paramref name="revealedOffset"/>)</param>
 	/// <returns>A list based on the given <paramref name="tokens"/> with some tokens concealed</returns>
-	IReadOnlyList<ConcealableCodeToken> ConcealTokens(ILanguage language, IReadOnlyList<CodeToken> tokens,
-		double revealedOffset, double revealedPercent);
+	IReadOnlyList<SyntaxToken<GeneralTokenType>> ConcealTokens(ILanguage language,
+		IReadOnlyList<SyntaxToken<GeneralTokenType>> tokens, double revealedOffset, double revealedPercent);
 }

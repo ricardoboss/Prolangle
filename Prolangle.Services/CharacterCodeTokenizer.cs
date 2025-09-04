@@ -1,3 +1,4 @@
+using Blism;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Prolangle.Abstractions.Languages;
@@ -10,9 +11,13 @@ namespace Prolangle.Services;
 /// </summary>
 public class CharacterCodeTokenizer : ICodeTokenizer
 {
-	public IReadOnlyList<CodeToken> Tokenize(ILanguage language, string code)
+	public IEnumerable<SyntaxToken<GeneralTokenType>> Tokenize(ILanguage language, string code)
 	{
-		return [.. code.Select((c, i) => new CodeToken(i, c.ToString(), TokenType.Other))];
+		return code.Select(c => new SyntaxToken<GeneralTokenType>
+		{
+			Value = c.ToString(),
+			Type = GeneralTokenType.Unknown,
+		});
 	}
 }
 

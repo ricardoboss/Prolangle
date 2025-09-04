@@ -13,7 +13,7 @@ public class Php : BaseLanguage
 	public override Guid Id { get; } = Guid.Parse("af47bee1-a518-44aa-ac4c-6328a6b9f30e");
 	public override string Name { get; } = "PHP";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic | TypeSystem.Weak;
-	public override bool Compiled { get; } = false;
+	public override bool Compiled { get; }
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.ReferenceCounting;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
 

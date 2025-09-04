@@ -13,7 +13,7 @@ public class Ruby : BaseLanguage
 	public override Guid Id { get; } = Guid.Parse("c43f873e-c39a-45e2-8aa2-b807c07c3120");
 	public override string Name { get; } = "Ruby";
 	public override TypeSystem Typing { get; } = TypeSystem.Duck | TypeSystem.Dynamic | TypeSystem.Strong;
-	public override bool Compiled { get; } = false;
+	public override bool Compiled { get; }
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.TracingGarbageCollection;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Perl;
 

@@ -13,7 +13,7 @@ public class Brainfuck : BaseLanguage
 	public override Guid Id { get; } = Guid.Parse("25491faa-6a2c-4ce4-93e9-103841a12f87");
 	public override string Name { get; } = "Brainfuck";
 	public override TypeSystem Typing { get; } = TypeSystem.None;
-	public override bool Compiled { get; } = false;
+	public override bool Compiled { get; }
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.Manual;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Other;
 
@@ -23,6 +23,6 @@ public class Brainfuck : BaseLanguage
 	public override Paradigms Paradigms { get; } = Paradigms.Esoteric | Paradigms.Imperative |
 	                                               Paradigms.Structured;
 
-	public override double? TiobeRating { get; } = null;
+	public override double? TiobeRating { get; }
 	public override int AppearanceYear { get; } = 1993;
 }

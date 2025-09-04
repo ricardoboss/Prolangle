@@ -62,5 +62,5 @@ public class VerboseBrainfuckSnippet : IAttributedCodeSnippet, ILicensedCodeSnip
 		""";
 
 	public string Attribution => "https://en.wikipedia.org/w/index.php?title=Brainfuck&oldid=1216286405#Hello_World!";
-	public string? License => "Creative Commons Attribution-ShareAlike License";
+	public string License => "Creative Commons Attribution-ShareAlike License";
 }

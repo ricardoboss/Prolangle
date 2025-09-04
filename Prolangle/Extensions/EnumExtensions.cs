@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Prolangle.Extensions;
 
-public static class EnumExtensions
+internal static class EnumExtensions
 {
 	private static string? GetDisplayName<TEnum>(this TEnum value)
 		where TEnum : System.Enum

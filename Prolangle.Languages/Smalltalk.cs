@@ -22,6 +22,6 @@ public class Smalltalk : BaseLanguage
 	                                               Paradigms.Imperative |
 	                                               Paradigms.Reflective;
 
-	public override double? TiobeRating { get; } = null;
+	public override double? TiobeRating { get; }
 	public override int AppearanceYear { get; } = 1972;
 }

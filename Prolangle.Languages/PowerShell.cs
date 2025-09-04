@@ -16,7 +16,7 @@ public class PowerShell : BaseLanguage
 	public override TypeSystem Typing { get; } =
 		TypeSystem.Strong | TypeSystem.Safe | TypeSystem.Dynamic | TypeSystem.Inferred;
 
-	public override bool Compiled { get; } = false;
+	public override bool Compiled { get; }
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.TracingGarbageCollection;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
 

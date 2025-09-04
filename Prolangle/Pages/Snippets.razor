@@ -1,14 +1,5 @@
 @page "/Snippets"
 
-@using Prolangle.Components
-@using Prolangle.Services
-@using Prolangle.Abstractions.Languages
-@using Prolangle.Abstractions.Services
-@using Prolangle.Abstractions.Snippets
-@using Prolangle.Extensions
-@using Prolangle.Models.Db
-@using TG.Blazor.IndexedDB
-
 @inject IGameSeedProvider GameSeeder
 @inject ISnippetsProvider LanguageSnippetProvider
 @inject IndexedDBManager DbManager
@@ -46,7 +37,7 @@
 <Heading Size="HeadingSize.Is1">Guess a Language</Heading>
 <Heading Size="HeadingSize.Is2">…based on a sample code snippet</Heading>
 
-@if (_won && Snippet is not null)
+@if (Won && Snippet is not null)
 {
 	<Heading Size="HeadingSize.Is3">You won!</Heading>
 
@@ -97,11 +88,7 @@ else
 	                   OnLanguageSelected="@OnLanguageSelected"/>
 }
 
-<code>
-	<pre>
-        @_concealedSourceCode
-    </pre>
-</code>
+<ConcealedSourceCode Snippet="@Snippet" RevealedPercent="@_revealedPercent" />
 
 <div style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 1em;">
 	@foreach (var language in RevealedLanguages)
@@ -128,11 +115,10 @@ else
 	private ILanguage? TargetLanguage { get; set; }
 	private ICodeSnippet? Snippet { get; set; }
 	private Game? Game;
-	private bool _won;
+	private bool Won => _revealedPercent >= 1;
+	private double _revealedPercent;
 
-	private SnippetRevealer? _snippetRevealer;
-
-	private string? _concealedSourceCode;
+	private const double _revealedPerGuess = 0.2;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -179,24 +165,22 @@ else
 		}
 
 		TargetLanguage = Snippet.Language;
-		_snippetRevealer = new SnippetRevealer(GameSeeder, Snippet.SourceCode, useJitter: true);
+		_revealedPercent = _revealedPerGuess;
 
-		_concealedSourceCode = _snippetRevealer.RevealMore();
 		var allGuesses = await DbManager.GetRecords<Guess>(Guess.StoreName);
 		var guesses = allGuesses?.Where(g => g.GameId == game.Id).ToList();
 
 		if (guesses is { Count: > 0 })
 		{
+			Debug.Assert(Game != null);
+
 			RevealedLanguages.AddRange(guesses.OrderBy(g => g.PlayedAt).Select(g => AvailableLanguages.Single(l => l.Id == g.LanguageId)));
 
 			Logger.LogInformation("Loaded {GuessCount} guess(es)", guesses.Count);
 
 			if (RevealedLanguages.Any(l => Game.SolutionId == l.Id))
 			{
-				_won = true;
-				_snippetRevealer!.Win();
-
-				_concealedSourceCode = Snippet!.SourceCode;
+				_revealedPercent = 1;
 			}
 		}
 		else
@@ -227,17 +211,14 @@ else
 
 		if (Game.SolutionId == language.Id)
 		{
-			_won = true;
-			_snippetRevealer!.Win();
-
-			_concealedSourceCode = Snippet!.SourceCode;
+			_revealedPercent = 1;
 		}
 		else
 		{
-			_concealedSourceCode = _snippetRevealer!.RevealMore();
+			_revealedPercent += _revealedPerGuess;
 		}
 
-		Logger.LogInformation("Added guess {Guess} (won = {Won})", guess, _won);
+		Logger.LogInformation("Added guess {Guess} (won = {Won})", guess, Won);
 
 		StateHasChanged();
 	}

@@ -1,6 +1,6 @@
 namespace Prolangle.Abstractions.Services;
 
-public enum TokenType
+public enum GeneralTokenType
 {
 	None = 0,
 	Whitespace,
@@ -11,5 +11,5 @@ public enum TokenType
 	Operator,
 	Punctuation,
 	Identifier,
-	Other,
+	Unknown,
 }

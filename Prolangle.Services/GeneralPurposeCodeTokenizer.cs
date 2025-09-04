@@ -1,3 +1,4 @@
+using Blism;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Prolangle.Abstractions.Languages;
@@ -16,9 +17,9 @@ public class GeneralPurposeCodeTokenizer : ICodeTokenizer
 	private static readonly HashSet<char> PunctuationChars =
 		['(', ')', '{', '}', '[', ']', ';', ',', '.', ':'];
 
-	public IReadOnlyList<CodeToken> Tokenize(ILanguage language, string code)
+	public IEnumerable<SyntaxToken<GeneralTokenType>> Tokenize(ILanguage language, string code)
 	{
-		List<CodeToken> tokens = new(code.Length / 4);
+		List<SyntaxToken<GeneralTokenType>> tokens = [];
 		int i = 0;
 
 		while (i < code.Length)
@@ -30,7 +31,7 @@ public class GeneralPurposeCodeTokenizer : ICodeTokenizer
 			{
 				int start = i;
 				while (i < code.Length && char.IsWhiteSpace(code[i])) i++;
-				Emit(TokenType.Whitespace, start, i);
+				Emit(GeneralTokenType.Whitespace, start, i);
 			}
 			// --- comments ---
 			else if (c == '/' && i + 1 < code.Length)
@@ -43,7 +44,7 @@ public class GeneralPurposeCodeTokenizer : ICodeTokenizer
 							int start = i;
 							i += 2;
 							while (i < code.Length && code[i] != '\n') i++;
-							Emit(TokenType.Comment, start, i);
+							Emit(GeneralTokenType.Comment, start, i);
 							break;
 						}
 					// C-style block comment
@@ -53,7 +54,7 @@ public class GeneralPurposeCodeTokenizer : ICodeTokenizer
 							i += 2;
 							while (i + 1 < code.Length && !(code[i] == '*' && code[i + 1] == '/')) i++;
 							i = Math.Min(i + 2, code.Length);
-							Emit(TokenType.Comment, start, i);
+							Emit(GeneralTokenType.Comment, start, i);
 							break;
 						}
 					default:
@@ -65,14 +66,14 @@ public class GeneralPurposeCodeTokenizer : ICodeTokenizer
 			{
 				int start = i;
 				while (i < code.Length && code[i] != '\n') i++;
-				Emit(TokenType.Comment, start, i);
+				Emit(GeneralTokenType.Comment, start, i);
 			}
 			else if (c == '-' && i + 1 < code.Length && code[i + 1] == '-') // SQL
 			{
 				int start = i;
 				i += 2;
 				while (i < code.Length && code[i] != '\n') i++;
-				Emit(TokenType.Comment, start, i);
+				Emit(GeneralTokenType.Comment, start, i);
 			}
 			else if (c == '<' && i + 3 < code.Length && code[i..].StartsWith("<!--", StringComparison.OrdinalIgnoreCase)) // HTML/XML
 			{
@@ -80,14 +81,14 @@ public class GeneralPurposeCodeTokenizer : ICodeTokenizer
 				i += 4;
 				while (i + 2 < code.Length && !(code[i] == '-' && code[i + 1] == '-' && code[i + 2] == '>')) i++;
 				i = Math.Min(i + 3, code.Length);
-				Emit(TokenType.Comment, start, i);
+				Emit(GeneralTokenType.Comment, start, i);
 			}
 			// --- identifiers ---
 			else if (char.IsLetter(c) || c == '_')
 			{
 				int start = i;
 				while (i < code.Length && (char.IsLetterOrDigit(code[i]) || code[i] == '_')) i++;
-				Emit(TokenType.Identifier, start, i);
+				Emit(GeneralTokenType.Identifier, start, i);
 			}
 			// --- numbers ---
 			else if (char.IsDigit(c))
@@ -101,7 +102,7 @@ public class GeneralPurposeCodeTokenizer : ICodeTokenizer
 					while (i < code.Length && char.IsDigit(code[i])) i++;
 				}
 
-				Emit(TokenType.Number, start, i);
+				Emit(GeneralTokenType.Number, start, i);
 			}
 			// --- strings ---
 			else if (c is '"' or '\'' or '`')
@@ -124,7 +125,7 @@ public class GeneralPurposeCodeTokenizer : ICodeTokenizer
 					i++;
 				}
 
-				Emit(TokenType.Text, start, i);
+				Emit(GeneralTokenType.Text, start, i);
 			}
 			// --- operators & punctuation ---
 			else
@@ -135,9 +136,13 @@ public class GeneralPurposeCodeTokenizer : ICodeTokenizer
 
 		return tokens;
 
-		void Emit(TokenType type, int start, int end)
+		void Emit(GeneralTokenType type, int start, int end)
 		{
-			tokens.Add(new(start, code[start..end], type));
+			tokens.Add(new()
+			{
+				Value = code[start..end],
+				Type = type,
+			});
 		}
 
 		int HandleOperatorOrPunct(char c)
@@ -146,15 +151,15 @@ public class GeneralPurposeCodeTokenizer : ICodeTokenizer
 			{
 				int start = i++;
 				while (i < code.Length && OperatorChars.Contains(code[i])) i++;
-				Emit(TokenType.Operator, start, i);
+				Emit(GeneralTokenType.Operator, start, i);
 			}
 			else if (PunctuationChars.Contains(c))
 			{
-				Emit(TokenType.Punctuation, i, ++i);
+				Emit(GeneralTokenType.Punctuation, i, ++i);
 			}
 			else
 			{
-				Emit(TokenType.Other, i, ++i);
+				Emit(GeneralTokenType.Unknown, i, ++i);
 			}
 
 			return i;

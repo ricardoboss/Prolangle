@@ -24,6 +24,6 @@ public class AppleScript : BaseLanguage
 	                                               Paradigms.EventDriven | Paradigms.ObjectOriented |
 	                                               Paradigms.NaturalLanguage;
 
-	public override double? TiobeRating { get; } = null;
+	public override double? TiobeRating { get; }
 	public override int AppearanceYear { get; } = 1993;
 }

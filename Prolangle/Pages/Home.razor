@@ -1,12 +1,5 @@
 ﻿@page "/"
 
-@using Prolangle.Abstractions.Languages
-@using Prolangle.Abstractions.Services
-@using Prolangle.Components
-@using Prolangle.Extensions
-@using Prolangle.Models.Db
-@using TG.Blazor.IndexedDB
-
 @inject IGameSeedProvider GameSeeder
 @inject ILanguageChooser LanguageChooser
 @inject ILanguagesProvider LanguagesProvider
@@ -131,6 +124,8 @@ else
 
 		if (guesses is { Count: > 0 })
 		{
+			Debug.Assert(Game != null);
+
 			RevealedLanguages.AddRange(guesses.OrderBy(g => g.PlayedAt).Select(g => AvailableLanguages.Single(l => l.Id == g.LanguageId)));
 
 			Logger.LogInformation("Loaded {GuessCount} guess(es)", guesses.Count);

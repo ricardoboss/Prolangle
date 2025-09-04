@@ -39,6 +39,10 @@ builder.Services.AddTimeBasedDailyGameSeedProvider();
 builder.Services.AddPropertiesLanguageComparer();
 builder.Services.AddSeededSnippetChooser();
 builder.Services.AddSeededLanguageChooser();
+builder.Services.AddGeneralTokenTypeHighlighter();
+builder.Services.AddGeneralPurposeCodeTokenizer();
+builder.Services.AddDefaultConcealingTokenizerFactory();
+builder.Services.AddSimpleCodeConcealer();
 
 builder.Services.AddIndexedDB(o =>
 {

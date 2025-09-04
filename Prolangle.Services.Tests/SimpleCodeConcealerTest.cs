@@ -1,3 +1,4 @@
+using Blism;
 using Prolangle.Abstractions.Languages;
 using Prolangle.Abstractions.Services;
 
@@ -8,11 +9,12 @@ public static class SimpleCodeConcealerTest
 	[Fact]
 	public static void TestNothingRevealed()
 	{
-		CodeToken[] tokens = [
-			new(0, "Hello", TokenType.Other),
-			new(5, ", ", TokenType.Other),
-			new(7, "World", TokenType.Other),
-			new(12, "!", TokenType.Other),
+		SyntaxToken<GeneralTokenType>[] tokens =
+		[
+			new() { Value = "Hello", Type = GeneralTokenType.Unknown },
+			new() { Value = ", ", Type = GeneralTokenType.Unknown },
+			new() { Value = "World", Type = GeneralTokenType.Unknown },
+			new() { Value = "!", Type = GeneralTokenType.Unknown },
 		];
 
 		var languageMock = new Mock<ILanguage>();
@@ -22,20 +24,20 @@ public static class SimpleCodeConcealerTest
 		var concealedTokens = concealer.ConcealTokens(languageMock.Object, tokens, 0, 0);
 
 		Assert.Equal(4, concealedTokens.Count);
-		Assert.All(concealedTokens, t =>
-		{
-			Assert.Equal(CodeTokenVisibility.Concealed, t.Visibility);
-		});
+
+		var text = string.Join("", concealedTokens.Select(t => t.Value));
+		Assert.Equal("•••••••••••••", text);
 	}
 
 	[Fact]
 	public static void TestMiddleRevealed()
 	{
-		CodeToken[] tokens = [
-			new(0, "Hello", TokenType.Other),
-			new(5, ", ", TokenType.Other),
-			new(7, "World", TokenType.Other),
-			new(12, "!", TokenType.Other),
+		SyntaxToken<GeneralTokenType>[] tokens =
+		[
+			new() { Value = "Hello", Type = GeneralTokenType.Unknown },
+			new() { Value = ", ", Type = GeneralTokenType.Unknown },
+			new() { Value = "World", Type = GeneralTokenType.Unknown },
+			new() { Value = "!", Type = GeneralTokenType.Unknown },
 		];
 
 		var languageMock = new Mock<ILanguage>();
@@ -48,20 +50,20 @@ public static class SimpleCodeConcealerTest
 		var concealedTokens = concealer.ConcealTokens(languageMock.Object, tokens, 0.5, 0.5);
 
 		Assert.Equal(4, concealedTokens.Count);
-		Assert.Equal(CodeTokenVisibility.Concealed, concealedTokens[0].Visibility);
-		Assert.Equal(CodeTokenVisibility.Visible, concealedTokens[1].Visibility);
-		Assert.Equal(CodeTokenVisibility.Visible, concealedTokens[2].Visibility);
-		Assert.Equal(CodeTokenVisibility.Concealed, concealedTokens[3].Visibility);
+
+		var text = string.Join("", concealedTokens.Select(t => t.Value));
+		Assert.Equal("•••••, World•", text);
 	}
 
 	[Fact]
 	public static void TestStartRevealed()
 	{
-		CodeToken[] tokens = [
-			new(0, "Hello", TokenType.Other),
-			new(5, ", ", TokenType.Other),
-			new(7, "World", TokenType.Other),
-			new(12, "!", TokenType.Other),
+		SyntaxToken<GeneralTokenType>[] tokens =
+		[
+			new() { Value = "Hello", Type = GeneralTokenType.Unknown },
+			new() { Value = ", ", Type = GeneralTokenType.Unknown },
+			new() { Value = "World", Type = GeneralTokenType.Unknown },
+			new() { Value = "!", Type = GeneralTokenType.Unknown },
 		];
 
 		var languageMock = new Mock<ILanguage>();
@@ -71,9 +73,8 @@ public static class SimpleCodeConcealerTest
 		var concealedTokens = concealer.ConcealTokens(languageMock.Object, tokens, 0, 0.5);
 
 		Assert.Equal(4, concealedTokens.Count);
-		Assert.Equal(CodeTokenVisibility.Visible, concealedTokens[0].Visibility);
-		Assert.Equal(CodeTokenVisibility.Visible, concealedTokens[1].Visibility);
-		Assert.Equal(CodeTokenVisibility.Concealed, concealedTokens[2].Visibility);
-		Assert.Equal(CodeTokenVisibility.Concealed, concealedTokens[3].Visibility);
+
+		var text = string.Join("", concealedTokens.Select(t => t.Value));
+		Assert.Equal("Hello, ••••••", text);
 	}
 }

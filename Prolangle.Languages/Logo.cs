@@ -13,7 +13,7 @@ public class Logo : BaseLanguage
 	public override Guid Id { get; } = Guid.Parse("b96e2784-980f-44cd-b3df-c7f64db5491a");
 	public override string Name { get; } = "Logo";
 	public override TypeSystem Typing { get; } = TypeSystem.Dynamic;
-	public override bool Compiled { get; } = false;
+	public override bool Compiled { get; }
 	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.None;
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Other;
 

@@ -1,6 +1,6 @@
 namespace Prolangle.Models.Db;
 
-public class Game
+internal sealed class Game
 {
 	public const string StoreName = "Games";
 

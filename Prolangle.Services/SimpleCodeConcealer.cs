@@ -1,3 +1,4 @@
+using Blism;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Prolangle.Abstractions.Languages;
@@ -11,7 +12,10 @@ namespace Prolangle.Services;
 /// </summary>
 public class SimpleCodeConcealer : ICodeConcealer
 {
-	public IReadOnlyList<ConcealableCodeToken> ConcealTokens(ILanguage language, IReadOnlyList<CodeToken> tokens,
+	private const char concealingChar = '•';
+
+	public IReadOnlyList<SyntaxToken<GeneralTokenType>> ConcealTokens(ILanguage language,
+		IReadOnlyList<SyntaxToken<GeneralTokenType>> tokens,
 		double revealedOffset, double revealedPercent)
 	{
 		var revealedAreaCenterIndex = tokens.Count * revealedOffset;
@@ -24,15 +28,16 @@ public class SimpleCodeConcealer : ICodeConcealer
 
 		return [..concealTokensIteratively()];
 
-		IEnumerable<ConcealableCodeToken> concealTokensIteratively()
+		IEnumerable<SyntaxToken<GeneralTokenType>> concealTokensIteratively()
 		{
 			var tokenIdx = 0;
 			foreach (var token in tokens)
 			{
-				if (tokenIdx < startRevealingAtIndex || tokenIdx >= endRevealingAtIndex)
-					yield return ConcealableCodeToken.FromCodeToken(token, CodeTokenVisibility.Concealed);
+				if (tokenIdx < startRevealingAtIndex ||
+				    tokenIdx >= endRevealingAtIndex && token.Type != GeneralTokenType.Whitespace)
+					yield return new() { Value = new(concealingChar, token.Value.Length), Type = token.Type };
 				else
-					yield return ConcealableCodeToken.FromCodeToken(token);
+					yield return token;
 
 				tokenIdx++;
 			}
