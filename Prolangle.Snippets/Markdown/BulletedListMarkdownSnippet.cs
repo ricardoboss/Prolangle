@@ -1,9 +1,12 @@
-using Prolangle.Languages.Framework;
+using Prolangle.Abstractions.Languages;
+using Prolangle.Abstractions.Snippets;
 
 namespace Prolangle.Snippets.Markdown;
 
 public class BulletedListMarkdownSnippet : ICodeSnippet
 {
+	public Guid Id { get; } = Guid.Parse("6529db62-a4a5-4f33-9634-263e681af5de");
+
 	public ILanguage Language => Languages.Markdown.Instance;
 
 	public string Filename => "CONTRIBUTING.md";

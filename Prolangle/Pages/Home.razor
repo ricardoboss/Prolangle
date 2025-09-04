@@ -1,13 +1,15 @@
 ﻿@page "/"
 
-@using Prolangle.Languages.Framework
-@using Prolangle.Services
+@using Prolangle.Abstractions.Languages
+@using Prolangle.Abstractions.Services
 @using Prolangle.Components
+@using Prolangle.Extensions
 @using Prolangle.Models.Db
 @using TG.Blazor.IndexedDB
 
-@inject GuessGame GuessGame
-@inject LanguagesProvider LanguagesProvider
+@inject IGameSeedProvider GameSeeder
+@inject ILanguageChooser LanguageChooser
+@inject ILanguagesProvider LanguagesProvider
 @inject IndexedDBManager DbManager
 @inject ILogger<Home> Logger;
 
@@ -74,7 +76,7 @@ else
 
 @code {
 
-	private List<ILanguage> AvailableLanguages => LanguagesProvider!.Languages.Where(l => !RevealedLanguages.Contains(l)).ToList();
+	private List<ILanguage> AvailableLanguages => LanguagesProvider!.GetAll().Where(l => !RevealedLanguages.Contains(l)).OrderBy(l => l.Name).ToList();
 	private List<ILanguage> RevealedLanguages { get; } = [];
 	private ILanguage? TargetLanguage { get; set; }
 	private Game? Game;
@@ -92,19 +94,21 @@ else
 
 	protected override async Task OnParametersSetAsync()
 	{
+		var seed = GameSeeder.GetCurrentPropertiesGameSeed();
 		var games = await DbManager.GetRecords<Game>(Game.StoreName);
-		var game = games.FirstOrDefault(g => g.Seed == GuessGame.Seed && g.TypeId == GameType.PropertiesGameTypeId);
+		var game = games.FirstOrDefault(g => g.Seed == seed.Value && g.TypeId == GameType.PropertiesGameTypeId);
 
 		Logger.LogInformation("Tried to load game for today: {Game}", game);
 
 		if (game == null)
 		{
+			TargetLanguage = LanguageChooser.ChooseLanguage(seed);
 			game = new()
 			{
 				Id = Guid.NewGuid(),
-				Seed = GuessGame.Seed,
+				Seed = seed.Value,
 				PlayedAt = DateTimeOffset.Now,
-				SolutionId = GuessGame.MetadatumGameLanguage.Id,
+				SolutionId = TargetLanguage.Id,
 				TypeId = GameType.PropertiesGameTypeId,
 			};
 
@@ -116,9 +120,11 @@ else
 
 			Logger.LogInformation("Created new game: {Game}", game);
 		}
-
-		Game = game;
-		TargetLanguage = AvailableLanguages.Find(l => l.Id == game.SolutionId);
+		else
+		{
+			TargetLanguage = LanguagesProvider.GetById(game.SolutionId);
+			Game = game;
+		}
 
 		var allGuesses = await DbManager.GetRecords<Guess>(Guess.StoreName);
 		var guesses = allGuesses?.Where(g => g.GameId == game.Id).ToList();

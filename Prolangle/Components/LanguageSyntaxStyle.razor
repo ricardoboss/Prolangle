@@ -1,11 +1,11 @@
-@using Prolangle.Languages.Framework
-@using Prolangle.Services
+@using Prolangle.Abstractions.Languages
+@using Prolangle.Abstractions.Services
 @using Prolangle.Extensions
 
-@inject LanguageMetadataProvider MetadataProvider
+@inject ILanguageMetadataProvider MetadataProvider
 
 @{
-    var desc = MetadataProvider.ResolveDescription(SyntaxStyle);
+    var desc = MetadataProvider.GetDescription(SyntaxStyle);
     var style = string.IsNullOrWhiteSpace(desc) ? "" : "border-bottom: 1px dotted black";
 
     var flagName = SyntaxStyle.GetDisplayNameOrFallback();
@@ -13,7 +13,7 @@
     flagName += SyntaxStyle switch
     {
         SyntaxStyle.None or SyntaxStyle.Other => "",
-        _ => "-like"
+        _ => "-like",
     };
 }
 

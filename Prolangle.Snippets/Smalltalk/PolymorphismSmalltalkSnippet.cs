@@ -1,4 +1,5 @@
-using Prolangle.Languages.Framework;
+using Prolangle.Abstractions.Languages;
+using Prolangle.Abstractions.Snippets;
 
 namespace Prolangle.Snippets.Smalltalk;
 
@@ -7,6 +8,8 @@ namespace Prolangle.Snippets.Smalltalk;
 /// </remarks>
 public class PolymorphismSmalltalkSnippet : ICodeSnippet
 {
+	public Guid Id { get; } = Guid.Parse("5542afca-7a89-4105-8b29-1f6cbe740d5b");
+
 	public ILanguage Language => Languages.Smalltalk.Instance;
 
 	public string Filename => "shapes.st";

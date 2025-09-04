@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CHANGELOG.md = CHANGELOG.md
 		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		Directory.Tests.props = Directory.Tests.props
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prolangle.Tests", "Prolangle.Tests\Prolangle.Tests.csproj", "{7D716373-8C2B-4874-BE6B-0FE55E7BD230}"
@@ -35,6 +37,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prolangle.Languages", "Prolangle.Languages\Prolangle.Languages.csproj", "{ADCA3232-C135-4906-BCCD-6E267D105163}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prolangle.Snippets", "Prolangle.Snippets\Prolangle.Snippets.csproj", "{D8EA2426-59F2-4FBD-83B0-356353757B1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prolangle.Services", "Prolangle.Services\Prolangle.Services.csproj", "{85372592-144B-44A3-9AE9-9A34D8ADA923}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prolangle.Abstractions", "Prolangle.Abstractions\Prolangle.Abstractions.csproj", "{BEE1E3AB-D92D-4446-B663-9CDA8E8BCF91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prolangle.Services.Tests", "Prolangle.Services.Tests\Prolangle.Services.Tests.csproj", "{CC10A788-1014-45C8-9880-69F456827BAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prolangle.Languages.Tests", "Prolangle.Languages.Tests\Prolangle.Languages.Tests.csproj", "{B2C5F8C9-CB96-47FD-A859-70BA058017FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +68,22 @@ Global
 		{D8EA2426-59F2-4FBD-83B0-356353757B1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8EA2426-59F2-4FBD-83B0-356353757B1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8EA2426-59F2-4FBD-83B0-356353757B1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85372592-144B-44A3-9AE9-9A34D8ADA923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85372592-144B-44A3-9AE9-9A34D8ADA923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85372592-144B-44A3-9AE9-9A34D8ADA923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85372592-144B-44A3-9AE9-9A34D8ADA923}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEE1E3AB-D92D-4446-B663-9CDA8E8BCF91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEE1E3AB-D92D-4446-B663-9CDA8E8BCF91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEE1E3AB-D92D-4446-B663-9CDA8E8BCF91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEE1E3AB-D92D-4446-B663-9CDA8E8BCF91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC10A788-1014-45C8-9880-69F456827BAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC10A788-1014-45C8-9880-69F456827BAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC10A788-1014-45C8-9880-69F456827BAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC10A788-1014-45C8-9880-69F456827BAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2C5F8C9-CB96-47FD-A859-70BA058017FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C5F8C9-CB96-47FD-A859-70BA058017FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C5F8C9-CB96-47FD-A859-70BA058017FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C5F8C9-CB96-47FD-A859-70BA058017FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C3E5C557-BA0C-42F0-BC30-F3F785110446} = {C7B512EC-4A5B-418B-BE91-91C15DD9F7CA}

@@ -1,9 +1,12 @@
-using Prolangle.Languages.Framework;
+using Prolangle.Abstractions.Languages;
+using Prolangle.Abstractions.Snippets;
 
 namespace Prolangle.Snippets.Markdown;
 
 public class SimpleMarkdownSnippet : ICodeSnippet
 {
+	public Guid Id { get; } = Guid.Parse("18b45f82-45c2-4dc8-bebe-cf181aaa0771");
+
 	public ILanguage Language => Languages.Markdown.Instance;
 
 	public string Filename => "README.md";

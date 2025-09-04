@@ -1,9 +1,12 @@
-using Prolangle.Languages.Framework;
+using Prolangle.Abstractions.Languages;
+using Prolangle.Abstractions.Snippets;
 
 namespace Prolangle.Snippets.Batch;
 
 public class FindVcVarsAllBatchSnippet : IAttributedCodeSnippet, ILicensedCodeSnippet
 {
+	public Guid Id { get; } = Guid.Parse("38644c54-3a05-40c8-a621-438182958b0f");
+
 	public ILanguage Language => Languages.Batch.Instance;
 
 	public string Filename => "findvcvarsall.bat";

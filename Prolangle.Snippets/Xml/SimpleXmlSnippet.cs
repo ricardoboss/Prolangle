@@ -1,9 +1,12 @@
-using Prolangle.Languages.Framework;
+using Prolangle.Abstractions.Languages;
+using Prolangle.Abstractions.Snippets;
 
 namespace Prolangle.Snippets.Xml;
 
 public class SimpleXmlSnippet : IAttributedCodeSnippet
 {
+	public Guid Id { get; } = Guid.Parse("d121bcfc-64bf-4ec6-ae33-9b3d840b8ac5");
+
 	public ILanguage Language => Languages.Xml.Instance;
 
 	public string Filename => "Snippet.xml";

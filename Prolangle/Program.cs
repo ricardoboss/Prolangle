@@ -28,57 +28,17 @@ builder.Services
 builder.Services.AddMudBlazorScrollSpy();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddSingleton<LanguageMetadataProvider>();
-builder.Services.AddSingleton<LanguagesProvider>();
-builder.Services.AddSingleton<GameSeeder>(sp =>
-{
-	var logger = sp.GetRequiredService<ILogger<GameSeeder>>();
-
-	var environment = sp.GetRequiredService<IWebAssemblyHostEnvironment>();
-
-	logger.LogInformation("Running in {Environment} environment", environment.Environment);
-
-	DateTime currentGameTimestamp, nextGameTimestamp;
-
-	switch (environment.Environment)
-	{
-		case "Development":
-			currentGameTimestamp = DateTime.Today.AddHours(DateTime.Now.Hour);
-			nextGameTimestamp = DateTime.Today.AddHours(DateTime.Now.Hour + 1);
-			break;
-		case "Production":
-			currentGameTimestamp = DateTime.Today;
-			nextGameTimestamp = DateTime.Today.AddDays(1);
-			break;
-		default:
-			throw new NotImplementedException();
-	}
-
-	var seeder = (int)(currentGameTimestamp.Ticks % Math.Pow(2, 31));
-
-	return new GameSeeder(() => seeder, currentGameTimestamp, nextGameTimestamp);
-});
-
-builder.Services.AddSingleton<LanguageSnippetProvider>(sp =>
-{
-	var seeder = sp.GetRequiredService<GameSeeder>();
-
-	return new LanguageSnippetProvider(seeder);
-});
-
-builder.Services.AddSingleton<GuessGame>(sp =>
-{
-	var lp = sp.GetRequiredService<LanguagesProvider>();
-	var logger = sp.GetRequiredService<ILogger<GuessGame>>();
-
-	var environment = sp.GetRequiredService<IWebAssemblyHostEnvironment>();
-
-	var seeder = sp.GetRequiredService<GameSeeder>();
-
-	var snippetProvider = sp.GetRequiredService<LanguageSnippetProvider>();
-
-	return new GuessGame(lp, snippetProvider, logger, seeder, environment);
-});
+builder.Services.AddDefaultLanguageMetadataProvider();
+builder.Services.AddAssemblyLanguagesProvider();
+builder.Services.AddAssemblySnippetsProvider();
+#if DEBUG
+builder.Services.AddTimeBasedHourlyGameSeedProvider();
+#else
+builder.Services.AddTimeBasedDailyGameSeedProvider();
+#endif
+builder.Services.AddPropertiesLanguageComparer();
+builder.Services.AddSeededSnippetChooser();
+builder.Services.AddSeededLanguageChooser();
 
 builder.Services.AddIndexedDB(o =>
 {

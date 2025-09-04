@@ -1,9 +1,12 @@
-using Prolangle.Languages.Framework;
+using Prolangle.Abstractions.Languages;
+using Prolangle.Abstractions.Snippets;
 
 namespace Prolangle.Snippets.Fortran;
 
 public class AverageFortranSnippet : IAttributedCodeSnippet, ILicensedCodeSnippet
 {
+	public Guid Id { get; } = Guid.Parse("dfae5f1b-5b98-4bd2-8980-d8bb0fefcb9c");
+
 	public ILanguage Language => Languages.Fortran.Instance;
 
 	public string Filename => "average.f90";

@@ -1,10 +1,9 @@
-@using Prolangle.Services
-
-@inject GameSeeder GameSeeder;
+@using Prolangle.Abstractions.Services
+@inject IGameSeedProvider GameSeeder;
 
 <p>
 	Next game in:
-	<strong>@((GameSeeder.NextGameTimestamp - DateTime.Now).ToString(@"hh\:mm\:ss"))</strong>
+	<strong>@GameSeeder.GetTimeUntilNextSeed().ToString(@"hh\:mm\:ss")</strong>
 </p>
 
 @code {

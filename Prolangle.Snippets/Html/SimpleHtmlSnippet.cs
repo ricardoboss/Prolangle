@@ -1,9 +1,12 @@
-using Prolangle.Languages.Framework;
+using Prolangle.Abstractions.Languages;
+using Prolangle.Abstractions.Snippets;
 
 namespace Prolangle.Snippets.Html;
 
 public class SimpleHtmlSnippet : ICodeSnippet
 {
+	public Guid Id { get; } = Guid.Parse("b79e8cb0-9127-4f11-9f5c-849f50fc2c61");
+
 	public ILanguage Language => Languages.Html.Instance;
 
 	public string Filename => "hello.html";

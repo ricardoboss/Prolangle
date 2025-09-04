@@ -1,9 +1,12 @@
-using Prolangle.Languages.Framework;
+using Prolangle.Abstractions.Languages;
+using Prolangle.Abstractions.Snippets;
 
 namespace Prolangle.Snippets.Css;
 
 public class SimpleCssSnippet : ICodeSnippet
 {
+	public Guid Id { get; } = Guid.Parse("03baef01-e429-475c-ac55-a6fd082da9c9");
+
 	public ILanguage Language => Languages.Css.Instance;
 
 	public string Filename => "style.css";

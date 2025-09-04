@@ -2,16 +2,18 @@
 
 @using Prolangle.Components
 @using Prolangle.Services
-@using Prolangle.Languages.Framework
+@using Prolangle.Abstractions.Languages
+@using Prolangle.Abstractions.Services
+@using Prolangle.Abstractions.Snippets
+@using Prolangle.Extensions
 @using Prolangle.Models.Db
-@using Prolangle.Snippets
 @using TG.Blazor.IndexedDB
 
-@inject GuessGame GuessGame
-@inject GameSeeder GameSeeder
-@inject LanguageSnippetProvider LanguageSnippetProvider
+@inject IGameSeedProvider GameSeeder
+@inject ISnippetsProvider LanguageSnippetProvider
 @inject IndexedDBManager DbManager
 @inject ILogger<Snippets> Logger;
+@inject ISnippetChooser SnippetChooser;
 
 <style>
 	code {
@@ -20,15 +22,15 @@
 
 	.snippet-language {
 		padding: 0.5em;
-    	border-radius: 0.5em;
-    	color: var(--color-on-match-inner);
+		border-radius: 0.5em;
+		color: var(--color-on-match-inner);
 	}
 
 	.snippet-language > span {
 		padding: 0.3em 0.5em;
-        background: var(--color-match-inner);
-        border-radius: 0.35em;
-    }
+		background: var(--color-match-inner);
+		border-radius: 0.35em;
+	}
 
 	.snippet-language-match {
 		color: var(--color-on-exact-match);
@@ -121,7 +123,7 @@ else
 
 @code
 {
-	private List<ILanguage> AvailableLanguages => LanguageSnippetProvider.SupportedLanguages.Where(l => !RevealedLanguages.Contains(l)).ToList();
+	private List<ILanguage> AvailableLanguages => LanguageSnippetProvider.GetAvailableLanguages().Where(l => !RevealedLanguages.Contains(l)).OrderBy(l => l.Name).ToList();
 	private List<ILanguage> RevealedLanguages { get; } = [];
 	private ILanguage? TargetLanguage { get; set; }
 	private ICodeSnippet? Snippet { get; set; }
@@ -141,19 +143,29 @@ else
 
 	protected override async Task OnParametersSetAsync()
 	{
+		var languageSeed = GameSeeder.GetCurrentSnippetsGameLanguageSeed();
+
 		var games = await DbManager.GetRecords<Game>(Game.StoreName);
-		var game = games.FirstOrDefault(g => g.Seed == GuessGame.Seed && g.TypeId == GameType.SnippetsGameTypeId);
+		var game = games.FirstOrDefault(g => g.Seed == languageSeed.Value && g.TypeId == GameType.SnippetsGameTypeId);
 
 		Logger.LogInformation("Tried to load game for today: {Game}", game);
 
-		if (game == null)
+		if (game is { SecondarySolutionId: { } snippetId })
 		{
+			Snippet = LanguageSnippetProvider.GetById(snippetId);
+			Game = game;
+		}
+		else
+		{
+			var snippetSeed = GameSeeder.GetCurrentSnippetsGameSnippetSeed();
+			Snippet = SnippetChooser.ChooseSnippet(languageSeed, snippetSeed);
 			game = new()
 			{
 				Id = Guid.NewGuid(),
-				Seed = GuessGame.Seed,
+				Seed = languageSeed.Value,
 				PlayedAt = DateTimeOffset.Now,
-				SolutionId = GuessGame.SnippetGameLanguage.Id,
+				SolutionId = Snippet.Language.Id,
+				SecondarySolutionId = Snippet.Id,
 				TypeId = GameType.SnippetsGameTypeId,
 			};
 
@@ -166,9 +178,7 @@ else
 			Logger.LogInformation("Created new game: {Game}", game);
 		}
 
-		Game = game;
-		TargetLanguage = AvailableLanguages.Find(l => l.Id == game.SolutionId);
-		Snippet = LanguageSnippetProvider.GetSnippet(TargetLanguage!);
+		TargetLanguage = Snippet.Language;
 		_snippetRevealer = new SnippetRevealer(GameSeeder, Snippet.SourceCode, useJitter: true);
 
 		_concealedSourceCode = _snippetRevealer.RevealMore();

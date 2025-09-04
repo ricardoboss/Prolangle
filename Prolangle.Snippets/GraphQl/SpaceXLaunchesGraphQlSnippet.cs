@@ -1,9 +1,12 @@
-using Prolangle.Languages.Framework;
+using Prolangle.Abstractions.Languages;
+using Prolangle.Abstractions.Snippets;
 
 namespace Prolangle.Snippets.GraphQl;
 
 public class SpaceXLaunchesGraphQlSnippet : IAttributedCodeSnippet
 {
+	public Guid Id { get; } = Guid.Parse("f130727d-b6d3-439d-a1cf-a8e665bd1a76");
+
 	public ILanguage Language => Languages.GraphQl.Instance;
 
 	public string Filename => "space-x-launches.gql";

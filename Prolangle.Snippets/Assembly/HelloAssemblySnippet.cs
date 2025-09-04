@@ -1,9 +1,12 @@
-using Prolangle.Languages.Framework;
+using Prolangle.Abstractions.Languages;
+using Prolangle.Abstractions.Snippets;
 
 namespace Prolangle.Snippets.Assembly;
 
 public class HelloAssemblySnippet : IAttributedCodeSnippet, ILicensedCodeSnippet
 {
+	public Guid Id { get; } = Guid.Parse("5223499b-b179-4388-8a8c-200129bc5224");
+
 	public ILanguage Language => Languages.Assembly.Instance;
 
 	public string Filename => "hello.asm";

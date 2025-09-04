@@ -1,4 +1,4 @@
-using Prolangle.Languages.Framework;
+using Prolangle.Abstractions.Languages;
 
 namespace Prolangle.Languages;
 

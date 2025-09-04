@@ -12,10 +12,12 @@ public class Game
 
 	public required Guid SolutionId { get; set; }
 
+	public Guid? SecondarySolutionId { get; set; }
+
 	public required Guid TypeId { get; set; }
 
 	public override string ToString()
 	{
-		return $"Game {{ Id = {Id}, Seed = {Seed}, PlayedAt = {PlayedAt:s}, TypeId = {TypeId} }}";
+		return $"Game {{ Id = {Id}, GameSeed = {Seed}, PlayedAt = {PlayedAt:s}, TypeId = {TypeId} }}";
 	}
 }

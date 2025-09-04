@@ -7,6 +7,7 @@
 * (internal) Update to .NET 9
 * (internal) Removed service worker
 * Added a new logo for Prolangle
+* (internal) Completely restructured service layers
 
 # 2024-10-15.1
 

@@ -1,11 +1,11 @@
-@using Prolangle.Languages.Framework
-@using Prolangle.Services
+@using Prolangle.Abstractions.Languages
+@using Prolangle.Abstractions.Services
 @using Prolangle.Extensions
 
-@inject LanguageMetadataProvider MetadataProvider
+@inject ILanguageMetadataProvider MetadataProvider
 
 @{
-	var desc = MetadataProvider.ResolveDescription(MemoryManagement);
+	var desc = MetadataProvider.GetDescription(MemoryManagement);
 	var style = string.IsNullOrWhiteSpace(desc) ? "" : "border-bottom: 1px dotted black";
 
 	var flagName = MemoryManagement.GetDisplayNameOrFallback();

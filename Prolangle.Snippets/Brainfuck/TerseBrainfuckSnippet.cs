@@ -1,4 +1,5 @@
-using Prolangle.Languages.Framework;
+using Prolangle.Abstractions.Languages;
+using Prolangle.Abstractions.Snippets;
 
 namespace Prolangle.Snippets.Brainfuck;
 
@@ -7,6 +8,8 @@ namespace Prolangle.Snippets.Brainfuck;
 /// </summary>
 public class TerseBrainfuckSnippet : IAttributedCodeSnippet, ILicensedCodeSnippet
 {
+	public Guid Id { get; } = Guid.Parse("1920c0db-a726-4e09-b2db-cefeeb0e64f4");
+
 	public ILanguage Language => Languages.Brainfuck.Instance;
 
 	public string Filename => "helloworld.bf";

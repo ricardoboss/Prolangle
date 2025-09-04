@@ -1,9 +1,12 @@
-using Prolangle.Languages.Framework;
+using Prolangle.Abstractions.Languages;
+using Prolangle.Abstractions.Snippets;
 
 namespace Prolangle.Snippets.CSharp;
 
 public class TaskCSharpSnippet : ICodeSnippet
 {
+	public Guid Id { get; } = Guid.Parse("7a22e1d4-99a9-4c93-87e7-580075157351");
+
 	public ILanguage Language => Languages.CSharp.Instance;
 
 	public string Filename => "AsyncTaskExample.cs";

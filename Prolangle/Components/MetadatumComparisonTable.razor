@@ -1,6 +1,7 @@
-@using Prolangle.Languages.Framework
-@using Prolangle.Models
-@using Prolangle.Services
+@using Prolangle.Abstractions.Languages
+@using Prolangle.Abstractions.Services
+
+@inject ILanguageComparer Comparer;
 
 @code {
 
@@ -10,15 +11,6 @@
 	[Parameter]
 	public required IReadOnlyList<ILanguage> RevealedLanguages { get; set; }
 
-	private MetadatumComparisonService compare = null!;
-
-	protected override void OnParametersSet()
-	{
-		base.OnParametersSet();
-
-		compare = new(TargetLanguage);
-	}
-
 	private static string DirectionToString(ComparisonDirection comparisonDirection)
 	{
 		return comparisonDirection switch
@@ -26,7 +18,7 @@
 			ComparisonDirection.Equal => "",
 			ComparisonDirection.Up => "\u25b2",
 			ComparisonDirection.Down => "\u25bc",
-			_ => throw new ArgumentOutOfRangeException(nameof(comparisonDirection), comparisonDirection, null)
+			_ => throw new ArgumentOutOfRangeException(nameof(comparisonDirection), comparisonDirection, null),
 		};
 	}
 
@@ -47,50 +39,55 @@
 		</TableRow>
 	</TableHeader>
 	<TableBody>
-		@foreach (ILanguage language in RevealedLanguages)
+		@foreach (var language in RevealedLanguages)
 		{
+			var comparison = Comparer.Compare(TargetLanguage, language);
+
 			<TableRow>
 				<TableRowHeader Style="white-space: nowrap; vertical-align: middle">@language.Name</TableRowHeader>
 				<TableRowCell>
-					<MatchDisplay MatchType="compare.TypingMatch(language)">
-						<LanguageMetadatum Overlap="compare.TypingOverlap(language)" Value="language.Typing" Exclude="TypeSystem.None"/>
+					<MatchDisplay MatchType="comparison.TypeSystemMatch">
+						<LanguageMetadatum Overlap="comparison.TypeSystem" Value="language.Typing"
+						                   Exclude="TypeSystem.None"/>
 					</MatchDisplay>
 				</TableRowCell>
 				<TableRowCell>
-					<MatchDisplay MatchType="compare.CompiledMatch(language)">
+					<MatchDisplay MatchType="comparison.CompiledMatch">
 						@(language.Compiled ? "Compiled" : "Interpreted")
 					</MatchDisplay>
 				</TableRowCell>
 				<TableRowCell>
-					<MatchDisplay MatchType="compare.GarbageCollectedMatch(language)">
+					<MatchDisplay MatchType="comparison.MemoryManagementMatch">
 						<LanguageMemoryManagement MemoryManagement="language.MemoryManagement"/>
 					</MatchDisplay>
 				</TableRowCell>
 				<TableRowCell>
-					<MatchDisplay MatchType="compare.SyntaxStyleMatch(language)">
+					<MatchDisplay MatchType="comparison.SyntaxStyleMatch">
 						<LanguageSyntaxStyle SyntaxStyle="language.SyntaxStyle"/>
 					</MatchDisplay>
 				</TableRowCell>
 				<TableRowCell>
-					<MatchDisplay MatchType="compare.ApplicationsMatch(language)">
-						<LanguageMetadatum Overlap="compare.ApplicationsOverlap(language)" Value="language.KnownForBuilding" Exclude="Applications.None"/>
+					<MatchDisplay MatchType="comparison.ApplicationsMatch">
+						<LanguageMetadatum Overlap="comparison.Applications"
+						                   Value="language.KnownForBuilding" Exclude="Applications.None"/>
 					</MatchDisplay>
 				</TableRowCell>
 				<TableRowCell>
-					<MatchDisplay MatchType="compare.ParadigmsMatch(language)">
-						<LanguageMetadatum Overlap="compare.ParadigmsOverlap(language)" Value="language.Paradigms" Exclude="Paradigms.None"/>
+					<MatchDisplay MatchType="comparison.ParadigmsMatch">
+						<LanguageMetadatum Overlap="comparison.Paradigms" Value="language.Paradigms"
+						                   Exclude="Paradigms.None"/>
 					</MatchDisplay>
 				</TableRowCell>
 				<TableRowCell>
-					<MatchDisplay MatchType="compare.TiobeRatingMatch(language)">
+					<MatchDisplay MatchType="comparison.TiobeRatingMatch">
 						@(language.TiobeRating?.ToString() ?? "None")
-						@DirectionToString(compare.TiobeRatingDirection(language))
+						@DirectionToString(comparison.TiobeRatingDirection)
 					</MatchDisplay>
 				</TableRowCell>
 				<TableRowCell>
-					<MatchDisplay MatchType="compare.AppearanceYearMatch(language)">
+					<MatchDisplay MatchType="comparison.AppearanceYearMatch">
 						@language.AppearanceYear
-						@DirectionToString(compare.AppearanceYearDirection(language))
+						@DirectionToString(comparison.AppearanceYearDirection)
 					</MatchDisplay>
 				</TableRowCell>
 			</TableRow>
@@ -100,64 +97,64 @@
 
 <!--suppress CssUnresolvedCustomProperty -->
 <style>
-thead > tr > th {
-	white-space: nowrap;
-}
+	thead > tr > th {
+		white-space: nowrap;
+	}
 
-tbody > tr > td {
-    --reveal-duration: 0.5s;
-    --reveal-delay: 0.35s;
+	tbody > tr > td {
+		--reveal-duration: 0.5s;
+		--reveal-delay: 0.35s;
 
-    animation: fade-in var(--reveal-duration) forwards;
-    opacity: 0;
-}
+		animation: fade-in var(--reveal-duration) forwards;
+		opacity: 0;
+	}
 
-tbody > tr > td {
-	vertical-align: middle !important;
-}
+	tbody > tr > td {
+		vertical-align: middle !important;
+	}
 
-tbody > tr > td:nth-child(1) {
-    animation-delay: calc(0 * var(--reveal-delay));
-}
+	tbody > tr > td:nth-child(1) {
+		animation-delay: calc(0 * var(--reveal-delay));
+	}
 
-tbody > tr > td:nth-child(2) {
-    animation-delay: calc(1 * var(--reveal-delay));
-}
+	tbody > tr > td:nth-child(2) {
+		animation-delay: calc(1 * var(--reveal-delay));
+	}
 
-tbody > tr > td:nth-child(3) {
-    animation-delay: calc(2 * var(--reveal-delay));
-}
+	tbody > tr > td:nth-child(3) {
+		animation-delay: calc(2 * var(--reveal-delay));
+	}
 
-tbody > tr > td:nth-child(4) {
-    animation-delay: calc(3 * var(--reveal-delay));
-}
+	tbody > tr > td:nth-child(4) {
+		animation-delay: calc(3 * var(--reveal-delay));
+	}
 
-tbody > tr > td:nth-child(5) {
-    animation-delay: calc(4 * var(--reveal-delay));
-}
+	tbody > tr > td:nth-child(5) {
+		animation-delay: calc(4 * var(--reveal-delay));
+	}
 
-tbody > tr > td:nth-child(6) {
-    animation-delay: calc(5 * var(--reveal-delay));
-}
+	tbody > tr > td:nth-child(6) {
+		animation-delay: calc(5 * var(--reveal-delay));
+	}
 
-tbody > tr > td:nth-child(7) {
-    animation-delay: calc(6 * var(--reveal-delay));
-}
+	tbody > tr > td:nth-child(7) {
+		animation-delay: calc(6 * var(--reveal-delay));
+	}
 
-tbody > tr > td:nth-child(8) {
-    animation-delay: calc(7 * var(--reveal-delay));
-}
+	tbody > tr > td:nth-child(8) {
+		animation-delay: calc(7 * var(--reveal-delay));
+	}
 
-tbody > tr > td:nth-child(9) {
-    animation-delay: calc(8 * var(--reveal-delay));
-}
+	tbody > tr > td:nth-child(9) {
+		animation-delay: calc(8 * var(--reveal-delay));
+	}
 
-@@keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
+	@@keyframes fade-in {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
 </style>

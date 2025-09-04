@@ -1,4 +1,5 @@
-using Prolangle.Languages.Framework;
+using Prolangle.Abstractions.Languages;
+using Prolangle.Abstractions.Snippets;
 
 namespace Prolangle.Snippets.Smalltalk;
 
@@ -7,6 +8,8 @@ namespace Prolangle.Snippets.Smalltalk;
 /// </remarks>
 public class BankingSmalltalkSnippet : ICodeSnippet
 {
+	public Guid Id { get; } = Guid.Parse("9e57777d-ac32-40bf-8e79-8124641bf66f");
+
 	public ILanguage Language => Languages.Smalltalk.Instance;
 
 	public string Filename => "banking.st";

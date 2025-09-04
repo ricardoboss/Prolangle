@@ -1,10 +1,29 @@
 <Project>
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <!-- Harden code against potential issues -->
+    <PropertyGroup>
+        <AnalysisMode>All</AnalysisMode>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    </PropertyGroup>
+
+    <!-- Hide actual source paths in release builds -->
+    <PropertyGroup Condition="$(Configuration) == 'Release'">
+        <Deterministic>true</Deterministic>
+        <DeterministicSourcePaths>true</DeterministicSourcePaths>
+    </PropertyGroup>
+
+    <ItemGroup Condition="$(Configuration) == 'Release'">
+        <SourceRoot Include="$(MSBuildThisFileDirectory)/" />
+    </ItemGroup>
+
+    <!-- For test projects, import additional props -->
+    <Import Project="Directory.Tests.props" Condition="$(MSBuildProjectFile.EndsWith('.Tests.csproj'))" />
 
 </Project>
