@@ -42,7 +42,8 @@ builder.Services.AddSeededLanguageChooser();
 builder.Services.AddGeneralTokenTypeHighlighter();
 builder.Services.AddGeneralPurposeCodeTokenizer();
 builder.Services.AddDefaultConcealingTokenizerFactory();
-builder.Services.AddTokenBasedCodeConcealer();
+ builder.Services.AddTokenBasedCodeConcealer();
+//builder.Services.AddDebugCodeConcealer();
 
 builder.Services.AddIndexedDB(o =>
 {
