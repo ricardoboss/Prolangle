@@ -15,11 +15,17 @@
 {
 	@if (AvailableSnippets.Any())
 	{
+		<label>
+			<span>Reveal:</span>
+			<input type="range" @bind="revealed" min="0" max="1" step="0.1"/>
+			<span>@(revealed * 100) %</span>
+		</label>
+
 		<div style="display: flex; flex-wrap: wrap; gap: 1rem;">
 			@foreach (var snippet in AvailableSnippets)
 			{
 				<div style="flex: 0 0 auto; border: solid 1px #2f2f2f; padding: 0.5rem; border-radius: 0.5rem;">
-					<ConcealedSourceCode Snippet="snippet" RevealedPercent="1"/>
+					<ConcealedSourceCode Snippet="snippet" RevealedPercent="@revealed"/>
 
 					<ul>
 						<li>Filename: <code>@(snippet.Filename)</code></li>
@@ -43,6 +49,8 @@
 	private IEnumerable<ICodeSnippet> AvailableSnippets => SelectedLanguage != null ? SnippetsProvider.GetAllForLanguage(SelectedLanguage) : [];
 
 	private ILanguage? SelectedLanguage { get; set; }
+
+	private double revealed = 0.5;
 
 	private void LanguageSelected(ILanguage language)
 	{
