@@ -6,7 +6,8 @@
 	<SyntaxHighlighter TTokenType="GeneralTokenType"
 	                   Highlighter="Highlighter"
 	                   Tokenizer="Tokenizer"
-	                   Code="@Snippet?.SourceCode"/>
+	                   Code="@Snippet?.SourceCode"
+	                   Style="@Style"/>
 }
 
 @code {
@@ -17,6 +18,9 @@
 	[Parameter]
 	public double? RevealedPercent { get; set; }
 
-	private ITokenizer<GeneralTokenType>? Tokenizer => Snippet == null || !RevealedPercent.HasValue ? null : TokenizerFactory.GetTokenizer(Snippet.Language, RevealedPercent.Value);
+	[Parameter]
+	public string? Style { get; set; }
+
+	private ITokenizer<GeneralTokenType>? Tokenizer => Snippet == null || !RevealedPercent.HasValue ? null : TokenizerFactory.GetTokenizer(Snippet.Language, 0.5d, RevealedPercent.Value);
 
 }

@@ -12,10 +12,6 @@
     <PackageReference Include="Blazorise.Bulma" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" />
     <PackageReference Include="Blazorise.Snackbar" />
-    <PackageReference Include="Blism.Language.Bash" />
-    <PackageReference Include="Blism.Language.CSharp" />
-    <PackageReference Include="Blism.Language.Dart" />
-    <PackageReference Include="Blism.Language.Yaml" />
     <PackageReference Include="Humanizer.Core" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" />

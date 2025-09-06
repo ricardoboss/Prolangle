@@ -37,40 +37,9 @@
 <Heading Size="HeadingSize.Is1">Guess a Language</Heading>
 <Heading Size="HeadingSize.Is2">…based on a sample code snippet</Heading>
 
-@if (Won && Snippet is not null)
+@if (Won)
 {
 	<Heading Size="HeadingSize.Is3">You won!</Heading>
-
-	@if (Snippet is not IAttributedCodeSnippet attributedSnippet)
-	{
-		<Paragraph Margin="Margin.Is2.FromBottom">
-			This snippet was <code>@Snippet.Filename</code>.
-		</Paragraph>
-	}
-	else
-	{
-		<Paragraph Margin="Margin.Is2.FromBottom">
-			This snippet, <code>@attributedSnippet.Filename</code>, was
-
-			@if (Uri.TryCreate(attributedSnippet.Attribution, UriKind.Absolute, out Uri? uri))
-			{
-				<span> from: <a href="@uri">@uri</a></span>
-			}
-			else
-			{
-				<span> written by @attributedSnippet.Attribution</span>
-			}
-
-			@if (Snippet is not ILicensedCodeSnippet licensedSnippet)
-			{
-				<span>.</span>
-			}
-			else
-			{
-				<span>, licensed as follows: <strong style="font-weight: 500">@licensedSnippet.License</strong>.</span>
-			}
-		</Paragraph>
-	}
 
 	<Div Padding="Padding.Is1.FromBottom">
 		<ShareCodeSnippetButton RevealedLanguages="RevealedLanguages">
@@ -78,19 +47,43 @@
 		</ShareCodeSnippetButton>
 	</Div>
 
-	<Div Padding="Padding.Is1.FromBottom">
+	<Div Margin="Margin.Is3.FromBottom">
 		<NextGameTimer/>
 	</Div>
 }
-else
+
+@if (RevealFilename && Snippet is not null)
 {
-	<LanguageSelection AvailableLanguages="@AvailableLanguages" RevealedLanguages="@RevealedLanguages"
-	                   OnLanguageSelected="@OnLanguageSelected"/>
+	<Paragraph Margin="Margin.Is2.FromBottom">
+		Filename: <code>@Snippet.Filename</code>.
+
+		@if (Won && Snippet is IAttributedCodeSnippet attributedSnippet)
+		{
+			@if (Uri.TryCreate(attributedSnippet.Attribution, UriKind.Absolute, out var uri))
+			{
+				<span>From: <a href="@uri">@uri</a></span>
+			}
+			else
+			{
+				<span>Written by @attributedSnippet.Attribution</span>
+			}
+
+			@if (Snippet is ILicensedCodeSnippet licensedSnippet)
+			{
+				<span>, licensed as follows: <strong style="font-weight: 500">@licensedSnippet.License</strong>.</span>
+			}
+			else
+			{
+				<span>.</span>
+			}
+		}
+	</Paragraph>
 }
 
-<ConcealedSourceCode Snippet="@Snippet" RevealedPercent="@_revealedPercent" />
+<ConcealedSourceCode Snippet="@Snippet" RevealedPercent="@_revealedPercent"
+                     Style="padding: 0.5rem; border-radius: 0.5rem;"/>
 
-<div style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 1em;">
+<div style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 1em; margin-top: 1rem;">
 	@foreach (var language in RevealedLanguages)
 	{
 		@if (language == TargetLanguage)
@@ -108,17 +101,25 @@ else
 	}
 </div>
 
+@if (!Won)
+{
+	<LanguageSelection AvailableLanguages="@AvailableLanguages" RevealedLanguages="@RevealedLanguages"
+	                   OnLanguageSelected="@OnLanguageSelected"/>
+}
+
 @code
 {
 	private List<ILanguage> AvailableLanguages => LanguageSnippetProvider.GetAvailableLanguages().Where(l => !RevealedLanguages.Contains(l)).OrderBy(l => l.Name).ToList();
+	private bool Won => Game != null && RevealedLanguages.Any(l => Game.SolutionId == l.Id);
+	private bool RevealFilename => Won || (_revealedPercent >= 1 && !Won);
+
 	private List<ILanguage> RevealedLanguages { get; } = [];
 	private ILanguage? TargetLanguage { get; set; }
 	private ICodeSnippet? Snippet { get; set; }
 	private Game? Game;
-	private bool Won => _revealedPercent >= 1;
-	private double _revealedPercent;
 
-	private const double _revealedPerGuess = 0.2;
+	private double _revealedPercent;
+	private double _revealedPerGuess => 2d / Math.Max(1, AvailableLanguages.Count);
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -178,10 +179,10 @@ else
 
 			Logger.LogInformation("Loaded {GuessCount} guess(es)", guesses.Count);
 
-			if (RevealedLanguages.Any(l => Game.SolutionId == l.Id))
-			{
+			if (Won)
 				_revealedPercent = 1;
-			}
+			else
+				_revealedPercent = RevealedLanguages.Count * _revealedPerGuess;
 		}
 		else
 		{
@@ -209,14 +210,10 @@ else
 			Data = guess,
 		});
 
-		if (Game.SolutionId == language.Id)
-		{
+		if (Won)
 			_revealedPercent = 1;
-		}
 		else
-		{
 			_revealedPercent += _revealedPerGuess;
-		}
 
 		Logger.LogInformation("Added guess {Guess} (won = {Won})", guess, Won);
 

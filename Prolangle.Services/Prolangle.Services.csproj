@@ -7,6 +7,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blism.Language.Bash" />
+    <PackageReference Include="Blism.Language.CSharp" />
+    <PackageReference Include="Blism.Language.Dart" />
+    <PackageReference Include="Blism.Language.Php" />
+    <PackageReference Include="Blism.Language.Yaml" />
     <PackageReference Include="JetBrains.Annotations" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
   </ItemGroup>

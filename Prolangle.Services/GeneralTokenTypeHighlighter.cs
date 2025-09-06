@@ -1,26 +1,22 @@
 using Blism;
 using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 using Prolangle.Abstractions.Services;
 
 namespace Prolangle.Services;
 
-internal sealed class GeneralTokenTypeHighlighter : ITokenTypeHighlighter<GeneralTokenType>
+public class GeneralTokenTypeHighlighter : ITokenTypeHighlighter<GeneralTokenType>
 {
 	public string GetCss(GeneralTokenType tokenType)
 	{
 		return tokenType switch
 		{
-			GeneralTokenType.None => "",
-			GeneralTokenType.Whitespace => "",
 			GeneralTokenType.Keyword => "color: #47a2ed; font-weight: bold;",
 			GeneralTokenType.Number => "color: #b3cca4;",
 			GeneralTokenType.Text => "color: #cc884e;",
 			GeneralTokenType.Comment => "color: #699856; font-style: italic;",
-			GeneralTokenType.Operator => "",
-			GeneralTokenType.Punctuation => "",
 			GeneralTokenType.Identifier => "color: #94dbfd;",
-			GeneralTokenType.Unknown => "",
-			_ => throw new ArgumentOutOfRangeException(nameof(tokenType), tokenType, $"Unknown token type: {tokenType}"),
+			_ => "",
 		};
 	}
 
@@ -30,7 +26,7 @@ internal sealed class GeneralTokenTypeHighlighter : ITokenTypeHighlighter<Genera
 	}
 }
 
-internal static class GeneralTokenTypeHighlighterServiceCollectionExtensions
+public static class GeneralTokenTypeHighlighterServiceCollectionExtensions
 {
 	[PublicAPI]
 	public static IServiceCollection AddGeneralTokenTypeHighlighter(this IServiceCollection services)

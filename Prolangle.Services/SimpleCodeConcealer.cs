@@ -33,11 +33,11 @@ public class SimpleCodeConcealer : ICodeConcealer
 			var tokenIdx = 0;
 			foreach (var token in tokens)
 			{
-				if (tokenIdx < startRevealingAtIndex ||
-				    tokenIdx >= endRevealingAtIndex && token.Type != GeneralTokenType.Whitespace)
-					yield return new() { Value = new(concealingChar, token.Value.Length), Type = token.Type };
-				else
+				if (token.Type == GeneralTokenType.Whitespace ||
+				    !(tokenIdx < startRevealingAtIndex) && !(tokenIdx >= endRevealingAtIndex))
 					yield return token;
+				else
+					yield return new() { Value = new(concealingChar, token.Value.Length), Type = token.Type };
 
 				tokenIdx++;
 			}
