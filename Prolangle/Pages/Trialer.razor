@@ -1,0 +1,56 @@
+@page "/Trialer"
+
+@inject ILanguagesProvider LanguageProvider
+@inject ISnippetsProvider SnippetsProvider
+@inject ILogger<Trialer> Logger
+
+@if (SelectedLanguage != null)
+{
+	<MetadatumComparisonTable TargetLanguage="SelectedLanguage" RevealedLanguages="@(new[] { SelectedLanguage })"/>
+}
+
+<LanguageSelection AvailableLanguages="@AvailableLanguages" OnLanguageSelected="LanguageSelected" />
+
+@if (SelectedLanguage != null)
+{
+	@if (AvailableSnippets.Any())
+	{
+		<div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+			@foreach (var snippet in AvailableSnippets)
+			{
+				<div style="flex: 0 0 auto; border: solid 1px #2f2f2f; padding: 0.5rem; border-radius: 0.5rem;">
+					<ConcealedSourceCode Snippet="snippet" RevealedPercent="1"/>
+
+					<ul>
+						<li>Filename: <code>@(snippet.Filename)</code></li>
+						<li>Attribution: @(snippet is IAttributedCodeSnippet a ? a.Attribution : "-")</li>
+						<li>License: @(snippet is ILicensedCodeSnippet l ? l.License : "-")</li>
+					</ul>
+				</div>
+			}
+		</div>
+	}
+	else
+	{
+		<div>No snippets.</div>
+	}
+}
+
+@code {
+
+	private IReadOnlyList<ILanguage> AvailableLanguages => LanguageProvider.GetAll().ToList();
+
+	private IEnumerable<ICodeSnippet> AvailableSnippets => SelectedLanguage != null ? SnippetsProvider.GetAllForLanguage(SelectedLanguage) : [];
+
+	private ILanguage? SelectedLanguage { get; set; }
+
+	private void LanguageSelected(ILanguage language)
+	{
+		SelectedLanguage = language;
+
+		Logger.LogInformation("Updated selected language: {Language}", language);
+
+		StateHasChanged();
+	}
+
+}
