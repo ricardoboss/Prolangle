@@ -4,7 +4,7 @@ using Prolangle.Abstractions.Services;
 
 namespace Prolangle.Services.Tests;
 
-public static class SimpleCodeConcealerTest
+public static class TokenBasedCodeConcealerTest
 {
 	[Fact]
 	public static void TestNothingRevealed()
@@ -19,7 +19,7 @@ public static class SimpleCodeConcealerTest
 
 		var languageMock = new Mock<ILanguage>();
 
-		var concealer = new SimpleCodeConcealer();
+		var concealer = new TokenBasedCodeConcealer();
 
 		var concealedTokens = concealer.ConcealTokens(languageMock.Object, tokens, 0, 0);
 
@@ -42,7 +42,7 @@ public static class SimpleCodeConcealerTest
 
 		var languageMock = new Mock<ILanguage>();
 
-		var concealer = new SimpleCodeConcealer();
+		var concealer = new TokenBasedCodeConcealer();
 
 		// start in the middle
 		// reveal 50% overall
@@ -68,7 +68,7 @@ public static class SimpleCodeConcealerTest
 
 		var languageMock = new Mock<ILanguage>();
 
-		var concealer = new SimpleCodeConcealer();
+		var concealer = new TokenBasedCodeConcealer();
 
 		var concealedTokens = concealer.ConcealTokens(languageMock.Object, tokens, 0, 0.5);
 

@@ -10,7 +10,7 @@ namespace Prolangle.Services;
 /// Reveals code, regardless of language tokens, that is, without respecting the given languages syntax tokens. It might
 /// reveal tokens only partially.
 /// </summary>
-public class SimpleCodeConcealer : ICodeConcealer
+public class TokenBasedCodeConcealer : ICodeConcealer
 {
 	private const char concealingChar = '•';
 
@@ -33,11 +33,15 @@ public class SimpleCodeConcealer : ICodeConcealer
 			var tokenIdx = 0;
 			foreach (var token in tokens)
 			{
-				if (token.Type == GeneralTokenType.Whitespace ||
-				    !(tokenIdx < startRevealingAtIndex) && !(tokenIdx >= endRevealingAtIndex))
-					yield return token;
+				if (token.Type != GeneralTokenType.Whitespace &&
+				    (tokenIdx < startRevealingAtIndex || tokenIdx >= endRevealingAtIndex))
+				{
+					var concealedChars = token.Value.Select(c => char.IsWhiteSpace(c) ? c : concealingChar);
+
+					yield return new() { Value = string.Join("", concealedChars), Type = token.Type };
+				}
 				else
-					yield return new() { Value = new(concealingChar, token.Value.Length), Type = token.Type };
+					yield return token;
 
 				tokenIdx++;
 			}
@@ -45,12 +49,12 @@ public class SimpleCodeConcealer : ICodeConcealer
 	}
 }
 
-public static class SimpleCodeConcealerServiceCollectionExtensions
+public static class TokenBasedCodeConcealerServiceCollectionExtensions
 {
 	[PublicAPI]
-	public static IServiceCollection AddSimpleCodeConcealer(this IServiceCollection services)
+	public static IServiceCollection AddTokenBasedCodeConcealer(this IServiceCollection services)
 	{
-		services.AddSingleton<ICodeConcealer, SimpleCodeConcealer>();
+		services.AddSingleton<ICodeConcealer, TokenBasedCodeConcealer>();
 
 		return services;
 	}
