@@ -21,6 +21,7 @@ public class GeneralTokenizer(ILanguage language, ICodeTokenizer fallbackTokeniz
 			Dart => DartTokenizer.Instance.Tokenize(code).Select(TranslateDartToken),
 			// TODO: add YAML tokenizer from Blism when YAML gets added to Prolangle
 			Xml or Html => XmlLikeTokenizer.Instance.Tokenize(code),
+			Css => CssTokenizer.Instance.Tokenize(code),
 			_ => fallbackTokenizer.Tokenize(language, code),
 		};
 	}
