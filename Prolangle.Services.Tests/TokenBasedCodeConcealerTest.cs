@@ -26,7 +26,7 @@ public static class TokenBasedCodeConcealerTest
 		Assert.Equal(4, concealedTokens.Count);
 
 		var text = string.Join("", concealedTokens.Select(t => t.Value));
-		Assert.Equal("•••••••••••••", text);
+		Assert.Equal("•••••• ••••••", text);
 	}
 
 	[Fact]
