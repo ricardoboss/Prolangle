@@ -6,6 +6,7 @@
 * Persist guesses https://github.com/ricardoboss/Prolangle/pull/157 (Fixes https://github.com/ricardoboss/Prolangle/issues/22)
 * (internal) Update to .NET 9
 * (internal) Removed service worker
+* Added a new logo for Prolangle
 
 # 2024-10-15.1
 
