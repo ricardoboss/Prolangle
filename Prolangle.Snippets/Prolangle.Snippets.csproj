@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Prolangle.Abstractions\Prolangle.Abstractions.csproj" />
     <ProjectReference Include="..\Prolangle.Languages\Prolangle.Languages.csproj" />
+    <ProjectReference Include="..\Prolangle.Tokenizers\Prolangle.Tokenizers.csproj" />
   </ItemGroup>
 
 </Project>
