@@ -5,5 +5,5 @@ namespace Prolangle.Abstractions.Services;
 
 public interface IConcealingTokenizerFactory
 {
-	ITokenizer<GeneralTokenType> GetTokenizer(ILanguage language, double revealedOffset, double revealedPercent);
+	ITokenizer<GeneralTokenType> GetTokenizer(ILanguage language, double revealedOffset, double revealedPercent, bool debug);
 }

@@ -21,6 +21,9 @@
 	[Parameter]
 	public string? Style { get; set; }
 
-	private ITokenizer<GeneralTokenType>? Tokenizer => Snippet == null || !RevealedPercent.HasValue ? null : TokenizerFactory.GetTokenizer(Snippet.Language, 0.5d, RevealedPercent.Value);
+	[Parameter]
+	public bool Debug { get; set; }
+
+	private ITokenizer<GeneralTokenType>? Tokenizer => Snippet == null || !RevealedPercent.HasValue ? null : TokenizerFactory.GetTokenizer(Snippet.Language, 0.5d, RevealedPercent.Value, Debug);
 
 }

@@ -15,19 +15,26 @@
 {
 	@if (AvailableSnippets.Any())
 	{
-		<label>
-			<span>Reveal:</span>
-			<input type="range" @bind="revealed" min="0" max="1" step="0.1"/>
-			<span>@(revealed * 100) %</span>
-		</label>
+		<div style="display: flex; gap: 1rem">
+			<label>
+				<span>Reveal:</span>
+				<input type="range" @bind="revealed" min="0" max="1" step="0.1"/>
+				<span>@(revealed * 100) %</span>
+			</label>
+
+			<label>
+				<span>Debug:</span>
+				<input type="checkbox" @bind="debugSnippets"/>
+			</label>
+		</div>
 
 		<div style="display: flex; flex-wrap: wrap; gap: 1rem;">
 			@foreach (var snippet in AvailableSnippets)
 			{
 				<div style="flex: 0 0 auto; border: solid 1px #2f2f2f; padding: 0.5rem; border-radius: 0.5rem;">
-					<ConcealedSourceCode Snippet="snippet" RevealedPercent="@revealed"/>
+					<ConcealedSourceCode Snippet="snippet" RevealedPercent="@revealed" Debug="debugSnippets"/>
 
-					<ul>
+					<ul style="margin-top: 0.5rem;">
 						<li>Filename: <code>@(snippet.Filename)</code></li>
 						<li>Attribution: @(snippet is IAttributedCodeSnippet a ? a.Attribution : "-")</li>
 						<li>License: @(snippet is ILicensedCodeSnippet l ? l.License : "-")</li>
@@ -51,6 +58,8 @@
 	private ILanguage? SelectedLanguage { get; set; }
 
 	private double revealed = 1;
+
+	private bool debugSnippets;
 
 	private void LanguageSelected(ILanguage language)
 	{

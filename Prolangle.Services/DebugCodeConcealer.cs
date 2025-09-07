@@ -6,7 +6,7 @@ using Prolangle.Abstractions.Services;
 
 namespace Prolangle.Services;
 
-public class DebugCodeConcealer : ICodeConcealer
+public class DebugCodeConcealer(ICodeConcealer inner) : ICodeConcealer
 {
 	public IReadOnlyList<SyntaxToken<GeneralTokenType>> ConcealTokens(ILanguage language,
 		IReadOnlyList<SyntaxToken<GeneralTokenType>> tokens,
@@ -14,23 +14,13 @@ public class DebugCodeConcealer : ICodeConcealer
 	{
 		return
 		[
-			..tokens.Select(token => new SyntaxToken<GeneralTokenType>
-			{
-				// Value = $"{{{token.Type}}}{token.Value}",
-				Value = token.Value,
-				Type = token.Type,
-			}),
+			..inner.ConcealTokens(language, tokens, revealedOffset, revealedPercent)
+				.Select(token => new SyntaxToken<GeneralTokenType>
+				{
+					Value = $"{{{token.Type}}}{token.Value}",
+					// Value = token.Value,
+					Type = token.Type,
+				}),
 		];
-	}
-}
-
-public static class DebugCodeConcealerServiceCollectionExtensions
-{
-	[PublicAPI]
-	public static IServiceCollection AddDebugCodeConcealer(this IServiceCollection services)
-	{
-		services.AddSingleton<ICodeConcealer, DebugCodeConcealer>();
-
-		return services;
 	}
 }

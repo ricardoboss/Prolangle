@@ -10,9 +10,14 @@ public class DefaultConcealingTokenizerFactory(ICodeConcealer concealer, ICodeTo
 	: IConcealingTokenizerFactory
 {
 	public ITokenizer<GeneralTokenType>
-		GetTokenizer(ILanguage language, double revealedOffset, double revealedPercent) =>
-		new ConcealingTokenizer(concealer, new GeneralTokenizer(language, fallbackTokenizer), language,
-			revealedOffset, revealedPercent);
+		GetTokenizer(ILanguage language, double revealedOffset, double revealedPercent, bool debug) =>
+		new ConcealingTokenizer(
+			debug ? new DebugCodeConcealer(concealer) : concealer,
+			new GeneralTokenizer(language, fallbackTokenizer),
+			language,
+			revealedOffset,
+			revealedPercent
+		);
 }
 
 public static class DefaultConcealingTokenizerFactoryServiceCollectionExtensions
