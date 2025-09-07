@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 using Blism;
 using Prolangle.Abstractions.Services;
 
-namespace Prolangle.Services.Tokenizers;
+namespace Prolangle.Tokenizers;
 
 public class XmlLikeTokenizer : BaseTokenizer<GeneralTokenType>
 {

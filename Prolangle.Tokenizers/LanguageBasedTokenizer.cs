@@ -7,23 +7,35 @@ using Prolangle.Abstractions.Languages;
 using Prolangle.Abstractions.Services;
 using Prolangle.Languages;
 
-namespace Prolangle.Services.Tokenizers;
+namespace Prolangle.Tokenizers;
 
-public class GeneralTokenizer(ILanguage language, ICodeTokenizer fallbackTokenizer) : ITokenizer<GeneralTokenType>
+public class LanguageBasedTokenizer(ILanguage language, ITokenizer<GeneralTokenType> fallbackTokenizer) : ITokenizer<GeneralTokenType>
 {
 	public IEnumerable<SyntaxToken<GeneralTokenType>> Tokenize(string code)
 	{
 		return language switch
 		{
+			// TODO: move translation logic into separate classes
 			CSharp => CSharpTokenizer.Instance.Tokenize(code).Select(TranslateCSharpToken),
 			Bash => BashTokenizer.Instance.Tokenize(code).Select(TranslateBashToken),
 			Php => PhpTokenizer.Instance.Tokenize(code).Select(TranslatePhpToken),
 			Dart => DartTokenizer.Instance.Tokenize(code).Select(TranslateDartToken),
 			// TODO: add YAML tokenizer from Blism when YAML gets added to Prolangle
-			Xml or Html => XmlLikeTokenizer.Instance.Tokenize(code),
-			Css => CssTokenizer.Instance.Tokenize(code),
-			_ => fallbackTokenizer.Tokenize(language, code),
+			_ => TokenizeGeneral(code),
 		};
+	}
+
+	private IEnumerable<SyntaxToken<GeneralTokenType>> TokenizeGeneral(string code)
+	{
+		var tokenizer = language switch
+		{
+			Xml or Html => XmlLikeTokenizer.Instance,
+			Css => CssTokenizer.Instance,
+			Assembly => AssemblyTokenizer.Instance,
+			_ => fallbackTokenizer,
+		};
+
+		return tokenizer.Tokenize(code);
 	}
 
 	private static SyntaxToken<GeneralTokenType> TranslateDartToken(SyntaxToken<DartTokenType> dartToken)

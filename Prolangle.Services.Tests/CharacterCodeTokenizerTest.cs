@@ -10,11 +10,9 @@ public static class CharacterCodeTokenizerTest
 	{
 		const string sourceCode = "Hello, World!";
 
-		var languageMock = new Mock<ILanguage>();
-
 		var tokenizer = new CharacterCodeTokenizer();
 
-		var tokens = tokenizer.Tokenize(languageMock.Object, sourceCode).ToList();
+		var tokens = tokenizer.Tokenize(sourceCode).ToList();
 
 		Assert.Equal(13, tokens.Count);
 

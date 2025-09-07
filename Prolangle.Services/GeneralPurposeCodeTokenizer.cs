@@ -9,7 +9,7 @@ namespace Prolangle.Services;
 /// <summary>
 /// Tokenizes any given code by interpreting each individual word as a token (separated by certain characters).
 /// </summary>
-public class GeneralPurposeCodeTokenizer : ICodeTokenizer
+public class GeneralPurposeCodeTokenizer : ITokenizer<GeneralTokenType>
 {
 	private static readonly HashSet<char> OperatorChars =
 		['+', '-', '*', '/', '%', '=', '!', '<', '>', '&', '|', '^', '~', '?'];
@@ -17,7 +17,7 @@ public class GeneralPurposeCodeTokenizer : ICodeTokenizer
 	private static readonly HashSet<char> PunctuationChars =
 		['(', ')', '{', '}', '[', ']', ';', ',', '.', ':'];
 
-	public IEnumerable<SyntaxToken<GeneralTokenType>> Tokenize(ILanguage language, string code)
+	public IEnumerable<SyntaxToken<GeneralTokenType>> Tokenize(string code)
 	{
 		List<SyntaxToken<GeneralTokenType>> tokens = [];
 		int i = 0;
@@ -172,7 +172,7 @@ public static class GeneralPurposeCodeTokenizerServiceCollectionExtensions
 	[PublicAPI]
 	public static IServiceCollection AddGeneralPurposeCodeTokenizer(this IServiceCollection services)
 	{
-		services.AddSingleton<ICodeTokenizer, GeneralPurposeCodeTokenizer>();
+		services.AddSingleton<ITokenizer<GeneralTokenType>, GeneralPurposeCodeTokenizer>();
 
 		return services;
 	}

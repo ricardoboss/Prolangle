@@ -2,7 +2,7 @@ using Blism;
 using Prolangle.Abstractions.Languages;
 using Prolangle.Abstractions.Services;
 
-namespace Prolangle.Services.Tokenizers;
+namespace Prolangle.Services;
 
 public class ConcealingTokenizer(
 	ICodeConcealer concealer,

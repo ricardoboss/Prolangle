@@ -2,18 +2,18 @@ using Blism;
 using Microsoft.Extensions.DependencyInjection;
 using Prolangle.Abstractions.Languages;
 using Prolangle.Abstractions.Services;
-using Prolangle.Services.Tokenizers;
+using Prolangle.Tokenizers;
 
 namespace Prolangle.Services;
 
-public class DefaultConcealingTokenizerFactory(ICodeConcealer concealer, ICodeTokenizer fallbackTokenizer)
+public class DefaultConcealingTokenizerFactory(ICodeConcealer concealer, ITokenizer<GeneralTokenType> fallbackTokenizer)
 	: IConcealingTokenizerFactory
 {
 	public ITokenizer<GeneralTokenType>
-		GetTokenizer(ILanguage language, double revealedOffset, double revealedPercent, bool debug) =>
+		GetConcealedTokenizer(ILanguage language, ITokenizer<GeneralTokenType>? tokenizer, double revealedOffset, double revealedPercent, bool debug) =>
 		new ConcealingTokenizer(
 			debug ? new DebugCodeConcealer(concealer) : concealer,
-			new GeneralTokenizer(language, fallbackTokenizer),
+			tokenizer ?? new LanguageBasedTokenizer(language, fallbackTokenizer),
 			language,
 			revealedOffset,
 			revealedPercent

@@ -10,11 +10,9 @@ public static class GeneralPurposeCodeTokenizerTest
 	{
 		const string sourceCode = "Hello, World!";
 
-		var languageMock = new Mock<ILanguage>();
-
 		var tokenizer = new GeneralPurposeCodeTokenizer();
 
-		var tokens = tokenizer.Tokenize(languageMock.Object, sourceCode).ToList();
+		var tokens = tokenizer.Tokenize(sourceCode).ToList();
 
 		Assert.Equal(5, tokens.Count);
 
@@ -39,11 +37,9 @@ public static class GeneralPurposeCodeTokenizerTest
 	{
 		const string sourceCode = "A B  C \n D";
 
-		var languageMock = new Mock<ILanguage>();
-
 		var tokenizer = new GeneralPurposeCodeTokenizer();
 
-		var tokens = tokenizer.Tokenize(languageMock.Object, sourceCode).ToList();
+		var tokens = tokenizer.Tokenize(sourceCode).ToList();
 
 		Assert.Equal(7, tokens.Count);
 
@@ -75,11 +71,9 @@ public static class GeneralPurposeCodeTokenizerTest
 		                          }
 		                          """;
 
-		var languageMock = new Mock<ILanguage>();
-
 		var tokenizer = new GeneralPurposeCodeTokenizer();
 
-		var tokens = tokenizer.Tokenize(languageMock.Object, sourceCode).ToList();
+		var tokens = tokenizer.Tokenize(sourceCode).ToList();
 
 		Assert.Equal(49, tokens.Count);
 		Assert.Multiple(() =>

@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prolangle.Services.Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prolangle.Languages.Tests", "Prolangle.Languages.Tests\Prolangle.Languages.Tests.csproj", "{B2C5F8C9-CB96-47FD-A859-70BA058017FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prolangle.Tokenizers", "Prolangle.Tokenizers\Prolangle.Tokenizers.csproj", "{0C4F970D-A86F-4834-B83D-5C8743F351D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{B2C5F8C9-CB96-47FD-A859-70BA058017FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2C5F8C9-CB96-47FD-A859-70BA058017FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2C5F8C9-CB96-47FD-A859-70BA058017FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C4F970D-A86F-4834-B83D-5C8743F351D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C4F970D-A86F-4834-B83D-5C8743F351D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C4F970D-A86F-4834-B83D-5C8743F351D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C4F970D-A86F-4834-B83D-5C8743F351D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C3E5C557-BA0C-42F0-BC30-F3F785110446} = {C7B512EC-4A5B-418B-BE91-91C15DD9F7CA}
