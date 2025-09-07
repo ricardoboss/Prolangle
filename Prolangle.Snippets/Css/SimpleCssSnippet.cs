@@ -21,7 +21,7 @@ public class SimpleCssSnippet : ICodeSnippet
 		body {
 			background-color: lightblue;
 			color: black;
-			font-family: Arial, Helvetica, sans-serif;
+			font-family: "Arial", "Helvetica", sans-serif;
 		}
 
 		p {
