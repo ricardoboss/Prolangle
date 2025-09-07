@@ -166,7 +166,7 @@
 		}
 
 		TargetLanguage = Snippet.Language;
-		_revealedPercent = _revealedPerGuess;
+		_revealedPercent = 0;
 
 		var allGuesses = await DbManager.GetRecords<Guess>(Guess.StoreName);
 		var guesses = allGuesses?.Where(g => g.GameId == game.Id).ToList();
