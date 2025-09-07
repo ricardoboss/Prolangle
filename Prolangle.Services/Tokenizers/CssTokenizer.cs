@@ -10,11 +10,14 @@ public class CssTokenizer : BaseTokenizer<GeneralTokenType>
 
 	protected override IEnumerable<(Regex regex, GeneralTokenType type)> GetTokenDefinitions()
 	{
-		yield return (new(@"[\w-]+(?=:)"), GeneralTokenType.Keyword);
-		yield return (new(@"\d+(\.\d+)"), GeneralTokenType.Number);
-		yield return (new(@"\b[:;{}@()]\b"), GeneralTokenType.Punctuation);
-		yield return (new(@"(?<=:)[\w\s-()]+(?={)"), GeneralTokenType.Keyword);
 		yield return (new(@"/\*[.\n\r]*\*/"), GeneralTokenType.Comment);
+		yield return (new(@"\d+(?:\.\d+)?"), GeneralTokenType.Number);
+		yield return (new(@"[,:;{}@()]"), GeneralTokenType.Punctuation);
+		yield return (new(@"[@.#][\w-]+"), GeneralTokenType.Keyword); // groups/ids
+		yield return (new(@"[\w-]+(?=\:)"), GeneralTokenType.Identifier); // properties
+		yield return (new(@"[\w-]+"), GeneralTokenType.Keyword); // scopes for elements
+		yield return (new(@"(?<=:)[\w\s-()]+(?={)"), GeneralTokenType.Keyword); // modifiers
+		yield return (new(@"(?<=:)[\w\s-(),]+"), GeneralTokenType.Text); // values
 		yield return (new(@"\s+"), GeneralTokenType.Whitespace);
 	}
 
