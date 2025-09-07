@@ -8,6 +8,7 @@
 * (internal) Removed service worker
 * Added a new logo for Prolangle
 * (internal) Completely restructured service layers
+* (internal) Added /Trialer page for testing properties/snippets for specific languages
 
 # 2024-10-15.1
 
