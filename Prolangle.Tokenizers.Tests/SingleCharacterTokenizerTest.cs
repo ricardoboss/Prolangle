@@ -1,16 +1,15 @@
-using Prolangle.Abstractions.Languages;
 using Prolangle.Abstractions.Services;
 
-namespace Prolangle.Services.Tests;
+namespace Prolangle.Tokenizers.Tests;
 
-public static class CharacterCodeTokenizerTest
+public static class SingleCharacterTokenizerTest
 {
 	[Fact]
 	public static void TestTokenizeSimpleString()
 	{
 		const string sourceCode = "Hello, World!";
 
-		var tokenizer = new CharacterCodeTokenizer();
+		var tokenizer = new SingleCharacterTokenizer();
 
 		var tokens = tokenizer.Tokenize(sourceCode).ToList();
 

@@ -32,6 +32,7 @@ public class LanguageBasedTokenizer(ILanguage language, ITokenizer<GeneralTokenT
 			Xml or Html => XmlLikeTokenizer.Instance,
 			Css => CssTokenizer.Instance,
 			Assembly => AssemblyTokenizer.Instance,
+			Brainfuck => BrainfuckTokenizer.Instance,
 			_ => fallbackTokenizer,
 		};
 
