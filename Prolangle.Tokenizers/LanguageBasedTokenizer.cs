@@ -33,6 +33,12 @@ public class LanguageBasedTokenizer(ILanguage language, ITokenizer<GeneralTokenT
 			Css => CssTokenizer.Instance,
 			Assembly => AssemblyTokenizer.Instance,
 			Brainfuck => BrainfuckTokenizer.Instance,
+			Cobol => CobolTokenizer.Instance,
+			Fortran => FortranTokenizer.Instance,
+			GraphQl => GraphQlTokenizer.Instance,
+			Markdown => MarkdownTokenizer.Instance,
+			Smalltalk => SmalltalkTokenizer.Instance,
+			Sql => TSqlTokenizer.Instance,
 			_ => fallbackTokenizer,
 		};
 
