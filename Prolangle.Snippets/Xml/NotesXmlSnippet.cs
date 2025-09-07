@@ -3,13 +3,13 @@ using Prolangle.Abstractions.Snippets;
 
 namespace Prolangle.Snippets.Xml;
 
-public class SimpleXmlSnippet : IAttributedCodeSnippet
+public class NotesXmlSnippet : IAttributedCodeSnippet
 {
 	public Guid Id { get; } = Guid.Parse("d121bcfc-64bf-4ec6-ae33-9b3d840b8ac5");
 
 	public ILanguage Language => Languages.Xml.Instance;
 
-	public string Filename => "Snippet.xml";
+	public string Filename => "notes.xml";
 
 	public string SourceCode =>
 		"""
