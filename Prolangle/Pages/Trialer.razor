@@ -36,6 +36,7 @@
 
 					<ul style="margin-top: 0.5rem;">
 						<li>Filename: <code>@(snippet.Filename)</code></li>
+						<li>Tokenizer: <code>@(snippet is ICustomTokenizerSnippet t ? t.Tokenizer.GetType().Name : "-")</code></li>
 						<li>Attribution: @(snippet is IAttributedCodeSnippet a ? a.Attribution : "-")</li>
 						<li>License: @(snippet is ILicensedCodeSnippet l ? l.License : "-")</li>
 					</ul>
