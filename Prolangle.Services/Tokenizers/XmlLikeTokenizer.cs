@@ -1,68 +1,36 @@
-using System.Xml.Linq;
+using System.Text.RegularExpressions;
 using Blism;
 using Prolangle.Abstractions.Services;
 
 namespace Prolangle.Services.Tokenizers;
 
-public class XmlLikeTokenizer : ITokenizer<GeneralTokenType>
+public class XmlLikeTokenizer : BaseTokenizer<GeneralTokenType>
 {
 	public static readonly XmlLikeTokenizer Instance = new();
 
-	public IEnumerable<SyntaxToken<GeneralTokenType>> Tokenize(string code)
+	protected override IEnumerable<(Regex regex, GeneralTokenType type)> GetTokenDefinitions()
 	{
-		var doc = XDocument.Parse(code);
+		yield return (new(@"\s+"), GeneralTokenType.Whitespace);
+		yield return (new(@"<!--(?:.|\n)*?-->"), GeneralTokenType.Comment);
+		yield return (new(@"<!\[CDATA\[(?:.|\n)*?\]\]>"), GeneralTokenType.Keyword);
+		yield return (new(@"<!DOCTYPE\b[^>]*>"), GeneralTokenType.Keyword);
+		yield return (new(@"<\?.*?\?>"), GeneralTokenType.Keyword);
 
-		return [..EmitTokens(doc, 0)];
+		// attribute values
+		yield return (new(@"""(?:\\.|[^""\\])*""|'(?:\\.|[^'\\])*'"), GeneralTokenType.Text);
+
+		// text nodes between tags
+		yield return (new(@"(?<=>)[^<>]+(?=<)"), GeneralTokenType.Text);
+
+		// element/closing tag names
+		yield return (new(@"(?<=</?)[A-Za-z_:][A-Za-z0-9.\-_:]*"), GeneralTokenType.Identifier);
+
+		// attribute names
+		yield return (new(@"(?<=\s)[A-Za-z_:][A-Za-z0-9.\-_:]*(?=\s*=)"), GeneralTokenType.Identifier);
+
+		yield return (new(@"="), GeneralTokenType.Operator);
+		yield return (new(@"</|/>|<|>"), GeneralTokenType.Punctuation);
 	}
 
-	private static IEnumerable<SyntaxToken<GeneralTokenType>> EmitTokens(XObject obj, int indent)
-	{
-		const char indentChar = ' ';
-		const int indentPerLayer = 4;
-
-		switch (obj)
-		{
-			case XDocument d:
-				foreach (var subNode in d.Nodes())
-					foreach (var subToken in EmitTokens(subNode, 0))
-						yield return subToken;
-				break;
-			case XElement e:
-				yield return new() { Value = new(indentChar, indent), Type = GeneralTokenType.Whitespace };
-				yield return new() { Value = "<", Type = GeneralTokenType.Punctuation };
-				yield return new() { Value = e.Name.ToString(), Type = GeneralTokenType.Identifier };
-				foreach (var attr in e.Attributes())
-				{
-					yield return new() { Value = " ", Type = GeneralTokenType.Whitespace };
-					foreach (var subToken in EmitTokens(attr, 0))
-						yield return subToken;
-				}
-				yield return new() { Value = ">", Type = GeneralTokenType.Punctuation };
-				yield return new() { Value = "\r\n", Type = GeneralTokenType.Whitespace };
-				foreach (var subNode in e.Nodes())
-					foreach (var subToken in EmitTokens(subNode, indent + indentPerLayer))
-						yield return subToken;
-				yield return new() { Value = new(indentChar, indent), Type = GeneralTokenType.Whitespace };
-				yield return new() { Value = "</", Type = GeneralTokenType.Punctuation };
-				yield return new() { Value = e.Name.ToString(), Type = GeneralTokenType.Identifier };
-				yield return new() { Value = ">", Type = GeneralTokenType.Punctuation };
-				yield return new() { Value = "\r\n", Type = GeneralTokenType.Whitespace };
-				break;
-			case XAttribute a:
-				yield return new() { Value = a.Name.ToString(), Type = GeneralTokenType.Identifier };
-				yield return new() { Value = "=", Type = GeneralTokenType.Punctuation };
-				yield return new() { Value = "\"", Type = GeneralTokenType.Punctuation };
-				yield return new() { Value = a.Value, Type = GeneralTokenType.Text };
-				yield return new() { Value = "\"", Type = GeneralTokenType.Punctuation };
-				break;
-			case XText t:
-				yield return new() { Value = new(indentChar, indent), Type = GeneralTokenType.Whitespace };
-				yield return new() { Value = t.Value, Type = GeneralTokenType.Text };
-				yield return new() { Value = "\r\n", Type = GeneralTokenType.Whitespace };
-				break;
-			default:
-				yield return new() { Value = obj.GetType().ToString(), Type = GeneralTokenType.Unknown };
-				break;
-		}
-	}
+	protected override GeneralTokenType UnknownTokenType => GeneralTokenType.Unknown;
 }
