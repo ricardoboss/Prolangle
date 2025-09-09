@@ -3,6 +3,9 @@ using Prolangle.Abstractions.Snippets;
 
 namespace Prolangle.Abstractions.Games;
 
-public interface ISnippetsGame : IGuessGame<ICodeSnippet, ISnippetsGameGuess, ILanguage>;
+public interface ISnippetsGame : IGuessGame<ICodeSnippet, ISnippetsGameGuess, ILanguage>
+{
+	bool RevealFileName { get; }
 
-public interface ISnippetsGameGuess : IGuess<ILanguage>;
+	double RevealedPercent { get; }
+}

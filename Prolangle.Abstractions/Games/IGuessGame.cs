@@ -5,4 +5,6 @@ public interface IGuessGame<out TTarget, out TGuess, TGuessValue> : ISeededGame 
 	TTarget Target { get; }
 
 	IReadOnlyList<TGuess> Guesses { get; }
+
+	bool Won { get; }
 }

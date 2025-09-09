@@ -8,6 +8,4 @@ public class DefaultSnippetsGameGuess : ISnippetsGameGuess
 	public required ILanguage Guess { get; init; }
 
 	public required DateTimeOffset GuessedAt { get; init; }
-
-	public required GuessResult Result { get; init; }
 }

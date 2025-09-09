@@ -10,6 +10,8 @@
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="System.Linq.Async" />
+    <PackageReference Include="TG.Blazor.IndexedDB" />
   </ItemGroup>
 
 </Project>

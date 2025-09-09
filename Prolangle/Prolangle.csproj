@@ -16,7 +16,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" />
     <PackageReference Include="MudBlazor" />
-    <PackageReference Include="TG.Blazor.IndexedDB" />
   </ItemGroup>
 
   <ItemGroup>

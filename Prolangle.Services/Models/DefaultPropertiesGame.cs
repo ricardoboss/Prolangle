@@ -14,4 +14,6 @@ public class DefaultPropertiesGame : IPropertiesGame
 	public required ILanguage Target { get; init; }
 
 	public required IReadOnlyList<IPropertiesGameGuess> Guesses { get; init; }
+
+	public bool Won => Guesses.Any(g => g.Guess == Target);
 }

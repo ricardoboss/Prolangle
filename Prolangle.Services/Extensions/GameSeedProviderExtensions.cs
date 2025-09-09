@@ -1,9 +1,9 @@
 using Prolangle.Abstractions.Games;
 using Prolangle.Abstractions.Services;
 
-namespace Prolangle.Extensions;
+namespace Prolangle.Services.Extensions;
 
-internal static class GameSeedProviderExtensions
+public static class GameSeedProviderExtensions
 {
 	public static GameSeed GetCurrentPropertiesGameSeed(this IGameSeedProvider provider) =>
 		provider.GetCurrentGameSeed(1);
