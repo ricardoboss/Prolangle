@@ -1,0 +1,23 @@
+﻿using Prolangle.Abstractions.Languages;
+
+namespace Prolangle.Languages;
+
+public class Step : BaseLanguage
+{
+	private Step()
+	{
+	}
+
+	public static Step Instance { get; } = new();
+
+	public override Guid Id { get; } = Guid.Parse("10db572b-4635-4070-b532-1f955299cb76");
+	public override string Name { get; } = "STEP";
+	public override TypeSystem Typing { get; } = TypeSystem.Static | TypeSystem.Strong | TypeSystem.Safe | TypeSystem.Nominal | TypeSystem.Manifest;
+	public override bool Compiled { get; }
+	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.TracingGarbageCollection;
+	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
+	public override Applications KnownForBuilding { get; } = Applications.General;
+	public override Paradigms Paradigms { get; } = Paradigms.Functional | Paradigms.Declarative | Paradigms.Structured;
+	public override double? TiobeRating { get; }
+	public override int AppearanceYear { get; } = 2022;
+}

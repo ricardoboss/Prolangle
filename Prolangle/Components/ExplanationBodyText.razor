@@ -1,14 +1,11 @@
-@inject LanguageMetadataProvider MetadataProvider;
-
-@using Prolangle.Services
-@using Prolangle.Extensions
+@inject ILanguageMetadataProvider MetadataProvider;
 
 @typeparam TEnum where TEnum : System.Enum
 
 @{
 	var flagName = Value.GetDisplayNameOrFallback();
 
-	var desc = MetadataProvider.ResolveDescription(Value);
+	var desc = MetadataProvider.GetDescription(Value);
 
 	<Div Margin="Margin.Is3.FromBottom.Is3.FromStart">
 		<Heading Size="HeadingSize.Is5" Margin="Margin.Is1.FromBottom">

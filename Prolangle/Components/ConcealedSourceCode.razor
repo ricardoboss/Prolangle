@@ -1,0 +1,37 @@
+@inject ITokenTypeHighlighter<GeneralTokenType> Highlighter
+@inject IConcealingTokenizerFactory TokenizerFactory
+
+@if (Tokenizer != null)
+{
+	<SyntaxHighlighter TTokenType="GeneralTokenType"
+	                   Highlighter="Highlighter"
+	                   Tokenizer="Tokenizer"
+	                   Code="@Snippet?.SourceCode"
+	                   Style="@Style"/>
+}
+
+@code {
+
+	[Parameter]
+	public ICodeSnippet? Snippet { get; set; }
+
+	[Parameter]
+	public double? RevealedPercent { get; set; }
+
+	[Parameter]
+	public string? Style { get; set; }
+
+	[Parameter]
+	public bool Debug { get; set; }
+
+	private ITokenizer<GeneralTokenType>? Tokenizer => Snippet == null || !RevealedPercent.HasValue
+		? null
+		: TokenizerFactory.GetConcealedTokenizer(
+			Snippet.Language,
+			Snippet is ICustomTokenizerSnippet c ? c.Tokenizer : null,
+			0.5d,
+			RevealedPercent.Value,
+			Debug
+		);
+
+}

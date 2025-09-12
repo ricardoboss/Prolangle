@@ -1,0 +1,61 @@
+using Blism;
+using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
+using Prolangle.Abstractions.Languages;
+using Prolangle.Abstractions.Services;
+
+namespace Prolangle.Services;
+
+/// <summary>
+/// Reveals code, regardless of language tokens, that is, without respecting the given languages syntax tokens. It might
+/// reveal tokens only partially.
+/// </summary>
+public class TokenBasedCodeConcealer : ICodeConcealer
+{
+	private const char concealingChar = '•';
+
+	public IReadOnlyList<SyntaxToken<GeneralTokenType>> ConcealTokens(ILanguage language,
+		IReadOnlyList<SyntaxToken<GeneralTokenType>> tokens,
+		double revealedOffset, double revealedPercent)
+	{
+		var revealedAreaCenterIndex = tokens.Count * revealedOffset;
+		var revealedAreaSize = tokens.Count * revealedPercent;
+		var startRevealingAtIndex = revealedAreaCenterIndex - revealedAreaSize / 2;
+		startRevealingAtIndex = Math.Max(0, startRevealingAtIndex);
+
+		var endRevealingAtIndex = startRevealingAtIndex + revealedAreaSize;
+		endRevealingAtIndex = Math.Min(tokens.Count, endRevealingAtIndex);
+
+		return [..concealTokensIteratively()];
+
+		IEnumerable<SyntaxToken<GeneralTokenType>> concealTokensIteratively()
+		{
+			var tokenIdx = 0;
+			foreach (var token in tokens)
+			{
+				if (token.Type != GeneralTokenType.Whitespace &&
+				    (tokenIdx < startRevealingAtIndex || tokenIdx >= endRevealingAtIndex))
+				{
+					var concealedChars = token.Value.Select(c => char.IsWhiteSpace(c) ? c : concealingChar);
+
+					yield return new() { Value = string.Join("", concealedChars), Type = token.Type };
+				}
+				else
+					yield return token;
+
+				tokenIdx++;
+			}
+		}
+	}
+}
+
+public static class TokenBasedCodeConcealerServiceCollectionExtensions
+{
+	[PublicAPI]
+	public static IServiceCollection AddTokenBasedCodeConcealer(this IServiceCollection services)
+	{
+		services.AddSingleton<ICodeConcealer, TokenBasedCodeConcealer>();
+
+		return services;
+	}
+}

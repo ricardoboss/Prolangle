@@ -1,10 +1,4 @@
-@using BlazorComponentUtilities
-@using System.Text
-@using Prolangle.Extensions
-@using Prolangle.Languages.Framework
-@using Prolangle.Services
-
-@inject LanguageMetadataProvider MetadataProvider;
+@inject ILanguageMetadataProvider MetadataProvider;
 
 @typeparam TEnum where TEnum : System.Enum
 
@@ -28,8 +22,8 @@
 	if (Overlap.HasFlag(flag))
 		cssClassBuilder.AddClass("overlap");
 
-	var desc = MetadataProvider.ResolveDescription(flag);
-	var moreInfoUrl = MetadataProvider.ResolveMoreInfoUrl(flag);
+	var desc = MetadataProvider.GetDescription(flag);
+	var moreInfoUrl = MetadataProvider.GetMoreInfoUrl(flag);
 
 	var style = "";
 	if (!string.IsNullOrWhiteSpace(desc))
@@ -40,7 +34,7 @@
 
 	string flagName = displayName;
 
-	<ExplanationPopover Content="@desc" Title="@flagName" Url="@moreInfoUrl" class="@cssClassBuilder.Build()">
+	<ExplanationPopover Content="@desc" Title="@flagName" Url="@moreInfoUrl?.AbsoluteUri" class="@cssClassBuilder.Build()">
 		<span style="@style">@flagName</span>
 	</ExplanationPopover>
 }

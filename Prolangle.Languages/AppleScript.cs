@@ -1,0 +1,29 @@
+using Prolangle.Abstractions.Languages;
+
+namespace Prolangle.Languages;
+
+public class AppleScript : BaseLanguage
+{
+	private AppleScript()
+	{
+	}
+
+	public static AppleScript Instance { get; } = new();
+
+	public override Guid Id { get; } = Guid.Parse("3cc8a15e-3650-4cc6-b2f5-95ff6e767944");
+	public override string Name { get; } = "AppleScript";
+	public override TypeSystem Typing { get; } = TypeSystem.Weak | TypeSystem.Dynamic;
+	public override bool Compiled { get; } = true;
+	public override MemoryManagement MemoryManagement { get; } = MemoryManagement.TracingGarbageCollection;
+	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.Other;
+
+	public override Applications KnownForBuilding { get; } =
+		Applications.Apple | Applications.Other | Applications.Scripts;
+
+	public override Paradigms Paradigms { get; } = Paradigms.Imperative | Paradigms.Structured |
+	                                               Paradigms.EventDriven | Paradigms.ObjectOriented |
+	                                               Paradigms.NaturalLanguage;
+
+	public override double? TiobeRating { get; }
+	public override int AppearanceYear { get; } = 1993;
+}

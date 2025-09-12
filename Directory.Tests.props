@@ -1,0 +1,25 @@
+<Project>
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <IsTrimmable>false</IsTrimmable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit"/>
+    <Using Include="Moq"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+    <PackageReference Include="xunit.runner.visualstudio"/>
+    <PackageReference Include="xunit.v3"/>
+    <PackageReference Include="coverlet.collector"/>
+    <PackageReference Include="Moq"/>
+  </ItemGroup>
+
+</Project>

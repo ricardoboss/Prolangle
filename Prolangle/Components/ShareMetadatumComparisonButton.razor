@@ -1,9 +1,5 @@
-@using Prolangle.Languages.Framework
-@using System.Text
-@using Humanizer
-@using Prolangle.Models
-@using Prolangle.Services
 @inject IJSRuntime JsRuntime
+@inject ILanguageComparer Comparer;
 
 @code {
 
@@ -18,12 +14,6 @@
 
 	Snackbar snackbar = null!;
 	string snackbarMessage = "";
-	MetadatumComparisonService comparisonService = null!;
-
-	protected override void OnParametersSet()
-	{
-		comparisonService = new(TargetLanguage);
-	}
 
 	private async Task OnClicked()
 	{
@@ -39,18 +29,11 @@
 	{
 		var builder = new StringBuilder();
 
-		foreach (ILanguage language in RevealedLanguages.Take(4))
+		foreach (var language in RevealedLanguages.Take(4))
 		{
-			MatchType typings = comparisonService.TypingMatch(language);
-			MatchType compiled = comparisonService.CompiledMatch(language);
-			MatchType garbageCollected = comparisonService.GarbageCollectedMatch(language);
-			MatchType syntax = comparisonService.SyntaxStyleMatch(language);
-			MatchType applications = comparisonService.ApplicationsMatch(language);
-			MatchType paradigms = comparisonService.ParadigmsMatch(language);
-			ComparisonDirection tiobeRatingDirection = comparisonService.TiobeRatingDirection(language);
-			ComparisonDirection appearanceYearDirection = comparisonService.AppearanceYearDirection(language);
+			var comparison = Comparer.Compare(TargetLanguage, language);
 
-			foreach (MatchType match in new List<MatchType> { typings, compiled, garbageCollected, syntax, applications, paradigms })
+			foreach (var match in new List<MatchType> { comparison.TypeSystemMatch, comparison.CompiledMatch, comparison.MemoryManagementMatch, comparison.SyntaxStyleMatch, comparison.ApplicationsMatch, comparison.ParadigmsMatch })
 			{
 				builder.Append(match switch
 				{
@@ -61,7 +44,7 @@
 				});
 			}
 
-			foreach (ComparisonDirection direction in new List<ComparisonDirection> { tiobeRatingDirection, appearanceYearDirection })
+			foreach (var direction in new List<ComparisonDirection> { comparison.TiobeRatingDirection, comparison.AppearanceYearDirection })
 			{
 				builder.Append(direction switch
 				{

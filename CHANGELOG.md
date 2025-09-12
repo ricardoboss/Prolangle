@@ -7,6 +7,13 @@
 * (internal) Update to .NET 9
 * (internal) Removed service worker
 * Added a new logo for Prolangle
+* (internal) Completely restructured service layers
+* (internal) Added /Trialer page for testing properties/snippets for specific languages
+* Snippets game updates:
+  * revealing is now done token-by-token, as opposed to character-chunk-by-character-chunk
+  * added syntax highlighting
+  * snippets are now 0% revealed at the beginning
+  * the file name is revealed as an additional hint once the whole file has been revealed
 
 # 2024-10-15.1
 

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Prolangle.Abstractions\Prolangle.Abstractions.csproj" />
+    <ProjectReference Include="..\Prolangle.Languages\Prolangle.Languages.csproj" />
+    <ProjectReference Include="..\Prolangle.Snippets\Prolangle.Snippets.csproj" />
+    <ProjectReference Include="..\Prolangle.Tokenizers\Prolangle.Tokenizers.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="System.Linq.Async" />
+    <PackageReference Include="TG.Blazor.IndexedDB" />
+  </ItemGroup>
+
+</Project>
