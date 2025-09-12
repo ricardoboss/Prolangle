@@ -1,6 +1,5 @@
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using Prolangle.Abstractions;
 using Prolangle.Abstractions.Games;
 using Prolangle.Abstractions.Services;
 using Prolangle.Abstractions.Snippets;
@@ -19,18 +18,14 @@ public class SeededSnippetChooser(IGameSeedProvider gameSeedProvider, ISnippetsP
 		gameSeed ??= gameSeedProvider.GetCurrentGameSeed();
 
 		var languagesSeed = gameSeed.Value.Value;
-		languages.Shuffle(languagesSeed);
-
-		var targetLanguage = languages.First();
+		var targetLanguage = languages.PickRandom(languagesSeed);
 
 		var snippets = snippetsProvider.GetAllForLanguage(targetLanguage).ToList();
 		if (snippets.Count == 0)
 			throw new InvalidOperationException("No snippets are available");
 
 		var snippetsSeed = gameSeed.Value.Value;
-		snippets.Shuffle(snippetsSeed);
-
-		return snippets.First();
+		return snippets.PickRandom(snippetsSeed);
 	}
 }
 

@@ -13,7 +13,7 @@ public class TimeBasedDailyGameSeedProvider(TimeProvider timeProvider)
 	{
 		var today = GetToday();
 
-		return GameSeed.From((int)today.Ticks % int.MaxValue);
+		return GameSeed.From((uint)today.Ticks % uint.MaxValue);
 	}
 
 	private DateTimeOffset GetToday()

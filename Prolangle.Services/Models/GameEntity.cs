@@ -13,7 +13,7 @@ public sealed class GameEntity
 	public required DateTimeOffset PlayedAt { get; set; }
 
 	[Required]
-	public required int Seed { get; set; }
+	public required uint Seed { get; set; }
 
 	[Required]
 	public required Guid SolutionId { get; set; }

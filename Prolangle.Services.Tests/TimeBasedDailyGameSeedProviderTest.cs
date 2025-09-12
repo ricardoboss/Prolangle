@@ -17,7 +17,7 @@ public static class TimeBasedDailyGameSeedProviderTest
 		var gameSeed = provider.GetCurrentGameSeed();
 		var timeUntilNext = provider.GetTimeUntilNextSeed();
 
-		Assert.Equal(-748290048, gameSeed.Value);
+		Assert.Equal(3546677248, gameSeed.Value);
 		Assert.Equal(TimeSpan.FromSeconds(4 * 60 + 50), timeUntilNext);
 
 		timeProviderMock.VerifyAll();

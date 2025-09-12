@@ -2,5 +2,5 @@ using Vogen;
 
 namespace Prolangle.Abstractions.Games;
 
-[ValueObject<int>]
+[ValueObject<uint>]
 public readonly partial struct GameSeed;

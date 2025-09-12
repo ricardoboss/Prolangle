@@ -5,18 +5,25 @@ namespace Prolangle.Services.Extensions;
 public static class ListExtensions
 {
 	[SuppressMessage("Security", "CA5394:Do not use insecure randomness")]
-	public static void Shuffle<T>(this IList<T> source, int? seed = null)
+	public static T PickRandom<T>(this IReadOnlyList<T> source, uint? seed = null)
 	{
-		if (source.IsReadOnly && source is not T[])
-			throw new ArgumentException("Cannot shuffle read only list in-place!", nameof(source));
+		if (source.Count == 0)
+			throw new ArgumentException("Sequence is empty", nameof(source));
 
-		var prng = seed.HasValue ? new Random(seed.Value) : new();
-
-		for (int i = source.Count; i > 1; i--)
+		if (seed is { } h)
 		{
-			int j = prng.Next(i);
+			// Murmur3’s finalizer constants (avalanche for nearby seeds)
+			h ^= h >> 16;
+			h *= 0x7feb352d;
+			h ^= h >> 15;
+			h *= 0x846ca68b;
+			h ^= h >> 16;
 
-			(source[i - 1], source[j]) = (source[j], source[i - 1]);
+			return source[(int)(h % (uint)source.Count)];
 		}
+
+		var idx = Random.Shared.Next(source.Count);
+
+		return source[idx];
 	}
 }

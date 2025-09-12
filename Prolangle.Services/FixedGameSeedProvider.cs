@@ -5,7 +5,7 @@ using Prolangle.Abstractions.Services;
 
 namespace Prolangle.Services;
 
-public class FixedGameSeedProvider(int seed, TimeSpan timeUntilNextSeed) : IGameSeedProvider
+public class FixedGameSeedProvider(uint seed, TimeSpan timeUntilNextSeed) : IGameSeedProvider
 {
 	public GameSeed GetCurrentGameSeed() => GameSeed.From(seed);
 
@@ -15,7 +15,7 @@ public class FixedGameSeedProvider(int seed, TimeSpan timeUntilNextSeed) : IGame
 public static class FixedGameSeedProviderServiceCollectionExtensions
 {
 	[PublicAPI]
-	public static IServiceCollection AddFixedGameSeedProvider(this IServiceCollection services, int seed,
+	public static IServiceCollection AddFixedGameSeedProvider(this IServiceCollection services, uint seed,
 		TimeSpan? timeUntilNextSeed = null)
 	{
 		var provider = new FixedGameSeedProvider(seed, timeUntilNextSeed ?? TimeSpan.FromMinutes(1));

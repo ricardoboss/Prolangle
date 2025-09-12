@@ -13,7 +13,7 @@ public class TimeBasedHourlyGameSeedProvider(TimeProvider timeProvider)
 	{
 		var today = GetThisHour();
 
-		return GameSeed.From((int)today.Ticks % int.MaxValue);
+		return GameSeed.From((uint)today.Ticks % uint.MaxValue);
 	}
 
 	private DateTimeOffset GetThisHour()
