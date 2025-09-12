@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Prolangle.Abstractions.Games;
 using Prolangle.Abstractions.Languages;
 using Prolangle.Abstractions.Services;
@@ -51,6 +52,7 @@ public static class DatabaseSnippetsGameControllerServiceCollectionExtensions
 	[PublicAPI]
 	public static IServiceCollection AddDatabaseSnippetsGameController(this IServiceCollection services)
 	{
+		services.TryAddSingleton(TimeProvider.System);
 		services.AddScoped<ISnippetsGameController, DatabaseSnippetsGameController>();
 
 		return services;

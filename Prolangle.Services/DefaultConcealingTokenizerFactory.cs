@@ -1,4 +1,5 @@
 using Blism;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Prolangle.Abstractions.Languages;
 using Prolangle.Abstractions.Services;
@@ -22,6 +23,7 @@ public class DefaultConcealingTokenizerFactory(ICodeConcealer concealer, ITokeni
 
 public static class DefaultConcealingTokenizerFactoryServiceCollectionExtensions
 {
+	[PublicAPI]
 	public static IServiceCollection AddDefaultConcealingTokenizerFactory(this IServiceCollection services)
 	{
 		services.AddSingleton<IConcealingTokenizerFactory, DefaultConcealingTokenizerFactory>();
