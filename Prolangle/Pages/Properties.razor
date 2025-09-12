@@ -74,6 +74,8 @@ else
 	protected override async Task OnInitializedAsync()
 	{
 		await Controller.InitializeAsync();
+
+		anythingGuessed = Controller.RevealedLanguages.Count > 0;
 	}
 
 	private async void OnLanguageSelected(ILanguage language)
