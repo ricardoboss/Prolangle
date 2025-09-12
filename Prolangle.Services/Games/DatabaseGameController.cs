@@ -18,7 +18,7 @@ public abstract class DatabaseGameController(
 	public override async Task InitializeAsync(GameSeed? gameSeed = null)
 	{
 		if (game is not null)
-			throw new InvalidOperationException("Game was already loaded/created!");
+			return;
 
 		if (!database.IsOpen)
 			await database.OpenAsync();
