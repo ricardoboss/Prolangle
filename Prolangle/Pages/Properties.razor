@@ -1,0 +1,117 @@
+﻿@page "/"
+
+@inject IPropertiesGameController Controller
+
+<Heading Size="HeadingSize.Is1">Guess a Language</Heading>
+<Heading Size="HeadingSize.Is2">…based on its properties</Heading>
+
+@if (Controller.TargetLanguage != null)
+{
+	<MetadatumComparisonTable TargetLanguage="Controller.TargetLanguage"
+	                          RevealedLanguages="Controller.RevealedLanguages"/>
+}
+
+@if (Controller.Won)
+{
+	<Heading Size="HeadingSize.Is3">You won!</Heading>
+
+	<ShareMetadatumComparisonButton TargetLanguage="Controller.TargetLanguage"
+	                                RevealedLanguages="Controller.RevealedLanguages">
+		Share results
+	</ShareMetadatumComparisonButton>
+
+	<NextGameTimer/>
+}
+else
+{
+	<LanguageSelection AvailableLanguages="@SelectableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
+
+	@if (anythingGuessed)
+	{
+		<p>
+			<Icon Name="IconName.Lightbulb" Padding="Padding.Is2"/>
+
+			<span>
+				Lost? Just try picking a language, or head to <NavLink href="/explanations">Explanations</NavLink>
+				for more info.
+			</span>
+		</p>
+	}
+	else
+	{
+		<p>
+			<Icon Name="IconName.Lightbulb" Padding="Padding.Is2"/>
+
+			<span>
+				Boxes are
+				<span class="match-hint-wrap Exact"><span class="match-hint">green</span></span>
+				if they're an exact match,
+				<span class="match-hint-wrap Partial"><span class="match-hint">orange</span></span>
+				if <em>some</em> of the properties (which will be in <strong>bold</strong>) match, and
+				<span class="match-hint-wrap None"><span class="match-hint">red</span></span>
+				if you got this aspect wrong.
+			</span>
+		</p>
+
+		<p>
+			<Icon Name="IconName.Lightbulb" Padding="Padding.Is2"/>
+
+			<span>
+				Some terms are <span class="popover-available-hint">underlined</span>. You can tap or click those to get
+				a quick explanation. Or, head to <NavLink href="/explanations">Explanations</NavLink> for more info.
+			</span>
+		</p>
+	}
+}
+
+@code
+{
+
+	private bool anythingGuessed;
+
+	private IReadOnlyList<ILanguage> SelectableLanguages => Controller.AvailableLanguages.Except(Controller.RevealedLanguages).ToList();
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Controller.InitializeAsync();
+	}
+
+	private async void OnLanguageSelected(ILanguage language)
+	{
+		anythingGuessed = true;
+
+		await Controller.GuessAsync(language);
+
+		StateHasChanged();
+	}
+
+}
+
+<style>
+	.match-hint-wrap {
+		padding: 0.25em;
+		border-radius: 0.25em;
+		display: inline-block;
+	}
+
+	.match-hint {
+		background: var(--color-match-inner);
+		border-radius: 0.25em;
+		padding: 0.25em 0.15em;
+	}
+
+	.match-hint-wrap.Exact {
+		color: var(--color-on-exact-match);
+		background-color: var(--color-exact-match);
+	}
+
+	.match-hint-wrap.Partial {
+		color: var(--color-on-partial-match);
+		background-color: var(--color-partial-match);
+	}
+
+	.match-hint-wrap.None {
+		color: var(--color-on-no-match);
+		background-color: var(--color-no-match);
+	}
+</style>

@@ -44,6 +44,7 @@ builder.Services.AddGeneralPurposeCodeTokenizer();
 builder.Services.AddDefaultConcealingTokenizerFactory();
 builder.Services.AddTokenBasedCodeConcealer();
 builder.Services.AddIndexedDbDatabase("Prolangle", 1, [typeof(GameEntity), typeof(GuessEntity)]);
+builder.Services.AddDatabasePropertiesGameController();
 builder.Services.AddDatabaseSnippetsGameController();
 
 // builder.Services.AddIndexedDB(o =>
