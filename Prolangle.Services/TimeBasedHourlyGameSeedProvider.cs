@@ -9,11 +9,11 @@ namespace Prolangle.Services;
 public class TimeBasedHourlyGameSeedProvider(TimeProvider timeProvider)
 	: IGameSeedProvider
 {
-	public GameSeed GetCurrentGameSeed(int offset)
+	public GameSeed GetCurrentGameSeed()
 	{
 		var today = GetThisHour();
 
-		return GameSeed.From((int)(today.Ticks + offset) % int.MaxValue);
+		return GameSeed.From((int)today.Ticks % int.MaxValue);
 	}
 
 	private DateTimeOffset GetThisHour()

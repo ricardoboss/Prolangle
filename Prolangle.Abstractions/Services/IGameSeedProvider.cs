@@ -4,7 +4,7 @@ namespace Prolangle.Abstractions.Services;
 
 public interface IGameSeedProvider
 {
-	GameSeed GetCurrentGameSeed(int offset = 0);
+	GameSeed GetCurrentGameSeed();
 
 	TimeSpan GetTimeUntilNextSeed();
 }

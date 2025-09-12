@@ -17,7 +17,7 @@ public class SeededLanguageChooser(IGameSeedProvider gameSeedProvider, ILanguage
 		if (languages.Count == 0)
 			throw new InvalidOperationException("No languages are available");
 
-		var languagesSeed = (seed ?? gameSeedProvider.GetCurrentGameSeed(1)).Value;
+		var languagesSeed = (seed ?? gameSeedProvider.GetCurrentGameSeed()).Value;
 		languages.Shuffle(languagesSeed);
 
 		return languages.First();
