@@ -9,13 +9,15 @@ namespace Prolangle.Services;
 
 public class SeededSnippetChooser(IGameSeedProvider gameSeedProvider, ISnippetsProvider snippetsProvider) : ISnippetChooser
 {
-	public ICodeSnippet ChooseSnippet(GameSeed? languageSeed = null, GameSeed? snippetSeed = null)
+	public ICodeSnippet ChooseSnippet(GameSeed? gameSeed = null)
 	{
 		var languages = snippetsProvider.GetAvailableLanguages().ToList();
 		if (languages.Count == 0)
 			throw new InvalidOperationException("No languages are available");
 
-		var languagesSeed = (languageSeed ?? gameSeedProvider.GetCurrentGameSeed(2)).Value;
+		gameSeed ??= gameSeedProvider.GetCurrentGameSeed();
+
+		var languagesSeed = gameSeed.Value.Value;
 		languages.Shuffle(languagesSeed);
 
 		var targetLanguage = languages.First();
@@ -24,7 +26,7 @@ public class SeededSnippetChooser(IGameSeedProvider gameSeedProvider, ISnippetsP
 		if (snippets.Count == 0)
 			throw new InvalidOperationException("No snippets are available");
 
-		var snippetsSeed = (snippetSeed ?? gameSeedProvider.GetCurrentGameSeed(3)).Value;
+		var snippetsSeed = gameSeed.Value.Value;
 		snippets.Shuffle(snippetsSeed);
 
 		return snippets.First();

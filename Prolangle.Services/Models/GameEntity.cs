@@ -1,13 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Prolangle.Models.Db;
+namespace Prolangle.Services.Models;
 
 [Table("Games")]
-internal sealed class Game
+public sealed class GameEntity
 {
-	public const string StoreName = "Games";
-
 	[Key, Required]
 	public required Guid Id { get; set; }
 
@@ -20,13 +18,11 @@ internal sealed class Game
 	[Required]
 	public required Guid SolutionId { get; set; }
 
-	public Guid? SecondarySolutionId { get; set; }
-
 	[Required]
 	public required Guid TypeId { get; set; }
 
 	public override string ToString()
 	{
-		return $"Game {{ Id = {Id}, GameSeed = {Seed}, PlayedAt = {PlayedAt:s}, TypeId = {TypeId} }}";
+		return $"GameEntity {{ Id = {Id}, GameSeed = {Seed}, PlayedAt = {PlayedAt:s}, TypeId = {TypeId} }}";
 	}
 }

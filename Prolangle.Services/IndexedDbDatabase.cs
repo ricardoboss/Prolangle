@@ -91,6 +91,8 @@ public class IndexedDbDatabase : IDatabase
 	{
 		var (name, _) = IntrospectStore(typeof(T));
 		var records = await manager.GetRecords<T>(name);
+		if (records is null)
+			yield break;
 
 		foreach (var record in records)
 			yield return record;

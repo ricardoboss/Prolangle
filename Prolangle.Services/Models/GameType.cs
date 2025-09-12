@@ -1,4 +1,4 @@
-namespace Prolangle.Models.Db;
+namespace Prolangle.Services.Models;
 
 internal static class GameType
 {

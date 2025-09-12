@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using Prolangle;
-using Prolangle.Models.Db;
 using Prolangle.Services;
 using Prolangle.Services.Games;
+using Prolangle.Services.Models;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -43,8 +43,8 @@ builder.Services.AddGeneralTokenTypeHighlighter();
 builder.Services.AddGeneralPurposeCodeTokenizer();
 builder.Services.AddDefaultConcealingTokenizerFactory();
 builder.Services.AddTokenBasedCodeConcealer();
-builder.Services.AddIndexedDbDatabase("Prolangle", 1, [typeof(Game), typeof(Guess)]);
-builder.Services.AddDatabaseSnippetsGameManager();
+builder.Services.AddIndexedDbDatabase("Prolangle", 1, [typeof(GameEntity), typeof(GuessEntity)]);
+builder.Services.AddDatabaseSnippetsGameController();
 
 // builder.Services.AddIndexedDB(o =>
 // {

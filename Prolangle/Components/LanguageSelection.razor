@@ -18,17 +18,7 @@
 			@context.Name
 		</ResultTemplate>
 		<NotFoundTemplate>
-			<span style="font-style: italic">
-				@if (!string.IsNullOrWhiteSpace(Query) &&
-				     RevealedLanguages.Any(l => l.Name.Equals(Query, StringComparison.InvariantCultureIgnoreCase)))
-				{
-					<span>You've already tried that language!</span>
-				}
-				else
-				{
-					<span>We don't have any languages by that name.</span>
-				}
-			</span>
+			<span style="font-style: italic">This language is not available.</span>
 		</NotFoundTemplate>
 	</BlazoredTypeahead>
 
@@ -37,21 +27,22 @@
 
 @code {
 	private string Query { get; set; } = "";
+
 	private ILanguage? SelectedLanguage { get; set; }
 
 	private Task<IEnumerable<ILanguage>> Search(string query)
 	{
 		Query = query;
 
-		return Task.FromResult(AvailableLanguages
-			.Where(language => language.Name.Contains(Query, StringComparison.OrdinalIgnoreCase)));
+		var results = AvailableLanguages
+			.Where(l => l.Name.Contains(Query, StringComparison.OrdinalIgnoreCase))
+			.OrderBy(l => l.Name);
+
+		return Task.FromResult<IEnumerable<ILanguage>>(results);
 	}
 
 	[Parameter]
 	public required IReadOnlyList<ILanguage> AvailableLanguages { get; set; }
-
-	[Parameter]
-	public required IReadOnlyList<ILanguage> RevealedLanguages { get; set; }
 
 	[Parameter]
 	public EventCallback<ILanguage> OnLanguageSelected { get; set; }

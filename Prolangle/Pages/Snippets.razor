@@ -1,10 +1,6 @@
 @page "/Snippets"
 
-@inject IGameSeedProvider GameSeeder
-@inject ISnippetsProvider LanguageSnippetProvider
-@inject IndexedDBManager DbManager
-@inject ILogger<Snippets> Logger
-@inject ISnippetChooser SnippetChooser
+@inject ISnippetsGameController Controller
 
 <style>
 	code {
@@ -37,12 +33,12 @@
 <Heading Size="HeadingSize.Is1">Guess a Language</Heading>
 <Heading Size="HeadingSize.Is2">…based on a sample code snippet</Heading>
 
-@if (Won)
+@if (Controller.Won)
 {
 	<Heading Size="HeadingSize.Is3">You won!</Heading>
 
 	<Div Padding="Padding.Is1.FromBottom">
-		<ShareCodeSnippetButton RevealedLanguages="RevealedLanguages">
+		<ShareCodeSnippetButton RevealedLanguages="Controller.RevealedLanguages">
 			Share results
 		</ShareCodeSnippetButton>
 	</Div>
@@ -52,12 +48,12 @@
 	</Div>
 }
 
-@if (RevealFilename && Snippet is not null)
+@if (Controller.RevealFilename && Controller.Snippet is not null)
 {
 	<Paragraph Margin="Margin.Is2.FromBottom">
-		Filename: <code>@Snippet.Filename</code>.
+		Filename: <code>@Controller.Snippet.Filename</code>.
 
-		@if (Won && Snippet is IAttributedCodeSnippet attributedSnippet)
+		@if (Controller.Won && Controller.Snippet is IAttributedCodeSnippet attributedSnippet)
 		{
 			@if (Uri.TryCreate(attributedSnippet.Attribution, UriKind.Absolute, out var uri))
 			{
@@ -68,7 +64,7 @@
 				<span>Written by @attributedSnippet.Attribution</span>
 			}
 
-			@if (Snippet is ILicensedCodeSnippet licensedSnippet)
+			@if (attributedSnippet is ILicensedCodeSnippet licensedSnippet)
 			{
 				<span>, licensed as follows: <strong style="font-weight: 500">@licensedSnippet.License</strong>.</span>
 			}
@@ -80,13 +76,13 @@
 	</Paragraph>
 }
 
-<ConcealedSourceCode Snippet="@Snippet" RevealedPercent="@_revealedPercent"
+<ConcealedSourceCode Snippet="@Controller.Snippet" RevealedPercent="@Controller.RevealedPercent"
                      Style="padding: 0.5rem; border-radius: 0.5rem;"/>
 
 <div style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 1em; margin-top: 1rem;">
-	@foreach (var language in RevealedLanguages)
+	@foreach (var language in Controller.RevealedLanguages)
 	{
-		@if (language == TargetLanguage)
+		@if (language == Controller.TargetLanguage)
 		{
 			<span class="snippet-language snippet-language-match">
 				<span>@language.Name</span>
@@ -101,122 +97,26 @@
 	}
 </div>
 
-@if (!Won)
+@if (!Controller.Won)
 {
-	<LanguageSelection AvailableLanguages="@AvailableLanguages" RevealedLanguages="@RevealedLanguages"
-	                   OnLanguageSelected="@OnLanguageSelected"/>
+	<LanguageSelection AvailableLanguages="@SelectableLanguages" OnLanguageSelected="@OnLanguageSelected"/>
 }
 
 @code
 {
-	private List<ILanguage> AvailableLanguages => LanguageSnippetProvider.GetAvailableLanguages().Where(l => !RevealedLanguages.Contains(l)).OrderBy(l => l.Name).ToList();
-	private bool Won => Game != null && RevealedLanguages.Any(l => Game.SolutionId == l.Id);
-	private bool RevealFilename => Won || (_revealedPercent >= 1 && !Won);
 
-	private List<ILanguage> RevealedLanguages { get; } = [];
-	private ILanguage? TargetLanguage { get; set; }
-	private ICodeSnippet? Snippet { get; set; }
-	private Game? Game;
-
-	private double _revealedPercent;
-	private double _revealedPerGuess => 2d / Math.Max(1, AvailableLanguages.Count);
+	private IReadOnlyList<ILanguage> SelectableLanguages => Controller.AvailableLanguages.Except(Controller.RevealedLanguages).ToList();
 
 	protected override async Task OnInitializedAsync()
 	{
-		await DbManager.OpenDb();
-
-		DbManager.ActionCompleted += (_, args) => Logger.LogInformation("IndexedDB: {Message} => {Outcome}", args.Message, args.Outcome);
+		await Controller.InitializeAsync();
 	}
 
-	protected override async Task OnParametersSetAsync()
+	private async Task OnLanguageSelected(ILanguage language)
 	{
-		var languageSeed = GameSeeder.GetCurrentSnippetsGameLanguageSeed();
-
-		var games = await DbManager.GetRecords<Game>(Game.StoreName);
-		var game = games.FirstOrDefault(g => g.Seed == languageSeed.Value && g.TypeId == GameType.SnippetsGameTypeId);
-
-		Logger.LogInformation("Tried to load game for today: {Game}", game);
-
-		if (game is { SecondarySolutionId: { } snippetId })
-		{
-			Snippet = LanguageSnippetProvider.GetById(snippetId);
-			Game = game;
-		}
-		else
-		{
-			var snippetSeed = GameSeeder.GetCurrentSnippetsGameSnippetSeed();
-			Snippet = SnippetChooser.ChooseSnippet(languageSeed, snippetSeed);
-			game = new()
-			{
-				Id = Guid.NewGuid(),
-				Seed = languageSeed.Value,
-				PlayedAt = DateTimeOffset.Now,
-				SolutionId = Snippet.Language.Id,
-				SecondarySolutionId = Snippet.Id,
-				TypeId = GameType.SnippetsGameTypeId,
-			};
-
-			await DbManager.AddRecord<Game>(new()
-			{
-				Storename = Game.StoreName,
-				Data = game,
-			});
-
-			Logger.LogInformation("Created new game: {Game}", game);
-		}
-
-		TargetLanguage = Snippet.Language;
-		_revealedPercent = 0;
-
-		var allGuesses = await DbManager.GetRecords<Guess>(Guess.StoreName);
-		var guesses = allGuesses?.Where(g => g.GameId == game.Id).ToList();
-
-		if (guesses is { Count: > 0 })
-		{
-			Debug.Assert(Game != null);
-
-			RevealedLanguages.AddRange(guesses.OrderBy(g => g.PlayedAt).Select(g => AvailableLanguages.Single(l => l.Id == g.LanguageId)));
-
-			Logger.LogInformation("Loaded {GuessCount} guess(es)", guesses.Count);
-
-			if (Won)
-				_revealedPercent = 1;
-			else
-				_revealedPercent = RevealedLanguages.Count * _revealedPerGuess;
-		}
-		else
-		{
-			Logger.LogInformation("No guesses for game yet.");
-		}
-	}
-
-	private async void OnLanguageSelected(ILanguage language)
-	{
-		if (Game == null)
-			return;
-
-		RevealedLanguages.Add(language);
-
-		var guess = new Guess
-		{
-			GameId = Game.Id,
-			LanguageId = language.Id,
-			PlayedAt = DateTimeOffset.Now,
-		};
-
-		await DbManager.AddRecord<Guess>(new()
-		{
-			Storename = Guess.StoreName,
-			Data = guess,
-		});
-
-		if (Won)
-			_revealedPercent = 1;
-		else
-			_revealedPercent += _revealedPerGuess;
-
-		Logger.LogInformation("Added guess {Guess} (won = {Won})", guess, Won);
+		await Controller.GuessAsync(language);
 
 		StateHasChanged();
 	}
+
 }
