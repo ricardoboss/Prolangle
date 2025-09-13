@@ -1,5 +1,7 @@
 # _Waiting for deployment_
 
+# 2025-09-13.1
+
 * Added TypeScript https://github.com/ricardoboss/Prolangle/pull/125
 * Added Logo https://github.com/ricardoboss/Prolangle/pull/156
 * (internal) Updated dependencies
