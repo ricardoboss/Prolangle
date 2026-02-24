@@ -1,0 +1,35 @@
+<Solution>
+  <Folder Name="/.github/" />
+  <Folder Name="/.github/workflows/">
+    <File Path=".github/workflows/changelog.yml" />
+    <File Path=".github/workflows/dotnet.yml" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".dockerignore" />
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="CHANGELOG.md" />
+    <File Path="CODE_OF_CONDUCT.md" />
+    <File Path="CONTRIBUTING.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="Directory.Tests.props" />
+    <File Path="docker-compose.yml" />
+    <File Path="Dockerfile" />
+    <File Path="global.json" />
+    <File Path="nginx.conf" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Solution Items/Docs/">
+    <File Path="docs/Game Persistence.md" />
+  </Folder>
+  <Project Path="Prolangle.Abstractions/Prolangle.Abstractions.csproj" />
+  <Project Path="Prolangle.Languages.Tests/Prolangle.Languages.Tests.csproj" />
+  <Project Path="Prolangle.Languages/Prolangle.Languages.csproj" />
+  <Project Path="Prolangle.Services.Tests/Prolangle.Services.Tests.csproj" />
+  <Project Path="Prolangle.Services/Prolangle.Services.csproj" />
+  <Project Path="Prolangle.Snippets/Prolangle.Snippets.csproj" />
+  <Project Path="Prolangle.Tokenizers.Tests/Prolangle.Tokenizers.Tests.csproj" />
+  <Project Path="Prolangle.Tokenizers/Prolangle.Tokenizers.csproj" />
+  <Project Path="Prolangle/Prolangle.csproj" />
+</Solution>
