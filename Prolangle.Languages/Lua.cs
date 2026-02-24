@@ -23,6 +23,6 @@ public class Lua : BaseLanguage
 		Paradigms.ObjectOriented | Paradigms.Functional |
 		Paradigms.Reflective;
 
-	public override double? TiobeRating => 0.37;
+	public override double? TiobeRating => 0.6;
 	public override int AppearanceYear => 1993;
 }

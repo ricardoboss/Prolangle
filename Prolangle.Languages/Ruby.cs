@@ -23,6 +23,6 @@ public class Ruby : BaseLanguage
 	public override Paradigms Paradigms { get; } = Paradigms.ObjectOriented | Paradigms.Functional |
 	                                               Paradigms.Imperative | Paradigms.Structured | Paradigms.Reflective;
 
-	public override double? TiobeRating { get; } = 0.77;
+	public override double? TiobeRating { get; } = 0.71;
 	public override int AppearanceYear { get; } = 1995;
 }

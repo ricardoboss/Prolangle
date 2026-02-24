@@ -21,6 +21,6 @@ public class Logo : BaseLanguage
 
 	public override Paradigms Paradigms { get; } = Paradigms.Imperative;
 
-	public override double? TiobeRating { get; } = 0.14;
+	public override double? TiobeRating { get; } = 0.17;
 	public override int AppearanceYear { get; } = 1967;
 }

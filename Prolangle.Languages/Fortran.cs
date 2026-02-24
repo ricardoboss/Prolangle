@@ -21,6 +21,6 @@ public class Fortran : BaseLanguage
 
 	public override Paradigms Paradigms { get; } = Paradigms.Structured | Paradigms.Procedural;
 
-	public override double? TiobeRating { get; } = 1.78;
+	public override double? TiobeRating { get; } = 1.64;
 	public override int AppearanceYear { get; } = 1957;
 }

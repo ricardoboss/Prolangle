@@ -24,6 +24,6 @@ public class JavaScript : BaseLanguage
 	public override Paradigms Paradigms { get; } = Paradigms.EventDriven | Paradigms.Functional | Paradigms.Imperative |
 	                                               Paradigms.Procedural | Paradigms.ObjectOriented;
 
-	public override double? TiobeRating { get; } = 2.9;
+	public override double? TiobeRating { get; } = 2.92;
 	public override int AppearanceYear { get; } = 1995;
 }

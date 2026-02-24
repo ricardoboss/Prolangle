@@ -23,6 +23,6 @@ public class Perl : BaseLanguage
 	public override Paradigms Paradigms { get; } = Paradigms.ObjectOriented |
 	                                               Paradigms.Imperative;
 
-	public override double? TiobeRating { get; } = 0.55;
+	public override double? TiobeRating { get; } = 1.67;
 	public override int AppearanceYear { get; } = 1987;
 }

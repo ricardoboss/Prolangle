@@ -26,6 +26,6 @@ public class PowerShell : BaseLanguage
 	public override Paradigms Paradigms { get; } = Paradigms.Imperative | Paradigms.ObjectOriented |
 	                                               Paradigms.Functional | Paradigms.Reflective;
 
-	public override double? TiobeRating { get; } = 0.24;
+	public override double? TiobeRating { get; } = 0.26;
 	public override int AppearanceYear { get; } = 2006;
 }

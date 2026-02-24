@@ -27,6 +27,6 @@ public class ObjectiveC : BaseLanguage
 	public override Paradigms Paradigms { get; } =
 		Paradigms.ObjectOriented | Paradigms.EventDriven | Paradigms.Reflective;
 
-	public override double? TiobeRating { get; } = 0.43;
+	public override double? TiobeRating { get; } = 0.48;
 	public override int AppearanceYear { get; } = 1984;
 }

@@ -25,6 +25,6 @@ public class Python : BaseLanguage
 	                                               Paradigms.Imperative | Paradigms.Functional | Paradigms.Structured |
 	                                               Paradigms.Reflective;
 
-	public override double? TiobeRating { get; } = 13.86;
+	public override double? TiobeRating { get; } = 21.81;
 	public override int AppearanceYear { get; } = 1991;
 }

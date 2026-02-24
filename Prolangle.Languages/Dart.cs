@@ -22,6 +22,6 @@ public class Dart : BaseLanguage
 	public override Paradigms Paradigms { get; } = Paradigms.Functional | Paradigms.Imperative |
 	                                               Paradigms.ObjectOriented | Paradigms.Reflective;
 
-	public override double? TiobeRating { get; } = 0.47;
+	public override double? TiobeRating { get; } = 0.61;
 	public override int AppearanceYear { get; } = 2011;
 }

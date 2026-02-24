@@ -22,6 +22,6 @@ public class TypeScript : BaseLanguage
 	public override Paradigms Paradigms =>
 		Paradigms.EventDriven | Paradigms.Functional | Paradigms.ObjectOriented | Paradigms.Generic;
 
-	public override double? TiobeRating => 0.37;
+	public override double? TiobeRating => 0.47;
 	public override int AppearanceYear => 2012;
 }

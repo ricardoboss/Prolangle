@@ -22,6 +22,6 @@ public class Rust : BaseLanguage
 	public override Paradigms Paradigms { get; } = Paradigms.Concurrent | Paradigms.Functional | Paradigms.Generic |
 	                                               Paradigms.Imperative | Paradigms.Structured;
 
-	public override double? TiobeRating { get; } = 0.79;
+	public override double? TiobeRating { get; } = 1.32;
 	public override int AppearanceYear { get; } = 2015;
 }

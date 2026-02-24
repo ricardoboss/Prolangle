@@ -26,6 +26,6 @@ public class Go : BaseLanguage
 	public override Paradigms Paradigms { get; } = Paradigms.Concurrent | Paradigms.Imperative | Paradigms.Functional |
 	                                               Paradigms.ObjectOriented;
 
-	public override double? TiobeRating { get; } = 1.03;
+	public override double? TiobeRating { get; } = 1.23;
 	public override int AppearanceYear { get; } = 2009;
 }

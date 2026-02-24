@@ -24,6 +24,6 @@ public class Php : BaseLanguage
 	                                               Paradigms.ObjectOriented | Paradigms.Procedural |
 	                                               Paradigms.Reflective;
 
-	public override double? TiobeRating { get; } = 2.01;
+	public override double? TiobeRating { get; } = 1.34;
 	public override int AppearanceYear { get; } = 1995;
 }

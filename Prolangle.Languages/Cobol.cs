@@ -24,6 +24,6 @@ public class Cobol : BaseLanguage
 
 	public override Applications KnownForBuilding { get; } = Applications.Server | Applications.General;
 	public override Paradigms Paradigms { get; } = Paradigms.Imperative | Paradigms.Procedural;
-	public override double? TiobeRating { get; } = 1.09;
+	public override double? TiobeRating { get; } = 0.76;
 	public override int AppearanceYear { get; } = 1959;
 }

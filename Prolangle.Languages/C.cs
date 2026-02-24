@@ -20,6 +20,6 @@ public class C : BaseLanguage
 
 	public override Applications KnownForBuilding { get; } = Applications.System | Applications.General | Applications.Games;
 	public override Paradigms Paradigms { get; } = Paradigms.Imperative | Paradigms.Procedural | Paradigms.Structured;
-	public override double? TiobeRating { get; } = 11.44;
+	public override double? TiobeRating { get; } = 11.05;
 	public override int AppearanceYear { get; } = 1972;
 }

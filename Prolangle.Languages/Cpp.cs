@@ -18,6 +18,6 @@ public class Cpp : BaseLanguage
 	public override SyntaxStyle SyntaxStyle { get; } = SyntaxStyle.C;
 	public override Applications KnownForBuilding { get; } = Applications.System | Applications.Games | Applications.General;
 	public override Paradigms Paradigms { get; } = Paradigms.Procedural | Paradigms.Imperative | Paradigms.Functional | Paradigms.ObjectOriented | Paradigms.Generic;
-	public override double? TiobeRating { get; } = 10.01;
+	public override double? TiobeRating { get; } = 8.55;
 	public override int AppearanceYear { get; } = 1985;
 }

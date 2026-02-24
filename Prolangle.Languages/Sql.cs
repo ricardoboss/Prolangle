@@ -21,6 +21,6 @@ public class Sql : BaseLanguage
 
 	public override Paradigms Paradigms { get; } = Paradigms.Declarative;
 
-	public override double? TiobeRating { get; } = 1.61;
+	public override double? TiobeRating { get; } = 1.93;
 	public override int AppearanceYear { get; } = 1974;
 }

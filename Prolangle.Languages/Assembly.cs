@@ -20,6 +20,6 @@ public class Assembly : BaseLanguage
 
 	public override Applications KnownForBuilding { get; } = Applications.System | Applications.General | Applications.Games;
 	public override Paradigms Paradigms { get; } = Paradigms.Imperative;
-	public override double? TiobeRating { get; } = 1.11;
+	public override double? TiobeRating { get; } = 1.1;
 	public override int AppearanceYear { get; } = 1947;
 }

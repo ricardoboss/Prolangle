@@ -25,6 +25,6 @@ public class Swift : BaseLanguage
 	                                               Paradigms.Imperative | Paradigms.Declarative | Paradigms.Concurrent |
 	                                               Paradigms.EventDriven | Paradigms.Reflective;
 
-	public override double? TiobeRating { get; } = 0.82;
+	public override double? TiobeRating { get; } = 1.02;
 	public override int AppearanceYear { get; } = 2014;
 }

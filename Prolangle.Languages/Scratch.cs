@@ -18,6 +18,6 @@ public class Scratch : BaseLanguage
 	public override SyntaxStyle SyntaxStyle => SyntaxStyle.Visual;
 	public override Applications KnownForBuilding => Applications.Games | Applications.Fun | Applications.Education;
 	public override Paradigms Paradigms => Paradigms.EventDriven | Paradigms.BlockBased | Paradigms.ObjectOriented;
-	public override double? TiobeRating => 1.44;
+	public override double? TiobeRating => 1.3;
 	public override int AppearanceYear => 2007;
 }

@@ -22,6 +22,6 @@ public class VisualBasicClassic : BaseLanguage
 
 	public override Paradigms Paradigms { get; } = Paradigms.ObjectBased | Paradigms.EventDriven;
 
-	public override double? TiobeRating { get; } = 1.60;
+	public override double? TiobeRating { get; } = 0.74;
 	public override int AppearanceYear { get; } = 1991;
 }

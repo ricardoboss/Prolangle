@@ -28,6 +28,6 @@ public class VisualBasicNet : BaseLanguage
 	                                               Paradigms.Imperative | Paradigms.Concurrent |
 	                                               Paradigms.EventDriven | Paradigms.Reflective;
 
-	public override double? TiobeRating { get; } = 1.60;
+	public override double? TiobeRating { get; } = 2.85;
 	public override int AppearanceYear { get; } = 2001;
 }
