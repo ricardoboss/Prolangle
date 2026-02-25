@@ -6,6 +6,8 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Prolangle/Prolangle.csproj", "Prolangle/"]
+COPY Directory.Build.props .
+COPY Directory.Packages.props .
 RUN dotnet restore "Prolangle/Prolangle.csproj"
 COPY . .
 WORKDIR "/src/Prolangle"
