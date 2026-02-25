@@ -1,5 +1,8 @@
 # _Waiting for deployment_
 
+* Updated TIOBE ratings for all languages
+* (internal) Update to .NET 10
+
 # 2025-09-13.1
 
 * Added TypeScript https://github.com/ricardoboss/Prolangle/pull/125
