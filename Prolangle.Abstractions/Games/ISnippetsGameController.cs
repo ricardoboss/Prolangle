@@ -9,4 +9,6 @@ public interface ISnippetsGameController : IGameController
 	ICodeSnippet? Snippet { get; }
 
 	double RevealedPercent { get; }
+
+	bool RevealHighlighting { get; }
 }
