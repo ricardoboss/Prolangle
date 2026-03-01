@@ -28,7 +28,10 @@ public class DatabaseSnippetsGameController(
 
 	public ICodeSnippet? Snippet { get; private set; }
 
-	public double RevealedPercent => Won ? 1 : RevealedLanguages.Count * RevealedPerGuess;
+	// offset by 1 to reveal highlighting first
+	public double RevealedPercent => Won ? 1 : Math.Max(0, RevealedLanguages.Count - 1) * RevealedPerGuess;
+
+	public bool RevealHighlighting => RevealedLanguages.Count >= 1;
 
 	private double RevealedPerGuess => 2d / AvailableLanguages.Count;
 

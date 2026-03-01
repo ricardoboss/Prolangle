@@ -1,4 +1,5 @@
-@inject ITokenTypeHighlighter<GeneralTokenType> Highlighter
+@inject IColorfulTypeHighlighter ColorfulHighlighter
+@inject IColorlessTypeHighlighter ColorlessHighlighter
 @inject IConcealingTokenizerFactory TokenizerFactory
 
 @if (Tokenizer != null)
@@ -19,10 +20,17 @@
 	public double? RevealedPercent { get; set; }
 
 	[Parameter]
+	public bool? RevealHighlighting { get; set; }
+
+	[Parameter]
 	public string? Style { get; set; }
 
 	[Parameter]
 	public bool Debug { get; set; }
+
+	private ITokenTypeHighlighter<GeneralTokenType>? Highlighter => Snippet == null || RevealHighlighting != true
+		? ColorlessHighlighter
+		: ColorfulHighlighter;
 
 	private ITokenizer<GeneralTokenType>? Tokenizer => Snippet == null || !RevealedPercent.HasValue
 		? null
