@@ -1,5 +1,7 @@
 # _Waiting for deployment_
 
+* Hide syntax highlighting for first guess https://github.com/ricardoboss/Prolangle/pull/160
+
 # 2026-02-25.1
 
 * Updated TIOBE ratings for all languages
